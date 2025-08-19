@@ -65,13 +65,13 @@ fun TimetableGridItem(
             modifier = modifier
                 .width(TimetableGridItemDefaults.width)
                 .height(height)
+                .border(1.dp, LocalRoomTheme.current.primaryColor, shape)
                 .clip(shape)
                 .background(LocalRoomTheme.current.containerColor)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple(bounded = true),
                 ) { onTimetableItemClick(timetableItem) }
-                .border(1.dp, LocalRoomTheme.current.primaryColor, shape)
                 .padding(TimetableGridItemDefaults.contentPadding),
         ) {
             Column(
