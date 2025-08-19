@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedFilterChip
 import io.github.droidkaigi.confsched.eventmap.EventmapRes
@@ -22,6 +23,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 
+const val EventMapTabTestTagPrefix = "EventMapTabTestTag:"
+const val EventMapTabImageTestTag = "EventMapTabImageTestTag"
 private const val ChangeTabDeltaThreshold = 20f
 
 @Composable
@@ -49,6 +52,7 @@ fun TabbedEventMap(
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             FloorLevel.entries.reversed().forEach { floorLevel ->
                 AnimatedFilterChip(
+                    modifier = Modifier.testTag(EventMapTabTestTagPrefix.plus(floorLevel.floorName)),
                     isSelected = selectedFloor == floorLevel,
                     text = floorLevel.floorName,
                     onClick = { onSelectFloor(floorLevel) },
@@ -61,6 +65,7 @@ fun TabbedEventMap(
                 FloorLevel.Ground -> EventmapRes.drawable.event_map_1f
             }
             Image(
+                modifier = Modifier.testTag(EventMapTabImageTestTag),
                 painter = painterResource(mapRes),
                 contentDescription = "Map of ${floor.floorName}",
             )

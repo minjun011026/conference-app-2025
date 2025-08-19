@@ -1,10 +1,15 @@
 package io.github.droidkaigi.confsched.data.eventmap
 
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
+import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.model.eventmap.EventMapEvent
 import io.github.droidkaigi.confsched.model.eventmap.fakes
 import kotlinx.collections.immutable.PersistentList
 import okio.IOException
 
+@SingleIn(DataScope::class)
+@Inject
 public class FakeEventMapApiClient : EventMapApiClient {
 
     public sealed class Status : EventMapApiClient {

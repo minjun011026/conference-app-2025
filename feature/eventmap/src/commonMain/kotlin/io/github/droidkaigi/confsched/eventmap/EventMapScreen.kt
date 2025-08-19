@@ -9,6 +9,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.util.plus
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
@@ -18,16 +19,20 @@ import io.github.droidkaigi.confsched.eventmap.component.EventMap
 import io.github.droidkaigi.confsched.model.eventmap.FloorLevel
 import org.jetbrains.compose.resources.stringResource
 
+const val EventMapScreenTestTag = "EventMapScreenTestTag"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventMapScreen(
     uiState: EventMapUiState,
     onSelectFloor: (FloorLevel) -> Unit,
     onClickReadMore: (url: String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
+        modifier = modifier.testTag(EventMapScreenTestTag),
         topBar = {
             AnimatedTextTopAppBar(
                 title = stringResource(EventmapRes.string.event_map),

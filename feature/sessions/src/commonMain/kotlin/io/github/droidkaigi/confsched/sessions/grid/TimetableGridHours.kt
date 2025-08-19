@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.model.core.DroidKaigi2025Day
+import io.github.droidkaigi.confsched.sessions.TimetableScaleState
 import io.github.droidkaigi.confsched.sessions.TimetableScrollState
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
@@ -54,6 +55,7 @@ fun HourItem(
 fun TimetableGridHours(
     hoursCount: () -> Int,
     scrollState: TimetableScrollState,
+    scaleState: TimetableScaleState,
     timeLine: TimeLine?,
     selectedDay: DroidKaigi2025Day,
     modifier: Modifier = Modifier,
@@ -61,10 +63,11 @@ fun TimetableGridHours(
 ) {
     val density = LocalDensity.current
     val coroutineScope = rememberCoroutineScope()
+    val verticalScale = scaleState.verticalScale
 
-    val hoursScreen by remember {
+    val hoursScreen by remember(verticalScale) {
         derivedStateOf {
-            val hoursLayout = createHoursLayout(hoursCount(), density)
+            val hoursLayout = createHoursLayout(hoursCount(), density, verticalScale)
             HoursScreen(
                 scrollState = scrollState,
                 hoursLayout = hoursLayout,
@@ -251,8 +254,9 @@ private data class HoursLayout(
 private fun createHoursLayout(
     hoursCount: Int,
     density: Density,
+    verticalScale: Float,
 ): HoursLayout {
-    val minutePx = with(density) { TimetableGridDefaults.minuteHeight.toPx() }
+    val minutePx = with(density) { TimetableGridDefaults.minuteHeight.times(verticalScale).toPx() }
     var hoursHeight = 0
     var hoursWidth = 0
     val hourItemLayouts = List(hoursCount) { index ->

@@ -35,9 +35,10 @@ fun rememberTimetableGridState(
     selectedDay: DroidKaigi2025Day,
     scrollState: TimetableScrollState,
     density: Density = LocalDensity.current,
-) = remember(timetable, timeLine, selectedDay, scrollState, density) {
+    verticalScale: Float,
+) = remember(timetable, timeLine, selectedDay, scrollState, density, verticalScale) {
     TimetableGridState(
-        timetableLayout = timetable.toLayout(density),
+        timetableLayout = timetable.toLayout(density, verticalScale),
         timeLine = timeLine,
         selectedDay = selectedDay,
         scrollState = scrollState,
@@ -195,6 +196,7 @@ data class TimetableLayout(
 
 private fun Timetable.toLayout(
     density: Density,
+    verticalScale: Float = 1f,
 ): TimetableLayout {
     val dayStartTime = timetableItems.minOfOrNull { it.startsAt }
     val dayToStartTime = run {
@@ -215,7 +217,7 @@ private fun Timetable.toLayout(
             ).toInstant(timeZone)
         }
     }
-    val minutePx = with(density) { TimetableGridDefaults.minuteHeight.toPx() }
+    val minutePx = with(density) { TimetableGridDefaults.minuteHeight.times(verticalScale).toPx() }
     var timetableHeight = 0
     var timetableWidth = 0
     val timetableLayouts = timetableItems.map {

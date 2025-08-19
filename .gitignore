@@ -3,5 +3,18 @@
 .DS_STORE
 build
 local.properties
-.idea
+.idea/*
+!.idea/externalDependencies.xml
+!.idea/copyright
+!.idea/codeInsightSettings.xml
+# Keep the code styles.
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
+!/.idea/icon*.svg
+# Suppress typo
+!/.idea/dictionaries
+/.idea/dictionaries/*
+!/.idea/dictionaries/dictionary.xml
 bin

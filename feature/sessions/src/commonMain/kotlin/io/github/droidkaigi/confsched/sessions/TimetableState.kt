@@ -6,10 +6,12 @@ import androidx.compose.runtime.remember
 @Composable
 fun rememberTimetableState(
     timetableScrollState: TimetableScrollState = rememberTimetableScrollState(),
+    timetableScaleState: TimetableScaleState = rememberScreenScaleState(),
 ): TimetableState = remember {
-    TimetableState(timetableScrollState)
+    TimetableState(timetableScrollState, timetableScaleState)
 }
 
 data class TimetableState(
-    val timetableScrollState: TimetableScrollState,
+    val scrollState: TimetableScrollState,
+    val scaleState: TimetableScaleState,
 )

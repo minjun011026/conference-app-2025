@@ -26,6 +26,7 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.feature.sessions)
             implementation(projects.feature.about)
+            implementation(projects.feature.eventmap)
 
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
