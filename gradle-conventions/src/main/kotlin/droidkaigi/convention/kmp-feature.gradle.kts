@@ -43,10 +43,6 @@ kotlin {
             implementation(libs.library("lifecycleRuntimeCompose"))
         }
 
-        androidMain.dependencies {
-            implementation(libs.library("lifecycleViewmodelNavigation3"))
-        }
-
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
         }

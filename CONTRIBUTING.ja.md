@@ -50,7 +50,7 @@ https://developer.android.com/courses/jetpack-compose/course
 コードフォーマットのコマンドは以下の通りです。Android Studioでこのドキュメントを開いて、左側の実行ボタンから実行できます。
 
 ```bash
-./gradlew detekt --auto-correct
+./gradlew spotlessApply
 ```
 
 ### 6. プルリクエストを作成する

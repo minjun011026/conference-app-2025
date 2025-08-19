@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.about.AboutRes
 import io.github.droidkaigi.confsched.about.icon_youtube
@@ -25,6 +26,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AboutLinkIcon(
+    testTag: String,
     painter: Painter,
     contentDescription: String,
     modifier: Modifier = Modifier,
@@ -44,7 +46,8 @@ fun AboutLinkIcon(
     IconButton(
         onClick = onClick,
         interactionSource = interactionSource,
-        modifier = modifier,
+        modifier = modifier
+            .testTag(testTag),
     ) {
         Image(
             painter = painter,
@@ -60,6 +63,7 @@ private fun AboutLinkIconPreview() {
     KaigiTheme {
         Surface {
             AboutLinkIcon(
+                testTag = "testTag",
                 painter = painterResource(AboutRes.drawable.icon_youtube),
                 contentDescription = "YouTube",
                 onClick = {},

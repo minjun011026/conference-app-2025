@@ -50,7 +50,7 @@ https://developer.android.com/courses/jetpack-compose/course
 The command for code formatting is as follows. You can run it by opening this document in Android Studio and clicking the run button on the left:
 
 ```bash
-./gradlew detekt --auto-correct
+./gradlew spotlessApply
 ```
 
 ### 6. Create a Pull Request

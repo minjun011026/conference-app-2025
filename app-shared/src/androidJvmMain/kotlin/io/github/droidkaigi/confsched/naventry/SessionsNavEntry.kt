@@ -37,7 +37,10 @@ fun EntryProviderBuilder<NavKey>.sessionEntries(
         onShareClick = onShareClick,
         onLinkClick = onLinkClick,
     )
-    searchEntry()
+    searchEntry(
+        onBackClick = onBackClick,
+        onTimetableItemClick = onTimetableItemClick,
+    )
 }
 
 context(appGraph: AppGraph)
@@ -75,10 +78,16 @@ fun EntryProviderBuilder<NavKey>.timetableItemDetailEntry(
 }
 
 context(appGraph: AppGraph)
-fun EntryProviderBuilder<NavKey>.searchEntry() {
+fun EntryProviderBuilder<NavKey>.searchEntry(
+    onBackClick: () -> Unit = {},
+    onTimetableItemClick: (TimetableItemId) -> Unit = {},
+) {
     entry<SearchNavKey> {
         with(rememberSearchScreenContextRetained()) {
-            SearchScreenRoot()
+            SearchScreenRoot(
+                onBackClick = onBackClick,
+                onTimetableItemClick = onTimetableItemClick,
+            )
         }
     }
 }

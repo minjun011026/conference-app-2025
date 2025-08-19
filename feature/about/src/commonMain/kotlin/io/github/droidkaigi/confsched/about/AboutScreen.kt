@@ -9,6 +9,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import io.github.droidkaigi.confsched.about.section.AboutDroidKaigiHeader
 import io.github.droidkaigi.confsched.about.section.AboutFooter
 import io.github.droidkaigi.confsched.about.section.aboutCredits
@@ -21,6 +22,8 @@ import io.github.droidkaigi.confsched.droidkaigiui.extension.plus
 import io.github.droidkaigi.confsched.model.about.AboutItem
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+const val AboutScreenLazyColumnTestTag = "AboutScreenLazyColumnTestTag"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +46,9 @@ fun AboutScreen(
     ) { contentPadding ->
         LazyColumn(
             contentPadding = contentPadding + WindowInsets.safeDrawingWithBottomNavBar.excludeTop().asPaddingValues(),
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .testTag(AboutScreenLazyColumnTestTag),
         ) {
             item {
                 AboutDroidKaigiHeader(

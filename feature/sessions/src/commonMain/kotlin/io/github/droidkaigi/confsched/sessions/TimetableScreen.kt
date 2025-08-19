@@ -24,7 +24,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,6 +55,7 @@ fun TimetableScreen(
     onTimetableItemClick: (TimetableItemId) -> Unit,
     onBookmarkClick: (sessionId: String) -> Unit,
     onTimetableUiChangeClick: () -> Unit,
+    onDaySelected: (DroidKaigi2025Day) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val collapsingState = rememberCollapsingHeaderEnterAlwaysState()
@@ -72,6 +72,12 @@ fun TimetableScreen(
     val headerBackgroundColor by animateColorAsState(
         targetValue = if (completelyScrolledToTop) Color.Transparent else MaterialTheme.colorScheme.surface,
     )
+
+    val selectedDay = when (uiState.timetable) {
+        is TimetableUiState.GridTimetable -> uiState.timetable.selectedDay
+        is TimetableUiState.ListTimetable -> uiState.timetable.selectedDay
+        else -> DroidKaigi2025Day.ConferenceDay1
+    }
 
     Scaffold(
         topBar = {
@@ -90,7 +96,6 @@ fun TimetableScreen(
         CollapsingHeaderLayout(
             state = collapsingState,
             headerContent = {
-                var selectedDay by remember { mutableStateOf(DroidKaigi2025Day.ConferenceDay1) }
                 val conferenceDays = listOf(DroidKaigi2025Day.ConferenceDay1, DroidKaigi2025Day.ConferenceDay2)
 
                 Box(
@@ -107,7 +112,7 @@ fun TimetableScreen(
                                     index = index,
                                     count = conferenceDays.size,
                                 ),
-                                onClick = { selectedDay = droidKaigi2025Day },
+                                onClick = { onDaySelected(droidKaigi2025Day) },
                                 colors = SegmentedButtonDefaults.colors(
                                     activeContainerColor = MaterialTheme.colorScheme.secondaryContainer,
                                     activeContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -134,16 +139,16 @@ fun TimetableScreen(
                     is TimetableUiState.Empty -> Text("Empty")
                     is TimetableUiState.GridTimetable -> {
                         TimetableGrid(
-                            timetable = requireNotNull(uiState.timetable.timetableGridUiState[uiState.timetable.selectedDay]).timetable,
+                            timetable = requireNotNull(uiState.timetable.timetableGridUiState[selectedDay]).timetable,
                             timeLine = null, // TODO
                             onTimetableItemClick = onTimetableItemClick,
-                            selectedDay = uiState.timetable.selectedDay,
+                            selectedDay = selectedDay,
                             contentPadding = WindowInsets.safeDrawingWithBottomNavBar.excludeTop().asPaddingValues(),
                         )
                     }
 
                     is TimetableUiState.ListTimetable -> {
-                        val timetableListUiState = requireNotNull(uiState.timetable.timetableListUiStates[uiState.timetable.selectedDay])
+                        val timetableListUiState = requireNotNull(uiState.timetable.timetableListUiStates[selectedDay])
                         TimetableList(
                             timetableItemMap = timetableListUiState.timetableItemMap,
                             onTimetableItemClick = onTimetableItemClick,
@@ -178,6 +183,7 @@ private fun TimetableScreenPreview() {
             onSearchClick = {},
             onTimetableItemClick = {},
             onTimetableUiChangeClick = {},
+            onDaySelected = {},
         )
     }
 }
@@ -207,6 +213,7 @@ private fun TimetableScreenPreview_List() {
             onSearchClick = {},
             onTimetableItemClick = {},
             onTimetableUiChangeClick = {},
+            onDaySelected = {},
         )
     }
 }
@@ -234,6 +241,7 @@ private fun TimetableScreenPreview_Grid() {
             onSearchClick = {},
             onTimetableItemClick = {},
             onTimetableUiChangeClick = {},
+            onDaySelected = {},
         )
     }
 }

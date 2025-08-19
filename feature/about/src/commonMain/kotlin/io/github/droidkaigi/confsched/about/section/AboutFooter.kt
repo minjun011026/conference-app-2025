@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.about.AboutRes
@@ -27,6 +28,11 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+const val AboutFooterTestTag = "AboutFooterTestTag"
+const val AboutFooterYouTubeItemTestTag = "AboutFooterYouTubeItemTestTag"
+const val AboutFooterXItemTestTag = "AboutFooterXItemTestTag"
+const val AboutFooterMediumItemTestTag = "AboutFooterMediumItemTestTag"
+
 @Composable
 fun AboutFooter(
     versionName: String,
@@ -39,21 +45,25 @@ fun AboutFooter(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .testTag(AboutFooterTestTag)
             .fillMaxWidth()
             .padding(vertical = 24.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             AboutLinkIcon(
+                testTag = AboutFooterYouTubeItemTestTag,
                 painter = painterResource(AboutRes.drawable.icon_youtube),
                 contentDescription = stringResource(AboutRes.string.content_description_youtube),
                 onClick = onYouTubeClick,
             )
             AboutLinkIcon(
+                testTag = AboutFooterXItemTestTag,
                 painter = painterResource(AboutRes.drawable.icon_x),
                 contentDescription = "X",
                 onClick = onXClick,
             )
             AboutLinkIcon(
+                testTag = AboutFooterMediumItemTestTag,
                 painter = painterResource(AboutRes.drawable.icon_medium),
                 contentDescription = "Medium",
                 onClick = onMediumClick,

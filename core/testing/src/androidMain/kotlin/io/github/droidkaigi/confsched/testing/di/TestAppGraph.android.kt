@@ -7,6 +7,8 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.createGraph
 import io.github.droidkaigi.confsched.data.DataScope
+import io.github.droidkaigi.confsched.data.about.FakeBuildConfigProvider
+import io.github.droidkaigi.confsched.data.about.FakeLicensesJsonReader
 import io.github.droidkaigi.confsched.data.contributors.DefaultContributorsApiClient
 import io.github.droidkaigi.confsched.data.sessions.DefaultSessionsApiClient
 import kotlinx.coroutines.CoroutineDispatcher
@@ -33,6 +35,12 @@ internal interface AndroidTestAppGraph : TestAppGraph {
             .invoke(provider, testContext)
         return testContext
     }
+
+    @Provides
+    fun provideFakeBuildConfigProvider(): FakeBuildConfigProvider = FakeBuildConfigProvider()
+
+    @Provides
+    fun provideFakeLicensesJsonReader(): FakeLicensesJsonReader = FakeLicensesJsonReader()
 }
 
 internal actual fun createTestAppGraph(): TestAppGraph {

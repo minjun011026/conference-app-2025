@@ -58,6 +58,8 @@ navigationCompose = "2.9.0-beta04"
 
 aboutLibraries = "12.2.4"
 
+filekit = "0.10.0"
+
 [libraries]
 # gradle plugins
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
@@ -150,6 +152,9 @@ molecule = { module = "app.cash.molecule:molecule-runtime", version.ref = "molec
 navigationCompose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 aboutLibrariesComposeM3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
+
+filekitDialogsCompose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+filekitCoil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

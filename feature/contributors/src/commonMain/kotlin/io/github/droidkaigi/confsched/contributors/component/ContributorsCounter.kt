@@ -15,8 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +23,7 @@ import io.github.droidkaigi.confsched.contributors.ContributorsRes
 import io.github.droidkaigi.confsched.contributors.contributor_person
 import io.github.droidkaigi.confsched.contributors.contributor_total
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.droidkaigiui.rememberIntSaveable
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -33,7 +32,7 @@ fun ContributorsCounter(
     totalContributors: Int,
     modifier: Modifier = Modifier,
 ) {
-    var targetValue by rememberSaveable { mutableIntStateOf(0) }
+    var targetValue by rememberIntSaveable(0)
     val animatedTotalContributor by animateIntAsState(
         targetValue = targetValue,
         animationSpec = tween(

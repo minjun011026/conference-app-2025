@@ -40,6 +40,9 @@ fun TimetableScreenRoot(
                 eventFlow.tryEmit(TimetableScreenEvent.Bookmark(sessionId))
             },
             onTimetableUiChangeClick = { eventFlow.tryEmit(TimetableScreenEvent.UiTypeChange) },
+            onDaySelected = { day ->
+                eventFlow.tryEmit(TimetableScreenEvent.SelectTab(day))
+            },
         )
     }
 }

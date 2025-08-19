@@ -3,6 +3,11 @@ package io.github.droidkaigi.confsched
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
+import java.awt.Desktop
+import java.net.URI
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+import kotlin.time.Instant
 
 @Composable
 actual fun rememberExternalNavController(): ExternalNavController {
@@ -15,7 +20,34 @@ class JvmExternalNavController : ExternalNavController {
     }
 
     override fun navigateToCalendarRegistration(timetableItem: TimetableItem) {
-        TODO("Not yet implemented")
+        fun Instant.toBasicISO8601String(): String {
+            return this.toString()
+                .replace("-", "")
+                .replace(":", "")
+                .replace(".", "")
+        }
+
+        fun String.encodeUtf8(): String {
+            return URLEncoder.encode(this, StandardCharsets.UTF_8.toString())
+        }
+
+        val calendarUrl = buildString {
+            append("https://calendar.google.com/calendar/r/eventedit")
+            append("?text=").append("[${timetableItem.room.name.currentLangTitle}] ${timetableItem.title.currentLangTitle}".encodeUtf8())
+            append("&dates=").append("${timetableItem.startsAt.toBasicISO8601String()}/${timetableItem.endsAt.toBasicISO8601String()}".encodeUtf8())
+            append("&details=").append(timetableItem.url.encodeUtf8())
+            append("&location=").append(timetableItem.room.name.currentLangTitle.encodeUtf8())
+        }
+
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            runCatching {
+                Desktop.getDesktop().browse(URI(calendarUrl))
+            }.onFailure { error ->
+                println("Failed to add event to calendar: $error")
+            }
+        } else {
+            println("Access to calendar not granted:")
+        }
     }
 
     override fun onShareClick(timetableItem: TimetableItem) {

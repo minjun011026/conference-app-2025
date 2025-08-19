@@ -40,7 +40,10 @@ fun NavGraphBuilder.timetableTabNavGraph(
             onShareClick = onShareClick,
             onAddCalendarClick = onAddCalendarClick,
         )
-        searchNavGraph()
+        searchNavGraph(
+            onBackClick = onBackClick,
+            onTimetableItemClick = onTimetableItemClick,
+        )
     }
 }
 
@@ -81,10 +84,16 @@ fun NavGraphBuilder.timetableItemDetailNavGraph(
 }
 
 context(appGraph: AppGraph)
-private fun NavGraphBuilder.searchNavGraph() {
+private fun NavGraphBuilder.searchNavGraph(
+    onBackClick: () -> Unit,
+    onTimetableItemClick: (TimetableItemId) -> Unit,
+) {
     composable<SearchRoute> {
         with(rememberSearchScreenContextRetained()) {
-            SearchScreenRoot()
+            SearchScreenRoot(
+                onBackClick = onBackClick,
+                onTimetableItemClick = onTimetableItemClick,
+            )
         }
     }
 }

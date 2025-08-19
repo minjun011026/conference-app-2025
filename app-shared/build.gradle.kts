@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.soilQueryCompose)
             implementation(libs.androidxDatastorePreferencesCore)
             implementation(libs.haze)
+            implementation(libs.filekitCoil)
         }
 
         androidMain.dependencies {

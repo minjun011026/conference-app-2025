@@ -30,6 +30,8 @@ fun profileEditScreenPresenter(
                 name = "",
                 occupation = "",
                 link = "",
+                imagePath = "",
+                image = ByteArray(0),
             ),
             meta = formMeta,
         )

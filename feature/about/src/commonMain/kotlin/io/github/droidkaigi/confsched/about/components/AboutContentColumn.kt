@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.about.AboutRes
 import io.github.droidkaigi.confsched.about.staff
@@ -27,6 +28,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun AboutContentColumn(
     leadingIcon: ImageVector,
     label: String,
+    testTag: String,
     onClickAction: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -34,6 +36,7 @@ fun AboutContentColumn(
         modifier = modifier
             .fillMaxWidth()
             .height(73.dp)
+            .testTag(testTag)
             .clickable(onClick = onClickAction),
     ) {
         Row(
@@ -78,6 +81,7 @@ private fun AboutContentColumnPreview() {
         AboutContentColumn(
             leadingIcon = Outlined.SentimentVerySatisfied,
             label = stringResource(AboutRes.string.staff),
+            testTag = "",
             onClickAction = {},
         )
     }

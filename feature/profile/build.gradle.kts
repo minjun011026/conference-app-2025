@@ -6,6 +6,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.soilForm)
+            implementation(libs.filekitDialogsCompose)
         }
     }
 }
