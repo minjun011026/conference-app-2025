@@ -5,6 +5,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteractionCollection
+import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 
 fun hasTestTag(
     testTag: String,
@@ -22,6 +23,15 @@ fun hasTestTag(
         }
     }
 }
+
+fun SemanticsNodeInteractionsProvider.onAllNodesWithTag(
+    testTag: String,
+    substring: Boolean = false,
+    useUnmergedTree: Boolean = false,
+): SemanticsNodeInteractionCollection = onAllNodes(
+    hasTestTag(testTag = testTag, substring = substring),
+    useUnmergedTree = useUnmergedTree,
+)
 
 fun SemanticsNodeInteractionCollection.assertCountAtLeast(
     minimumExpectedSize: Int,

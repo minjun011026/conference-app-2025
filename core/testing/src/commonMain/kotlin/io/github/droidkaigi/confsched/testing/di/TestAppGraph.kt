@@ -18,6 +18,7 @@ internal interface TestAppGraph :
     TimetableScreenTestGraph,
     TimetableItemDetailScreenTestGraph,
     AboutScreenTestGraph,
+    ContributorsScreenTestGraph,
     EventMapScreenTestGraph,
     StaffScreenTestGraph {
 
