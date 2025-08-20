@@ -29,7 +29,6 @@ setup: ## Initial setup for the project
 	fi
 	@cd Core && swift package resolve
 	@cd Native && swift package resolve
-	@swift package resolve
 	@echo "Setup complete!"
 
 .PHONY: build
