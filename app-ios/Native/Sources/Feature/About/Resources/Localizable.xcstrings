@@ -1,19 +1,36 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Credits" : {
+    "Code of Conduct" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Credits"
+            "value" : "Code of Conduct"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クレジット"
+            "value" : "行動規範"
+          }
+        }
+      }
+    },
+    "CodeOfConductURL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/en/about/code-of-conduct"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/about/code-of-conduct"
           }
         }
       }
@@ -35,70 +52,19 @@
         }
       }
     },
-    "Staffs" : {
+    "Credits" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Staffs"
+            "value" : "Credits"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スタッフ"
-          }
-        }
-      }
-    },
-    "Sponsors" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sponsors"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スポンサー"
-          }
-        }
-      }
-    },
-    "Others" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Others"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "その他"
-          }
-        }
-      }
-    },
-    "Code of Conduct" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Code of Conduct"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "行動規範"
+            "value" : "クレジット"
           }
         }
       }
@@ -120,6 +86,23 @@
         }
       }
     },
+    "Others" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Others"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他"
+          }
+        }
+      }
+    },
     "Privacy Policy" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -137,6 +120,23 @@
         }
       }
     },
+    "PrivacyPolicyURL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/en/about/privacy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/about/privacy"
+          }
+        }
+      }
+    },
     "Settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -150,6 +150,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定"
+          }
+        }
+      }
+    },
+    "Sponsors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsors"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー"
+          }
+        }
+      }
+    },
+    "Staffs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Staffs"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スタッフ"
           }
         }
       }
