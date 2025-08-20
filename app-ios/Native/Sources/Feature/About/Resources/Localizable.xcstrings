@@ -1,6 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "2025.09.12(Thu) - 13(Fri)" : {
+
+    },
+    "About" : {
+
+    },
+    "App Version" : {
+
+    },
+    "Bellesalle Shibuya Garden" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Check Map" : {
+
+    },
     "Code of Conduct" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -69,6 +87,12 @@
         }
       }
     },
+    "Date:" : {
+
+    },
+    "DroidKaigi is a conference for Android developers" : {
+
+    },
     "Licenses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -85,6 +109,9 @@
           }
         }
       }
+    },
+    "Location:" : {
+
     },
     "Others" : {
       "extractionState" : "manual",
@@ -188,6 +215,9 @@
         }
       }
     },
+    "Switch" : {
+
+    },
     "Switch to Compose Multiplatform" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -221,6 +251,9 @@
           }
         }
       }
+    },
+    "Switch UI from SwiftUI to Compose Multiplatform. Are you sure you want to do this?" : {
+
     }
   },
   "version" : "1.0"

@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Native",
+    defaultLocalization: "ja",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
