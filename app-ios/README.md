@@ -156,7 +156,7 @@ git clone https://github.com/DroidKaigi/conference-app-2025.git
 ```bash
 cd app-ios && make setup
 ```
-Note: This installs SwiftLint via nest. Make sure nest is installed first (`brew install mtj0928/tap/nest`).
+Note: This installs SwiftLint via nest. Make sure nest is installed first (`curl -s https://raw.githubusercontent.com/mtj0928/nest/main/Scripts/install.sh | bash`) and confirm `~/.nest/bin` is added to PATH.
 
 4. Open the project:
 ```bash
