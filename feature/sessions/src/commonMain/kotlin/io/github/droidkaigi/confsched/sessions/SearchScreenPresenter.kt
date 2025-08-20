@@ -12,10 +12,12 @@ import io.github.droidkaigi.confsched.model.core.Filters
 import io.github.droidkaigi.confsched.model.core.Lang
 import io.github.droidkaigi.confsched.model.sessions.Timetable
 import io.github.droidkaigi.confsched.model.sessions.TimetableCategory
+import io.github.droidkaigi.confsched.model.sessions.TimetableItemId
 import io.github.droidkaigi.confsched.model.sessions.TimetableSessionType
 import io.github.takahirom.rin.rememberRetained
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentMap
+import soil.query.compose.rememberMutation
 
 @Composable
 context(screenContext: SearchScreenContext)
@@ -28,6 +30,8 @@ fun searchScreenPresenter(
     var selectedCategory by rememberRetained { mutableStateOf<TimetableCategory?>(null) }
     var selectedSessionType by rememberRetained { mutableStateOf<TimetableSessionType?>(null) }
     var selectedLanguage by rememberRetained { mutableStateOf<Lang?>(null) }
+    var selectedBookmarks by rememberRetained { mutableStateOf(timetable.bookmarks) }
+    val favoriteTimetableItemIdMutation = rememberMutation(screenContext.favoriteTimetableItemIdMutationKey)
 
     EventEffect(eventFlow) { event ->
         when (event) {
@@ -49,7 +53,14 @@ fun searchScreenPresenter(
                 }
             }
             is SearchScreenEvent.Bookmark -> {
-                // TODO: Implement bookmark mutation issue#188
+                val targetId = TimetableItemId(event.sessionId)
+                val newBookmarks = if (selectedBookmarks.contains(targetId)) {
+                    selectedBookmarks.remove(targetId)
+                } else {
+                    selectedBookmarks.add(targetId)
+                }
+                selectedBookmarks = newBookmarks
+                favoriteTimetableItemIdMutation.mutate(targetId)
             }
             SearchScreenEvent.ClearFilters -> {
                 selectedDay = null
@@ -108,5 +119,6 @@ fun searchScreenPresenter(
             availableLanguages = listOf(Lang.JAPANESE, Lang.ENGLISH),
         ),
         hasSearchCriteria = hasSearchCriteria,
+        bookmarks = selectedBookmarks,
     )
 }
