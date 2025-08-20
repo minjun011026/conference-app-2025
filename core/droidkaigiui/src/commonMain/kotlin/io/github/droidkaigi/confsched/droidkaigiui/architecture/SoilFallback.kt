@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
 
 sealed interface SoilFallback {
@@ -21,6 +23,7 @@ object SoilFallbackDefaults {
         title: String,
         onBackClick: (() -> Unit)? = null,
         appBarSize: AppBarSize = AppBarSize.Default,
+        appBarContainerColor: Color = MaterialTheme.colorScheme.surface,
         // Allowing WindowInsets to be overridden to prevent layout jump/glitches
         // when navigating between screens with and without a bottom navigation bar.
         windowInsets: WindowInsets = WindowInsets.safeDrawingWithBottomNavBar,
@@ -29,6 +32,7 @@ object SoilFallbackDefaults {
         title = title,
         onBackClick = onBackClick,
         size = appBarSize,
+        containerColor = appBarContainerColor,
         windowInsets = windowInsets,
         contentBackground = contentBackground,
     )
@@ -55,6 +59,7 @@ private class AppBar(
     val title: String,
     val onBackClick: (() -> Unit)?,
     val size: AppBarSize,
+    val containerColor: Color,
     val windowInsets: WindowInsets,
     val contentBackground: (@Composable (innerPadding: PaddingValues) -> Unit)?,
 ) : SoilFallback {
@@ -63,6 +68,7 @@ private class AppBar(
             title = title,
             onBackClick = onBackClick,
             appBarSize = size,
+            appBarContainerColor = containerColor,
             windowInsets = windowInsets,
         ) { innerPadding ->
             contentBackground?.invoke(innerPadding)
@@ -77,6 +83,7 @@ private class AppBar(
             title = title,
             onBackClick = onBackClick,
             appBarSize = size,
+            appBarContainerColor = containerColor,
             windowInsets = windowInsets,
         ) { innerPadding ->
             contentBackground?.invoke(innerPadding)

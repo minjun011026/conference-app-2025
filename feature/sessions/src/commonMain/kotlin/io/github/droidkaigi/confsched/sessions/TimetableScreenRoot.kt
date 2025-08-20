@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched.sessions
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import io.github.droidkaigi.confsched.common.compose.rememberEventFlow
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.SoilDataBoundary
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.SoilFallbackDefaults
@@ -20,6 +21,7 @@ fun TimetableScreenRoot(
         state2 = rememberSubscription(screenContext.favoriteTimetableIdsSubscriptionKey),
         fallback = SoilFallbackDefaults.appBar(
             title = stringResource(SessionsRes.string.timetable),
+            appBarContainerColor = Color.Transparent,
             contentBackground = {
                 TimetableBackground()
             },
