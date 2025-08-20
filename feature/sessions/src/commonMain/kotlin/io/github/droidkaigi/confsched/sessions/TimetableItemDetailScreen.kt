@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.theme.ProvideRoomTheme
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
@@ -20,6 +21,10 @@ import io.github.droidkaigi.confsched.sessions.components.TimetableItemDetailHea
 import io.github.droidkaigi.confsched.sessions.components.TimetableItemDetailSummaryCard
 import io.github.droidkaigi.confsched.sessions.components.TimetableItemDetailTopAppBar
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+// TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
+// const val TimetableItemDetailBookmarkIconTestTag = "TimetableItemDetailBookmarkIconTestTag"
+const val TimetableItemDetailScreenLazyColumnTestTag = "TimetableItemDetailScreenLazyColumnTestTag"
 
 @Composable
 fun TimetableItemDetailScreen(
@@ -56,7 +61,8 @@ fun TimetableItemDetailScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
+                    .padding(innerPadding)
+                    .testTag(TimetableItemDetailScreenLazyColumnTestTag),
             ) {
                 item {
                     TimetableItemDetailHeadline(
