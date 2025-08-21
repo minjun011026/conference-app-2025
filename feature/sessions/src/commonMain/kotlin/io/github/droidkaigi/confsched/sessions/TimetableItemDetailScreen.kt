@@ -1,8 +1,10 @@
 package io.github.droidkaigi.confsched.sessions
 
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -50,6 +52,7 @@ fun TimetableItemDetailScreen(
                     onShareClick = { onShareClick(uiState.timetableItem) },
                     onViewSlideClick = onLinkClick,
                     onWatchVideoClick = onLinkClick,
+                    modifier = Modifier.padding(bottom = WindowInsets.safeGestures.asPaddingValues().calculateBottomPadding()),
                 )
             },
             contentWindowInsets = WindowInsets(),
