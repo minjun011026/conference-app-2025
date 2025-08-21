@@ -8,8 +8,8 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.SemanticsNodeInteractionCollection
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
-import kotlin.test.DefaultAsserter.assertTrue
 import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 fun hasTestTag(
     testTag: String,

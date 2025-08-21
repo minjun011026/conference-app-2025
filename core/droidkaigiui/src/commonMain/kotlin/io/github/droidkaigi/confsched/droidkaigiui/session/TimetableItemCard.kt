@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
@@ -60,10 +59,7 @@ const val TimetableItemCardTestTag = "TimetableListItem"
 
 const val TimetableItemCardTitleTextTestTag = "TimetableItemCardTitleText"
 
-private val timetableItemCardSemanticsKey = SemanticsPropertyKey<TimetableItem>("TimetableItem")
-
-@Suppress("UnusedReceiverParameter")
-val SemanticsProperties.TimetableItemCard get() = timetableItemCardSemanticsKey
+val TimetableItemCardSemanticsKey = SemanticsPropertyKey<TimetableItem>("TimetableItem")
 
 @Composable
 fun TimetableItemCard(
@@ -83,7 +79,7 @@ fun TimetableItemCard(
             modifier = modifier
                 .testTag(TimetableItemCardTestTag)
                 .semantics {
-                    this[SemanticsProperties.TimetableItemCard] = timetableItem
+                    this[TimetableItemCardSemanticsKey] = timetableItem
                 }
                 .clip(RoundedCornerShape(16.dp))
                 .clickable { onTimetableItemClick() }

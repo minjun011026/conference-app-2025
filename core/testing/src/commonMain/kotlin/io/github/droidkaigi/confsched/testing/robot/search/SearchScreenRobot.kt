@@ -1,6 +1,5 @@
 package io.github.droidkaigi.confsched.testing.robot.search
 
-import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.ComposeUiTest
 import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertIsDisplayed
@@ -18,7 +17,7 @@ import androidx.compose.ui.test.performTextInput
 import dev.zacsweers.metro.Inject
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.DefaultErrorFallbackContentTestTag
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.DefaultSuspenseFallbackContentTestTag
-import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCard
+import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCardSemanticsKey
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCardTestTag
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCardTitleTextTestTag
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableListTestTag
@@ -310,7 +309,7 @@ class SearchScreenRobot(
         composeUiTest
             .onAllNodesWithTag(TimetableItemCardTestTag)
             .onFirst()
-            .assertSemanticsProperty(SemanticsProperties.TimetableItemCard) { item ->
+            .assertSemanticsProperty(TimetableItemCardSemanticsKey) { item ->
                 item?.sessionType?.label?.enTitle == sessionType.label
             }
         waitUntilIdle()
@@ -323,7 +322,7 @@ class SearchScreenRobot(
         composeUiTest
             .onAllNodesWithTag(TimetableItemCardTestTag)
             .onFirst()
-            .assertSemanticsProperty(SemanticsProperties.TimetableItemCard) { item ->
+            .assertSemanticsProperty(TimetableItemCardSemanticsKey) { item ->
                 item?.language?.toLang()?.tagName == language.tagName
             }
 
@@ -331,7 +330,7 @@ class SearchScreenRobot(
             composeUiTest
                 .onAllNodesWithTag(TimetableItemCardTestTag)
                 .onFirst()
-                .assertSemanticsProperty(SemanticsProperties.TimetableItemCard) { item ->
+                .assertSemanticsProperty(TimetableItemCardSemanticsKey) { item ->
                     item?.language?.toLang()?.tagName != doesNotContain.tagName
                 }
         }
