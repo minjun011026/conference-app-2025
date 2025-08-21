@@ -20,6 +20,7 @@ import io.github.droidkaigi.confsched.naventry.profileNavEntry
 import io.github.droidkaigi.confsched.naventry.sessionEntries
 import io.github.droidkaigi.confsched.naventry.sponsorsEntry
 import io.github.droidkaigi.confsched.naventry.staffEntry
+import io.github.droidkaigi.confsched.navigation.extension.safeRemoveLastIfType
 import io.github.droidkaigi.confsched.navigation.rememberNavBackStack
 import io.github.droidkaigi.confsched.navigation.sceneStrategy
 import io.github.droidkaigi.confsched.navkey.AboutNavKey
@@ -71,7 +72,7 @@ actual fun KaigiAppUi() {
             sceneStrategy = sceneStrategy(),
             entryProvider = entryProvider {
                 sessionEntries(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastIfType<TimetableItemDetailNavKey>() },
                     onAddCalendarClick = externalNavController::navigateToCalendarRegistration,
                     onShareClick = externalNavController::onShareClick,
                     onLinkClick = externalNavController::navigate,
@@ -84,15 +85,15 @@ actual fun KaigiAppUi() {
                     },
                 )
                 contributorsEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastIfType<ContributorsNavKey>() },
                     onContributorClick = externalNavController::navigate,
                 )
                 sponsorsEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastIfType<SponsorsNavKey>() },
                     onSponsorClick = externalNavController::navigate,
                 )
                 staffEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastIfType<StaffNavKey>() },
                     onStaffItemClick = externalNavController::navigate,
                 )
                 favoritesEntry(
