@@ -63,7 +63,6 @@ class FavoritesScreenRobot(
 
     context(composeUiTest: ComposeUiTest)
     suspend fun setupSingleFavoriteSession() {
-        // Set up only the first session as favorite
         val firstSessionId = FakeSessionsApiClient.defaultSessionIds.first()
         userDataStore.toggleFavorite(TimetableItemId(firstSessionId))
         waitUntilIdle()
@@ -71,7 +70,6 @@ class FavoritesScreenRobot(
 
     context(composeUiTest: ComposeUiTest)
     suspend fun setupFavoriteSessions() {
-        // Set up multiple sessions as favorites
         FakeSessionsApiClient.defaultSessionIds.forEach {
             userDataStore.toggleFavorite(TimetableItemId(it))
         }
