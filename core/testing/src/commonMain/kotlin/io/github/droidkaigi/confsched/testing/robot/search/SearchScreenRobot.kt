@@ -16,6 +16,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import dev.zacsweers.metro.Inject
+import io.github.droidkaigi.confsched.droidkaigiui.architecture.DefaultErrorFallbackContentTestTag
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.DefaultSuspenseFallbackContentTestTag
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCard
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableItemCardTestTag
@@ -103,6 +104,11 @@ class SearchScreenRobot(
     context(composeUiTest: ComposeUiTest)
     fun checkLoadingIndicatorDisplayed() {
         composeUiTest.onNodeWithTag(DefaultSuspenseFallbackContentTestTag).assertExists()
+    }
+
+    context(composeUiTest: ComposeUiTest)
+    fun checkErrorMessageDisplayed() {
+        composeUiTest.onNodeWithTag(DefaultErrorFallbackContentTestTag).assertExists()
     }
 
     context(composeUiTest: ComposeUiTest)

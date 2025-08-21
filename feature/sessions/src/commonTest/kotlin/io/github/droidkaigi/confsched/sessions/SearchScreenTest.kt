@@ -157,6 +157,11 @@ class SearchScreenTest {
                 doIt {
                     waitFor5Seconds()
                 }
+                itShould("show error message") {
+                    captureScreenWithChecks {
+                        checkErrorMessageDisplayed()
+                    }
+                }
             }
         }
     }
