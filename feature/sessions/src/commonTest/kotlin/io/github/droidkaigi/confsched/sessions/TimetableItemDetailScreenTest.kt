@@ -40,32 +40,10 @@ class TimetableItemDetailScreenTest {
                         },
                     )
                 }
+
                 // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//                describe("click bookmark") {
-//                    doIt {
-//                        clickBookmarkButton()
-//                    }
-//                    itShould("show bookmarked session") {
-//                        captureScreenWithChecks(
-//                            checks = {
-//                                checkBookmarkedSession()
-//                            },
-//                        )
-//                    }
-//                    describe("click bookmark again") {
-//                        doIt {
-//                            clickBookmarkButton()
-//                        }
-//                        itShould("show unBookmarked session") {
-//                            waitFor5Seconds()
-//                            captureScreenWithChecks(
-//                                checks = {
-//                                    checkUnBookmarkSession()
-//                                },
-//                            )
-//                        }
-//                    }
-//                }
+                // TODO Test two states: bookmarked and not bookmarked.
+
                 describe("scroll") {
                     doIt {
                         scroll()
@@ -78,17 +56,10 @@ class TimetableItemDetailScreenTest {
                         )
                     }
                 }
+
                 // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//                describe("when scroll to bottom") {
-//                    doIt {
-//                        scrollToTargetAudienceSectionBottom()
-//                    }
-//                    itShould("not display both assets") {
-//                        captureScreenWithChecks {
-//                            checkAssetSectionDoesNotDisplayed()
-//                        }
-//                    }
-//                }
+                // TODO Test that both the transition methods to the video and slide assets are hidden.
+
             }
             describe("when the description is lengthy") {
                 doIt {
@@ -144,55 +115,12 @@ class TimetableItemDetailScreenTest {
                 }
             }
         }
+
         // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//        describe("when server is operational available both asset") {
-//            doIt {
-//                setupTimetableServer(ServerStatus.OperationalBothAssetAvailable)
-//            }
-//            describe("when launch") {
-//                doIt {
-//                    setupTimetableItemDetailScreenContent()
-//                    scrollToAssetSection()
-//                }
-//                itShould("display both assets") {
-//                    captureScreenWithChecks {
-//                        checkBothAssetButtonDisplayed()
-//                    }
-//                }
-//            }
-//        }
-//        describe("when server is operational available only slide asset") {
-//            doIt {
-//                setupTimetableServer(ServerStatus.OperationalOnlySlideAssetAvailable)
-//            }
-//            describe("when launch") {
-//                doIt {
-//                    setupTimetableItemDetailScreenContent()
-//                    scrollToAssetSection()
-//                }
-//                itShould("display only slide assets") {
-//                    captureScreenWithChecks {
-//                        checkOnlySlideAssetButtonDisplayed()
-//                    }
-//                }
-//            }
-//        }
-//        describe("when server is operational available only video asset") {
-//            doIt {
-//                setupTimetableServer(ServerStatus.OperationalOnlyVideoAssetAvailable)
-//            }
-//            describe("when launch") {
-//                doIt {
-//                    setupTimetableItemDetailScreenContent()
-//                    scrollToAssetSection()
-//                }
-//                itShould("only display video assets") {
-//                    captureScreenWithChecks {
-//                        checkOnlyVideoAssetButtonDisplayed()
-//                    }
-//                }
-//            }
-//        }
+        // TODO 1. Test that the transition means to both slide and video assets are displayed.
+        // TODO 2. Test that the transition means to slide assets only are displayed.
+        // TODO 3. Test that the transition means to video assets only are displayed.
+
         describe("when server is operational exists message") {
             doIt {
                 setupTimetableServer(ServerStatus.OperationalMessageExists)

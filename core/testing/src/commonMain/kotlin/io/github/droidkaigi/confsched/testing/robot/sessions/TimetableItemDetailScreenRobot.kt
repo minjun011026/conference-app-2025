@@ -75,13 +75,7 @@ class TimetableItemDetailScreenRobot(
     fun setupTimetableItemDetailScreenContentWithLongDescription() = setupTimetableItemDetailScreenContent(TimetableItemId(FakeSessionsApiClient.defaultSessionIdWithLongDescription))
 
     // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    suspend fun clickBookmarkButton() {
-//        composeUiTest
-//            .onNodeWithTag(TimetableItemDetailBookmarkIconTestTag)
-//            .performClick()
-//        waitUntilIdle()
-//    }
+    // TODO Prepare a method to click on bookmarks to test whether they are bookmarked or not.
 
     context(composeUiTest: ComposeUiTest)
     fun scroll() {
@@ -111,6 +105,8 @@ class TimetableItemDetailScreenRobot(
             .performScrollToNode(hasTestTag(DescriptionMoreButtonTestTag))
     }
 
+    // TODO This method is used when UI that needs to be confirmed under the target section is added.
+    // TODO If it is determined that it will not be used after the specifications are finalized, please delete it.
     context(composeUiTest: ComposeUiTest)
     fun scrollToTargetAudienceSectionBottom() {
         composeUiTest
@@ -123,12 +119,8 @@ class TimetableItemDetailScreenRobot(
     }
 
     // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    fun scrollToAssetSection() {
-//        composeUiTest
-//            .onNodeWithTag(TimetableItemDetailScreenLazyColumnTestTag)
-//            .performScrollToNode(hasTestTag(TimetableItemDetailContentArchiveSectionTestTag))
-//    }
+    // TODO Prepare a method to scroll to the asset section, such as slides and videos.
+    // TODO Note that this may not be necessary depending on the design, so if it is not needed, do not implement it and delete this TODO.
 
     context(composeUiTest: ComposeUiTest)
     fun scrollToMessageRow() {
@@ -153,19 +145,7 @@ class TimetableItemDetailScreenRobot(
     }
 
     // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkBookmarkedSession() {
-//        composeUiTest
-//            .onNodeWithTag(TimetableItemDetailBookmarkIconTestTag)
-//            .assertContentDescriptionEquals("Bookmarked")
-//    }
-//
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkUnBookmarkSession() {
-//        composeUiTest
-//            .onNodeWithTag(TimetableItemDetailBookmarkIconTestTag)
-//            .assertContentDescriptionEquals("Not Bookmarked")
-//    }
+    // TODO Please prepare a method to check bookmarked and unbookmarked items.
 
     context(composeUiTest: ComposeUiTest)
     fun checkTargetAudience() {
@@ -207,73 +187,14 @@ class TimetableItemDetailScreenRobot(
     }
 
     // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkBothAssetButtonDisplayed() {
-//        checkSlideAssetButtonDisplayed()
-//        checkVideoAssetButtonDisplayed()
-//    }
-
-    // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkAssetSectionDoesNotDisplayed() {
-//        composeUiTest
-//            .onAllNodesWithTag(TimetableItemDetailContentArchiveSectionTestTag)
-//            .onFirst()
-//            .assertIsNotDisplayed()
-//    }
-
-    // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkOnlySlideAssetButtonDisplayed() {
-//        checkSlideAssetButtonDisplayed()
-//        checkVideoAssetButtonDoesNotDisplayed()
-//    }
-//
-//    context(composeUiTest: ComposeUiTest)
-//    fun checkOnlyVideoAssetButtonDisplayed() {
-//        checkSlideAssetButtonDoesNotDisplayed()
-//        checkVideoAssetButtonDisplayed()
-//    }
-
-    // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    private fun checkSlideAssetButtonDisplayed() {
-//        composeUiTest
-//            .onAllNodesWithTag(TimetableItemDetailContentArchiveSectionSlideButtonTestTag)
-//            .onFirst()
-//            .assertExists()
-//            .assertIsDisplayed()
-//            .assertHasClickAction()
-//    }
-//
-//    context(composeUiTest: ComposeUiTest)
-//    private fun checkVideoAssetButtonDisplayed() {
-//        composeUiTest
-//            .onAllNodesWithTag(TimetableItemDetailContentArchiveSectionVideoButtonTestTag)
-//            .onFirst()
-//            .assertExists()
-//            .assertIsDisplayed()
-//            .assertHasClickAction()
-//    }
-
-    // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
-//    context(composeUiTest: ComposeUiTest)
-//    private fun checkSlideAssetButtonDoesNotDisplayed() {
-//        composeUiTest
-//            .onAllNodesWithTag(TimetableItemDetailContentArchiveSectionSlideButtonTestTag)
-//            .onFirst()
-//            .assertIsNotDisplayed()
-//            .assertDoesNotExist()
-//    }
-//
-//    context(composeUiTest: ComposeUiTest)
-//    private fun checkVideoAssetButtonDoesNotDisplayed() {
-//        composeUiTest
-//            .onAllNodesWithTag(TimetableItemDetailContentArchiveSectionVideoButtonTestTag)
-//            .onFirst()
-//            .assertIsNotDisplayed()
-//            .assertDoesNotExist()
-//    }
+    // TODO Verify that both asset buttons (slide and video) are displayed
+    // TODO Verify that the asset section is not displayed
+    // TODO Verify that only the slide button is displayed and the video button is not
+    // TODO Verify that only the video button is displayed and the slide button is not
+    // TODO Verify that the slide button exists, is displayed, and has a click action
+    // TODO Verify that the video button exists, is displayed, and has a click action
+    // TODO Verify that the slide button is not displayed and does not exist
+    // TODO Verify that the video button is not displayed and does not exist
 
     context(composeUiTest: ComposeUiTest)
     fun checkMessageDisplayed() {
