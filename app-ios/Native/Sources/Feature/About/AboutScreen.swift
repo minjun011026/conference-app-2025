@@ -110,7 +110,7 @@ public struct AboutScreen: View {
                 ) {
                     presenter.codeOfConductTapped()
                     Task {
-                      await safari(URL(string: String(localized: "CodeOfConductURL", bundle: .module))!)
+                        await safari(URL(string: String(localized: "CodeOfConductURL", bundle: .module))!)
                     }
                 }
 
@@ -134,7 +134,7 @@ public struct AboutScreen: View {
                 ) {
                     presenter.privacyPolicyTapped()
                     Task {
-                      await safari(URL(string: String(localized: "PrivacyPolicyURL", bundle: .module))!)
+                        await safari(URL(string: String(localized: "PrivacyPolicyURL", bundle: .module))!)
                     }
                 }
 
