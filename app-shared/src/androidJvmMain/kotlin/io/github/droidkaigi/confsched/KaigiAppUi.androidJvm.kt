@@ -20,7 +20,7 @@ import io.github.droidkaigi.confsched.naventry.profileNavEntry
 import io.github.droidkaigi.confsched.naventry.sessionEntries
 import io.github.droidkaigi.confsched.naventry.sponsorsEntry
 import io.github.droidkaigi.confsched.naventry.staffEntry
-import io.github.droidkaigi.confsched.navigation.extension.safeRemoveLastIfType
+import io.github.droidkaigi.confsched.navigation.extension.safeRemoveLastPreservingRoot
 import io.github.droidkaigi.confsched.navigation.rememberNavBackStack
 import io.github.droidkaigi.confsched.navigation.sceneStrategy
 import io.github.droidkaigi.confsched.navkey.AboutNavKey
@@ -72,7 +72,7 @@ actual fun KaigiAppUi() {
             sceneStrategy = sceneStrategy(),
             entryProvider = entryProvider {
                 sessionEntries(
-                    onBackClick = { backStack.safeRemoveLastIfType<TimetableItemDetailNavKey>() },
+                    onBackClick = { backStack.safeRemoveLastPreservingRoot() },
                     onAddCalendarClick = externalNavController::navigateToCalendarRegistration,
                     onShareClick = externalNavController::onShareClick,
                     onLinkClick = externalNavController::navigate,
@@ -85,15 +85,15 @@ actual fun KaigiAppUi() {
                     },
                 )
                 contributorsEntry(
-                    onBackClick = { backStack.safeRemoveLastIfType<ContributorsNavKey>() },
+                    onBackClick = { backStack.safeRemoveLastPreservingRoot() },
                     onContributorClick = externalNavController::navigate,
                 )
                 sponsorsEntry(
-                    onBackClick = { backStack.safeRemoveLastIfType<SponsorsNavKey>() },
+                    onBackClick = { backStack.safeRemoveLastPreservingRoot() },
                     onSponsorClick = externalNavController::navigate,
                 )
                 staffEntry(
-                    onBackClick = { backStack.safeRemoveLastIfType<StaffNavKey>() },
+                    onBackClick = { backStack.safeRemoveLastPreservingRoot() },
                     onStaffItemClick = externalNavController::navigate,
                 )
                 favoritesEntry(
