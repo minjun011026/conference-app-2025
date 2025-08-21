@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.rememberHazeState
@@ -42,13 +43,33 @@ fun KaigiNavigationScaffold(
             dampingRatio = Spring.DampingRatioLowBouncy,
         ),
     )
-
     val animatedColor by animateColorAsState(
         targetValue = MaterialTheme.colorScheme.primaryFixed,
         label = "animatedColor",
         animationSpec = spring(stiffness = Spring.StiffnessLow),
     )
 
+    KaigiNavigationScaffold(
+        currentTab = currentTab,
+        hazeState = hazeState,
+        onTabSelected = onTabSelected,
+        animatedSelectedTabIndex = animatedSelectedTabIndex,
+        animatedColor = animatedColor,
+        modifier = modifier,
+        content = content,
+    )
+}
+
+@Composable
+private fun KaigiNavigationScaffold(
+    currentTab: MainScreenTab?,
+    hazeState: HazeState,
+    onTabSelected: (MainScreenTab) -> Unit,
+    animatedSelectedTabIndex: Float,
+    animatedColor: Color,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
     Scaffold(
         bottomBar = {
             AnimatedVisibility(currentTab != null) {
