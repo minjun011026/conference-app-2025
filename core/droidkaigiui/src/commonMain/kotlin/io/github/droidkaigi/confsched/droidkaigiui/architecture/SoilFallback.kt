@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
 
 sealed interface SoilFallback {
@@ -18,21 +20,24 @@ sealed interface SoilFallback {
 }
 
 object SoilFallbackDefaults {
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun appBar(
         title: String,
+        colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors().copy(
+            scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+        ),
         onBackClick: (() -> Unit)? = null,
         appBarSize: AppBarSize = AppBarSize.Default,
-        appBarContainerColor: Color = MaterialTheme.colorScheme.surface,
         // Allowing WindowInsets to be overridden to prevent layout jump/glitches
         // when navigating between screens with and without a bottom navigation bar.
         windowInsets: WindowInsets = WindowInsets.safeDrawingWithBottomNavBar,
         contentBackground: (@Composable (innerPadding: PaddingValues) -> Unit)? = null,
     ): SoilFallback = AppBar(
         title = title,
+        colors = colors,
         onBackClick = onBackClick,
         size = appBarSize,
-        containerColor = appBarContainerColor,
         windowInsets = windowInsets,
         contentBackground = contentBackground,
     )
@@ -55,11 +60,12 @@ private object Default : SoilFallback {
         get() = { DefaultErrorFallbackContent() }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 private class AppBar(
     val title: String,
+    val colors: TopAppBarColors,
     val onBackClick: (() -> Unit)?,
     val size: AppBarSize,
-    val containerColor: Color,
     val windowInsets: WindowInsets,
     val contentBackground: (@Composable (innerPadding: PaddingValues) -> Unit)?,
 ) : SoilFallback {
@@ -68,7 +74,7 @@ private class AppBar(
             title = title,
             onBackClick = onBackClick,
             appBarSize = size,
-            appBarContainerColor = containerColor,
+            appBarColors = colors,
             windowInsets = windowInsets,
         ) { innerPadding ->
             contentBackground?.invoke(innerPadding)
@@ -83,7 +89,7 @@ private class AppBar(
             title = title,
             onBackClick = onBackClick,
             appBarSize = size,
-            appBarContainerColor = containerColor,
+            appBarColors = colors,
             windowInsets = windowInsets,
         ) { innerPadding ->
             contentBackground?.invoke(innerPadding)

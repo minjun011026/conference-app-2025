@@ -43,12 +43,10 @@ import androidx.compose.ui.unit.sp
 fun AnimatedTextTopAppBar(
     title: String,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
     onBackClick: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = AnimatedTextTopAppBarDefaults.windowInsets(),
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors().copy(
-        containerColor = containerColor,
         scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
     ),
     textColor: Color = MaterialTheme.colorScheme.onSurface,

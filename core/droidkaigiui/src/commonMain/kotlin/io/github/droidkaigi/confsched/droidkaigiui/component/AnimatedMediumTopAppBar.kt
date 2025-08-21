@@ -44,11 +44,9 @@ fun AnimatedMediumTopAppBar(
     title: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
     actions: @Composable RowScope.() -> Unit = {},
     windowInsets: WindowInsets = AnimatedMediumTopAppBarDefaults.windowInsets(),
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors().copy(
-        containerColor = containerColor,
         scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
     ),
     scrollBehavior: TopAppBarScrollBehavior? = null,
