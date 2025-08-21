@@ -46,7 +46,6 @@ import io.github.droidkaigi.confsched.sessions.grid.TimetableGridUiState
 import io.github.droidkaigi.confsched.sessions.section.TimetableListUiState
 import io.github.droidkaigi.confsched.sessions.section.TimetableUiState
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.datetime.LocalTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -199,14 +198,11 @@ private fun TimetableScreenPreview_List() {
                     timetableListUiStates = mapOf(
                         DroidKaigi2025Day.ConferenceDay1 to TimetableListUiState(
                             timetableItemMap = persistentMapOf(
-                                TimetableListUiState.TimeSlot(
-                                    startTime = LocalTime.parse("10:00"),
-                                    endTime = LocalTime.parse("11:00"),
-                                ) to listOf(
-                                    TimetableItem.Session.fake(),
-                                ),
+                                *TimetableListUiState.TimeSlot.fakes().map { slot ->
+                                    slot to listOf(TimetableItem.Session.fake())
+                                }.toTypedArray(),
                             ),
-                            Timetable.fake(),
+                            timetable = Timetable.fake(),
                         ),
                         DroidKaigi2025Day.ConferenceDay2 to TimetableListUiState(
                             persistentMapOf(),
