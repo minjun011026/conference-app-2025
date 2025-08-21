@@ -100,6 +100,7 @@ private fun TimetableItemDetailFloatingActionButtonMenu(
     }
 
     val roomTheme = LocalRoomTheme.current
+    // TODO: This color is temporary. We should define a proper color once the official Figma definitions are available.
     val menuItemContainerColor = roomTheme.primaryColor.copy(alpha = 0.5f).compositeOver(Color.Black)
     FloatingActionButtonMenu(
         expanded = expanded,
