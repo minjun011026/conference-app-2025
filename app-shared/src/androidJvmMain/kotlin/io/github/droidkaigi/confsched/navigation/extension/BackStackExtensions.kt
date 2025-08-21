@@ -34,7 +34,7 @@ val mainTabNavKeys = MainScreenTab.entries.map { it.navKey }.toSet()
  */
 fun SnapshotStateList<NavKey>.safeRemoveLastPreservingRoot(): NavKey? {
     val isRootNavKey = lastOrNull() in mainTabNavKeys
-    
+
     return if (size > 1 && !isRootNavKey) {
         removeLastOrNull()
     } else {
