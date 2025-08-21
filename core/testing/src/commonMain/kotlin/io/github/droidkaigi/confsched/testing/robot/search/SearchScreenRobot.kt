@@ -74,10 +74,10 @@ class SearchScreenRobot(
     }
 
     enum class SessionType(
-        val typeName: String,
+        val label: String,
     ) {
-        WelcomeTalk("WELCOME_TALK"),
-        Normal("Normal"),
+        WelcomeTalk("Welcome Talk"),
+        Normal("Session"),
     }
 
     enum class Language(
@@ -203,7 +203,7 @@ class SearchScreenRobot(
                 testTag = DropdownFilterChipTestTagPrefix,
                 substring = true,
             )
-            .filter(matcher = hasText(sessionType.typeName))
+            .filter(matcher = hasText(sessionType.label))
             .onFirst()
             .performClick()
         waitUntilIdle()
@@ -300,6 +300,19 @@ class SearchScreenRobot(
                 value = containText,
                 substring = true,
             )
+        waitUntilIdle()
+    }
+
+    context(composeUiTest: ComposeUiTest)
+    fun checkTimetableListItemBySessionType(
+        sessionType: SessionType,
+    ) {
+        composeUiTest
+            .onAllNodesWithTag(TimetableItemCardTestTag)
+            .onFirst()
+            .assertSemanticsProperty(SemanticsProperties.TimetableItemCard) { item ->
+                item?.sessionType?.label?.enTitle == sessionType.label
+            }
         waitUntilIdle()
     }
 

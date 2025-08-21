@@ -113,7 +113,32 @@ class SearchScreenTest {
                         }
                     }
                 }
-                // TODO add session type filter chip test
+                describe("when filter session type chip click") {
+                    doIt {
+                        clickFilterSessionTypeChip()
+                    }
+                    itShould("show drop down menu") {
+                        captureScreenWithChecks {
+                            checkDisplayedFilterSessionTypeChip()
+                        }
+                    }
+                    SearchScreenRobot.SessionType.entries.forEach { sessionType ->
+                        describe("when click ${sessionType.name}") {
+                            doIt {
+                                clickSessionType(
+                                    sessionType = sessionType,
+                                )
+                            }
+                            itShould("selected ${sessionType.name}") {
+                                captureScreenWithChecks {
+                                    checkTimetableListItemBySessionType(sessionType)
+                                    checkTimetableListDisplayed()
+                                    checkTimetableListItemsDisplayed()
+                                }
+                            }
+                        }
+                    }
+                }
                 describe("when filter language chip click") {
                     doIt {
                         scrollToFilterLanguageChip()
