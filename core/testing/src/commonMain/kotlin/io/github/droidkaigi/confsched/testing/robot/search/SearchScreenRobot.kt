@@ -88,7 +88,7 @@ class SearchScreenRobot(
     }
 
     context(composeUiTest: ComposeUiTest)
-    fun setupTimetableScreenContent() {
+    fun setupSearchScreenContent() {
         composeUiTest.setContent {
             with(screenContext) {
                 TestDefaultsProvider(testDispatcher) {

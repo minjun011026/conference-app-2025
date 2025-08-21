@@ -29,7 +29,7 @@ class SearchScreenTest {
         describe("when server is operational") {
             doIt {
                 setupTimetableServer(ServerStatus.Operational)
-                setupTimetableScreenContent()
+                setupSearchScreenContent()
             }
             itShould("show loading indicator") {
                 captureScreenWithChecks {
@@ -171,7 +171,7 @@ class SearchScreenTest {
         describe("when server is error") {
             doIt {
                 setupTimetableServer(ServerStatus.Error)
-                setupTimetableScreenContent()
+                setupSearchScreenContent()
             }
             itShould("show loading indicator") {
                 captureScreenWithChecks {
