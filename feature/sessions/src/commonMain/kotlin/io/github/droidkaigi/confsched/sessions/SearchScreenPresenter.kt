@@ -53,11 +53,6 @@ fun searchScreenPresenter(
             }
             is SearchScreenEvent.Bookmark -> {
                 val targetId = TimetableItemId(event.sessionId)
-                if (timetable.bookmarks.contains(targetId)) {
-                    timetable.bookmarks.remove(targetId)
-                } else {
-                    timetable.bookmarks.add(targetId)
-                }
                 favoriteTimetableItemIdMutation.mutate(targetId)
             }
             SearchScreenEvent.ClearFilters -> {
