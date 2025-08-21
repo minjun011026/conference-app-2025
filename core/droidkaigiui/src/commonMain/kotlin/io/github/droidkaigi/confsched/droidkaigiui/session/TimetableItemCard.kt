@@ -33,6 +33,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.SemanticsPropertyKey
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -52,6 +56,15 @@ import io.github.droidkaigi.confsched.model.sessions.fake
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+const val TimetableItemCardTestTag = "TimetableListItem"
+
+const val TimetableItemCardTitleTextTestTag = "TimetableItemCardTitleText"
+
+private val timetableItemCardSemanticsKey = SemanticsPropertyKey<TimetableItem>("TimetableItem")
+
+@Suppress("UnusedReceiverParameter")
+val SemanticsProperties.TimetableItemCard get() = timetableItemCardSemanticsKey
+
 @Composable
 fun TimetableItemCard(
     timetableItem: TimetableItem,
@@ -68,6 +81,10 @@ fun TimetableItemCard(
         Row(
             verticalAlignment = Alignment.Top,
             modifier = modifier
+                .testTag(TimetableItemCardTestTag)
+                .semantics {
+                    this[SemanticsProperties.TimetableItemCard] = timetableItem
+                }
                 .clip(RoundedCornerShape(16.dp))
                 .clickable { onTimetableItemClick() }
                 .background(Color.Transparent)
@@ -209,6 +226,7 @@ private fun TimetableItemTitle(
     }
 
     Text(
+        modifier = Modifier.testTag(TimetableItemCardTitleTextTestTag),
         text = highlightedTitle,
         style = MaterialTheme.typography.titleLarge,
     )

@@ -42,6 +42,8 @@ kotlin {
             implementation(libs.lifecycleRuntimeCompose)
             implementation(libs.androidxDatastorePreferencesCore)
             implementation(libs.material3)
+
+            implementation(kotlin("test"))
         }
 
         androidMain.dependencies {

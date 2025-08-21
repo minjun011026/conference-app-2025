@@ -6,6 +6,8 @@ import io.github.droidkaigi.confsched.testing.annotations.RunWith
 import io.github.droidkaigi.confsched.testing.annotations.UiTestRunner
 import io.github.droidkaigi.confsched.testing.behavior.describeBehaviors
 import io.github.droidkaigi.confsched.testing.behavior.execute
+import io.github.droidkaigi.confsched.testing.di.createSearchScreenTestGraph
+import io.github.droidkaigi.confsched.testing.robot.search.SearchScreenRobot
 import io.github.droidkaigi.confsched.testing.robot.sessions.TimetableServerRobot.ServerStatus
 
 @RunWith(UiTestRunner::class)
@@ -16,7 +18,7 @@ class SearchScreenTest {
     @ComposeTest
     fun runTest() {
         describedBehaviors.forEach { behavior ->
-            val robot = testAppGraph.timetableScreenRobotProvider()
+            val robot = testAppGraph.searchScreenRobotProvider()
             runComposeUiTest {
                 behavior.execute(robot)
             }
