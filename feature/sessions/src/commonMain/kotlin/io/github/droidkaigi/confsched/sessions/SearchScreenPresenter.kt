@@ -30,7 +30,6 @@ fun searchScreenPresenter(
     var selectedCategory by rememberRetained { mutableStateOf<TimetableCategory?>(null) }
     var selectedSessionType by rememberRetained { mutableStateOf<TimetableSessionType?>(null) }
     var selectedLanguage by rememberRetained { mutableStateOf<Lang?>(null) }
-    var selectedBookmarks by rememberRetained { mutableStateOf(timetable.bookmarks) }
     val favoriteTimetableItemIdMutation = rememberMutation(screenContext.favoriteTimetableItemIdMutationKey)
 
     EventEffect(eventFlow) { event ->
@@ -54,12 +53,11 @@ fun searchScreenPresenter(
             }
             is SearchScreenEvent.Bookmark -> {
                 val targetId = TimetableItemId(event.sessionId)
-                val newBookmarks = if (selectedBookmarks.contains(targetId)) {
-                    selectedBookmarks.remove(targetId)
+                if (timetable.bookmarks.contains(targetId)) {
+                    timetable.bookmarks.remove(targetId)
                 } else {
-                    selectedBookmarks.add(targetId)
+                    timetable.bookmarks.add(targetId)
                 }
-                selectedBookmarks = newBookmarks
                 favoriteTimetableItemIdMutation.mutate(targetId)
             }
             SearchScreenEvent.ClearFilters -> {
@@ -119,6 +117,6 @@ fun searchScreenPresenter(
             availableLanguages = listOf(Lang.JAPANESE, Lang.ENGLISH),
         ),
         hasSearchCriteria = hasSearchCriteria,
-        bookmarks = selectedBookmarks,
+        bookmarks = timetable.bookmarks,
     )
 }
