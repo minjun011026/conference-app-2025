@@ -40,6 +40,107 @@ class SearchScreenTest {
                 doIt {
                     waitFor5Seconds()
                 }
+                itShould("no timetable items are displayed") {
+                    captureScreenWithChecks {
+                        checkTimetableListNotDisplayed()
+                        checkTimetableListItemsNotDisplayed()
+                    }
+                }
+                describe("input search word to TextField") {
+                    doIt {
+                        inputDemoSearchWord()
+                    }
+                    itShould("show search word and filtered items") {
+                        captureScreenWithChecks {
+                            checkDemoSearchWordDisplayed()
+                            checkTimetableListItemsHasDemoText()
+                            checkTimetableListDisplayed()
+                            checkTimetableListItemsDisplayed()
+                        }
+                    }
+                }
+                describe("when filter day chip click") {
+                    doIt {
+                        clickFilterDayChip()
+                    }
+                    itShould("show drop down menu") {
+                        captureScreenWithChecks {
+                            checkDisplayedFilterDayChip()
+                        }
+                    }
+                    SearchScreenRobot.ConferenceDay.entries.forEach { conference ->
+                        describe("when click ${conference.day}") {
+                            doIt {
+                                clickConferenceDay(
+                                    clickDay = conference,
+                                )
+                            }
+                            itShould("selected ${conference.day}") {
+                                captureScreenWithChecks {
+                                    checkTimetableListItemByConferenceDay(
+                                        checkDay = conference,
+                                    )
+                                    checkTimetableListDisplayed()
+                                    checkTimetableListItemsDisplayed()
+                                }
+                            }
+                        }
+                    }
+                }
+                describe("when filter category chip click") {
+                    doIt {
+                        clickFilterCategoryChip()
+                    }
+                    itShould("show drop down menu") {
+                        captureScreenWithChecks {
+                            checkDisplayedFilterCategoryChip()
+                        }
+                    }
+                    SearchScreenRobot.Category.entries.forEach { category ->
+                        describe("when click ${category.categoryName}") {
+                            doIt {
+                                clickCategory(
+                                    category = category,
+                                )
+                            }
+                            itShould("selected ${category.categoryName}") {
+                                captureScreenWithChecks {
+                                    checkTimetableListItemByCategory(category)
+                                    checkTimetableListDisplayed()
+                                    checkTimetableListItemsDisplayed()
+                                }
+                            }
+                        }
+                    }
+                }
+                // TODO add session type filter chip test
+                describe("when filter language chip click") {
+                    doIt {
+                        scrollToFilterLanguageChip()
+                        clickFilterLanguageChip()
+                    }
+                    itShould("show drop down menu") {
+                        captureScreenWithChecks {
+                            checkDisplayedFilterLanguageChip()
+                        }
+                    }
+                    SearchScreenRobot.Language.entries.forEach { language ->
+                        describe("when click ${language.name}") {
+                            doIt {
+                                clickLanguage(
+                                    language = language,
+                                )
+                            }
+                            itShould("selected ${language.name}") {
+                                captureScreenWithChecks {
+                                    checkTimetableListItemByLanguage(language)
+                                    checkTimetableListDisplayed()
+                                    checkTimetableListItemsDisplayed()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         describe("when server is error") {

@@ -60,8 +60,8 @@ class SearchScreenRobot(
         val day: Int,
         val dateText: String,
     ) {
-        Day1(1, "9/12"),
-        Day2(2, "9/13"),
+        Day1(1, "9.11"),
+        Day2(2, "9.12"),
     }
 
     enum class Category(
@@ -75,14 +75,13 @@ class SearchScreenRobot(
     enum class SessionType(
         val typeName: String,
     ) {
-        WelcomeTalk("WelcomeTalk"),
+        WelcomeTalk("WELCOME_TALK"),
         Normal("Normal"),
     }
 
     enum class Language(
         val tagName: String,
     ) {
-        Mixed("MIXED"),
         Japanese("JA"),
         English("EN"),
     }
@@ -213,7 +212,7 @@ class SearchScreenRobot(
                 testTag = DropdownFilterChipTestTagPrefix,
                 substring = true,
             )
-            .filter(matcher = hasText(language.tagName))
+            .filter(matcher = hasText(language.tagName, ignoreCase = true, substring = true))
             .onFirst()
             .performClick()
         waitUntilIdle()
@@ -344,10 +343,10 @@ class SearchScreenRobot(
     }
 
     context(composeUiTest: ComposeUiTest)
-    fun checkTimetableListExists() {
+    fun checkTimetableListNotDisplayed() {
         composeUiTest
             .onNodeWithTag(TimetableListTestTag)
-            .assertExists()
+            .assertIsNotDisplayed()
     }
 
     context(composeUiTest: ComposeUiTest)

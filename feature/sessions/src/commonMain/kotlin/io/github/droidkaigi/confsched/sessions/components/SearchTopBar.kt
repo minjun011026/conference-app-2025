@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 
-const val SearchTopBarTextFieldTestTag = "SearchTopBarTextFieldTest"
+const val SearchTopBarTextFieldTestTag = "SearchTopBarTextFieldTestTag"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
