@@ -39,7 +39,7 @@ fun Modifier.glassEffect(hazeState: HazeState): Modifier = then(
         )
     } else {
         Modifier.background(MaterialTheme.colorScheme.background.copy(alpha = .95f))
-    }
+    },
 )
 
 fun DrawScope.drawSelectedTabCircle(
