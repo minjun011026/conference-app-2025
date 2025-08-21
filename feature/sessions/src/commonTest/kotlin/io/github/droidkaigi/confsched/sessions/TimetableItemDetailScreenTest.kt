@@ -59,7 +59,6 @@ class TimetableItemDetailScreenTest {
 
                 // TODO https://github.com/DroidKaigi/conference-app-2025/issues/218
                 // TODO Test that both the transition methods to the video and slide assets are hidden.
-
             }
             describe("when the description is lengthy") {
                 doIt {
