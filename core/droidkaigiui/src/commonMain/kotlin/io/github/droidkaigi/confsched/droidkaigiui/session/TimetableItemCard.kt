@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
@@ -51,6 +52,9 @@ import io.github.droidkaigi.confsched.model.sessions.TimetableSpeaker
 import io.github.droidkaigi.confsched.model.sessions.fake
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+const val TimetableItemCardTestTag = "TimetableItemCard"
+const val TimetableItemCardBookmarkButtonTestTag = "TimetableItemCardBookmarkButton"
 
 @Composable
 fun TimetableItemCard(
@@ -77,7 +81,8 @@ fun TimetableItemCard(
                     top = TimetableItemCardDefaults.tagRowTopPadding,
                     bottom = TimetableItemCardDefaults.contentPadding,
                     start = TimetableItemCardDefaults.contentPadding,
-                ),
+                )
+                .testTag(TimetableItemCardTestTag),
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -219,7 +224,11 @@ private fun FavoriteButton(
     isBookmarked: Boolean,
     onClick: () -> Unit,
 ) {
-    TextButton(onClick) {
+    TextButton(
+        onClick = onClick,
+        modifier = Modifier
+            .testTag(TimetableItemCardBookmarkButtonTestTag),
+    ) {
         if (isBookmarked) {
             Icon(
                 Icons.Filled.Favorite,
