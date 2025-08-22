@@ -53,6 +53,8 @@ internal interface IosTestAppGraph : TestAppGraph {
     @Binds
     val DefaultFavoriteTimetableItemIdMutationKey.bind: FavoriteTimetableItemIdMutationKey
 
+    // TODO Add Subscription and MutationKey here when implementing the SettingsScreen test.
+
     @Binds
     val DefaultContributorsQueryKey.bind: ContributorsQueryKey
 
