@@ -55,10 +55,9 @@ import io.github.droidkaigi.confsched.model.sessions.fake
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-const val TimetableItemCardTestTag = "TimetableListItem"
-
+const val TimetableItemCardTestTag = "TimetableItemCard"
 const val TimetableItemCardTitleTextTestTag = "TimetableItemCardTitleText"
-
+const val TimetableItemCardBookmarkButtonTestTag = "TimetableItemCardBookmarkButton"
 val TimetableItemCardSemanticsKey = SemanticsPropertyKey<TimetableItem>("TimetableItem")
 
 @Composable
@@ -90,7 +89,8 @@ fun TimetableItemCard(
                     top = TimetableItemCardDefaults.tagRowTopPadding,
                     bottom = TimetableItemCardDefaults.contentPadding,
                     start = TimetableItemCardDefaults.contentPadding,
-                ),
+                )
+                .testTag(TimetableItemCardTestTag),
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -233,7 +233,11 @@ private fun FavoriteButton(
     isBookmarked: Boolean,
     onClick: () -> Unit,
 ) {
-    TextButton(onClick) {
+    TextButton(
+        onClick = onClick,
+        modifier = Modifier
+            .testTag(TimetableItemCardBookmarkButtonTestTag),
+    ) {
         if (isBookmarked) {
             Icon(
                 Icons.Filled.Favorite,
