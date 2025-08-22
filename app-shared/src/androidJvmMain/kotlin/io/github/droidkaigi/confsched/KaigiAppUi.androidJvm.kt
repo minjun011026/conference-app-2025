@@ -18,6 +18,7 @@ import io.github.droidkaigi.confsched.naventry.eventMapEntry
 import io.github.droidkaigi.confsched.naventry.favoritesEntry
 import io.github.droidkaigi.confsched.naventry.profileNavEntry
 import io.github.droidkaigi.confsched.naventry.sessionEntries
+import io.github.droidkaigi.confsched.naventry.settingsEntry
 import io.github.droidkaigi.confsched.naventry.sponsorsEntry
 import io.github.droidkaigi.confsched.naventry.staffEntry
 import io.github.droidkaigi.confsched.navigation.rememberNavBackStack
@@ -29,6 +30,7 @@ import io.github.droidkaigi.confsched.navkey.FavoritesNavKey
 import io.github.droidkaigi.confsched.navkey.LicensesNavKey
 import io.github.droidkaigi.confsched.navkey.ProfileNavKey
 import io.github.droidkaigi.confsched.navkey.SearchNavKey
+import io.github.droidkaigi.confsched.navkey.SettingsNavKey
 import io.github.droidkaigi.confsched.navkey.SponsorsNavKey
 import io.github.droidkaigi.confsched.navkey.StaffNavKey
 import io.github.droidkaigi.confsched.navkey.TimetableItemDetailNavKey
@@ -95,6 +97,9 @@ actual fun KaigiAppUi() {
                     onBackClick = { backStack.removeLastOrNull() },
                     onStaffItemClick = externalNavController::navigate,
                 )
+                settingsEntry(
+                    onBackClick = { backStack.removeLastOrNull() },
+                )
                 favoritesEntry(
                     onTimetableItemClick = {
                         if (backStack.lastOrNull() is TimetableItemDetailNavKey) {
@@ -137,7 +142,7 @@ actual fun KaigiAppUi() {
                                 )
                             }
 
-                            AboutItem.Settings -> TODO()
+                            AboutItem.Settings -> backStack.add(SettingsNavKey)
                             AboutItem.Youtube -> {
                                 externalNavController.navigate(
                                     url = "https://www.youtube.com/c/DroidKaigi",
