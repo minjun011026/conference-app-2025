@@ -123,4 +123,10 @@ class FavoritesScreenRobot(
                 )
             }
     }
+
+    context(composeUiTest: ComposeUiTest)
+    suspend fun clearFavorites() {
+        userDataStore.clearFavorites()
+        waitUntilIdle()
+    }
 }

@@ -37,6 +37,8 @@ class FavoritesScreenTest {
             }
             describe("with single favorite session") {
                 doIt {
+                    // Clear favorites is required because the same UserDataStore instance is used throughout the test class
+                    clearFavorites()
                     setupSingleFavoriteSession()
                 }
                 itShould("display single favorite session") {
@@ -46,8 +48,6 @@ class FavoritesScreenTest {
                 }
                 describe("click first session bookmark") {
                     doIt {
-                        // TODO: UserDataStore data cannot be inherited, so definition is also required here
-                        setupSingleFavoriteSession()
                         clickFirstSessionBookmark()
                     }
                     itShould("display empty view") {
@@ -59,6 +59,8 @@ class FavoritesScreenTest {
             }
             describe("with many favorite sessions") {
                 doIt {
+                    // Clear favorites is required because the same UserDataStore instance is used throughout the test class
+                    clearFavorites()
                     setupFavoriteSessions()
                 }
                 itShould("display multiple favorite sessions") {
@@ -68,8 +70,6 @@ class FavoritesScreenTest {
                 }
                 describe("click first session bookmark") {
                     doIt {
-                        // TODO: UserDataStore data cannot be inherited, so definition is also required here
-                        setupFavoriteSessions()
                         clickFirstSessionBookmark()
                     }
                     itShould("display remaining favorite sessions") {
@@ -80,8 +80,6 @@ class FavoritesScreenTest {
                 }
                 describe("scroll to see more sessions") {
                     doIt {
-                        // TODO: UserDataStore data cannot be inherited, so definition is also required here
-                        setupFavoriteSessions()
                         scrollFavorites()
                     }
                     itShould("display scrolled content") {
