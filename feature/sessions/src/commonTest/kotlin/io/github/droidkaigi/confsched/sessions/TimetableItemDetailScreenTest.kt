@@ -104,46 +104,38 @@ class TimetableItemDetailScreenTest {
                 doIt {
                     setFontScale(2.0f)
                     setupTimetableItemDetailScreenContent()
+                    scrollLazyColumnByTestTag(SummaryCardTextTag.plus("Date/Time"))
                 }
-                describe("when scroll to top of SummaryCard") {
-                    doIt {
-                        scrollLazyColumnByTestTag(SummaryCardTextTag.plus("Date/Time"))
-                    }
-                    itShould("show huge font session detail") {
-                        captureScreenWithChecks(
-                            checks = {
-                                checkSummaryCardTexts(
-                                    titles = listOf(
-                                        "Date/Time",
-                                    ),
-                                )
-                            },
-                        )
-                    }
+                itShould("show huge font session detail(top)") {
+                    captureScreenWithChecks(
+                        checks = {
+                            checkSummaryCardTexts(
+                                titles = listOf(
+                                    "Date/Time",
+                                ),
+                            )
+                        },
+                    )
                 }
             }
             describe("when font scale is huge") {
                 doIt {
                     setFontScale(2.0f)
                     setupTimetableItemDetailScreenContent()
+                    scrollLazyColumnByTestTag(SummaryCardTextTag.plus("Category"))
                 }
-                describe("when scroll to bottom of SummaryCard") {
-                    doIt {
-                        scrollLazyColumnByTestTag(SummaryCardTextTag.plus("Category"))
-                    }
-                    itShould("show huge font session detail") {
-                        captureScreenWithChecks(
-                            checks = {
-                                checkSummaryCardTexts(
-                                    titles = listOf(
-                                        "Location",
-                                        "Supported Languages",
-                                        "Category",
-                                    ),
-                                )
-                            },
-                        )
-                    }
+                itShould("show huge font session detail(bottom)") {
+                    captureScreenWithChecks(
+                        checks = {
+                            checkSummaryCardTexts(
+                                titles = listOf(
+                                    "Location",
+                                    "Supported Languages",
+                                    "Category",
+                                ),
+                            )
+                        },
+                    )
                 }
             }
         }
