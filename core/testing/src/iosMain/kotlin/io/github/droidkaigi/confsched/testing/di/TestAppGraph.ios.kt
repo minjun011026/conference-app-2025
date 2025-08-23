@@ -16,6 +16,8 @@ import io.github.droidkaigi.confsched.data.eventmap.DefaultEventMapApiClient
 import io.github.droidkaigi.confsched.data.eventmap.DefaultEventMapQueryKey
 import io.github.droidkaigi.confsched.data.sessions.DefaultSessionsApiClient
 import io.github.droidkaigi.confsched.data.sessions.DefaultTimetableQueryKey
+import io.github.droidkaigi.confsched.data.settings.DefaultSettingsMutationKey
+import io.github.droidkaigi.confsched.data.settings.DefaultSettingsSubscriptionKey
 import io.github.droidkaigi.confsched.data.staff.DefaultStaffApiClient
 import io.github.droidkaigi.confsched.data.staff.DefaultStaffQueryKey
 import io.github.droidkaigi.confsched.data.user.DefaultFavoriteTimetableIdsSubscriptionKey
@@ -25,6 +27,8 @@ import io.github.droidkaigi.confsched.model.data.FavoriteTimetableIdsSubscriptio
 import io.github.droidkaigi.confsched.model.data.FavoriteTimetableItemIdMutationKey
 import io.github.droidkaigi.confsched.model.data.TimetableQueryKey
 import io.github.droidkaigi.confsched.model.eventmap.EventMapQueryKey
+import io.github.droidkaigi.confsched.model.settings.SettingsMutationKey
+import io.github.droidkaigi.confsched.model.settings.SettingsSubscriptionKey
 import io.github.droidkaigi.confsched.model.staff.StaffQueryKey
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineDispatcher
@@ -59,7 +63,11 @@ internal interface IosTestAppGraph : TestAppGraph {
     @Binds
     val DefaultFavoriteTimetableItemIdMutationKey.bind: FavoriteTimetableItemIdMutationKey
 
-    // TODO Add Subscription and MutationKey here when implementing the SettingsScreen test.
+    @Binds
+    val DefaultSettingsSubscriptionKey.bind: SettingsSubscriptionKey
+
+    @Binds
+    val DefaultSettingsMutationKey.bind: SettingsMutationKey
 
     @Binds
     val DefaultContributorsQueryKey.bind: ContributorsQueryKey
