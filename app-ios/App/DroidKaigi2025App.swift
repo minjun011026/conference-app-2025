@@ -7,30 +7,31 @@
 
 import Root
 import SwiftUI
+import Theme
 
 @main
 struct DroidKaigi2025App: App {
     init() {
-        let nav = UINavigationBarAppearance()
-        nav.configureWithTransparentBackground()
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
 
-        let inlineBase = UIFont(name: "Chango-Regular", size: 20) ?? .systemFont(ofSize: 20, weight: .bold)
-        let largeBase  = UIFont(name: "Chango-Regular", size: 34) ?? .systemFont(ofSize: 34, weight: .bold)
+        let inlineBase = UIFont(name: changoFontName, size: 20) ?? .systemFont(ofSize: 20)
+        let titleBase  = UIFont(name: changoFontName, size: 28) ?? .systemFont(ofSize: 28)
 
         let inlineFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: inlineBase)
-        let largeFont  = UIFontMetrics(forTextStyle: .largeTitle).scaledFont(for: largeBase)
+        let titleFont  = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBase)
 
-        nav.titleTextAttributes = [
+        appearance.titleTextAttributes = [
             .font: inlineFont,
         ]
-        nav.largeTitleTextAttributes = [
-            .font: largeFont,
+        appearance.largeTitleTextAttributes = [
+            .font: titleFont,
         ]
 
         let bar = UINavigationBar.appearance()
-        bar.standardAppearance = nav
-        bar.compactAppearance = nav
-        bar.scrollEdgeAppearance = nav
+        bar.standardAppearance = appearance
+        bar.compactAppearance = appearance
+        bar.scrollEdgeAppearance = appearance
     }
 
     var body: some Scene {
