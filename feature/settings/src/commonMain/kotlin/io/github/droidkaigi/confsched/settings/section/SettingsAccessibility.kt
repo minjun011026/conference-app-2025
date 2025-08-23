@@ -6,6 +6,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.theme.changoFontFamily
@@ -22,7 +23,9 @@ import io.github.droidkaigi.confsched.settings.section_title_accessibility
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-// TODO Define TestTag
+const val SettingsAccessibilityUseFontFamilySettingsItemRowTestTag = "SettingsAccessibilityUseFontFamilySettingsItemRowTestTag"
+const val SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix =
+    "SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix:"
 
 fun LazyListScope.accessibility(
     modifier: Modifier = Modifier,
@@ -37,9 +40,8 @@ fun LazyListScope.accessibility(
         )
     }
     item {
-        // TODO Add TestTag
         SettingsItemRow(
-            modifier = modifier,
+            modifier = modifier.testTag(SettingsAccessibilityUseFontFamilySettingsItemRowTestTag),
             leadingIcon = vectorResource(SettingsRes.drawable.ic_brand_family),
             itemName = stringResource(SettingsRes.string.section_item_title_font),
             currentValue = uiState.useKaigiFontFamily.displayName,
@@ -52,7 +54,10 @@ fun LazyListScope.accessibility(
                         KaigiFontFamily.SystemDefault -> FontFamily.Default
                     }
                     SelectableItemColumn(
-                        // TODO Add TestTag
+                        modifier = Modifier.testTag(
+                            SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix
+                                .plus(fontFamily.displayName),
+                        ),
                         fontFamily = itemFont,
                         currentValue = fontFamily.displayName,
                         onClickItem = {
