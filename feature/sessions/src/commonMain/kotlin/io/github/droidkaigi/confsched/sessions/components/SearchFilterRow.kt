@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.sessions.SearchScreenEvent
 import io.github.droidkaigi.confsched.sessions.SearchScreenUiState
@@ -32,6 +33,14 @@ import io.github.droidkaigi.confsched.sessions.filter_chip_day
 import io.github.droidkaigi.confsched.sessions.filter_chip_session_type
 import io.github.droidkaigi.confsched.sessions.filter_chip_supported_language
 import org.jetbrains.compose.resources.stringResource
+
+const val SearchFilterRowTestTag = "SearchFilterRowTestTag"
+const val SearchFilterRowFilterDayChipTestTag = "SearchFilterRowFilterDayChipTestTag"
+const val SearchFilterRowFilterCategoryChipTestTag = "SearchFilterRowFilterCategoryChipTestTag"
+const val SearchFilterRowFilterSessionTypeChipTestTag = "SearchFilterRowFilterSessionTypeChipTestTag"
+const val SearchFilterRowFilterLanguageChipTestTag = "SearchFilterRowFilterLanguageChipTestTag"
+
+const val DropdownFilterChipTestTagPrefix = "DropdownFilterChipTestTag:"
 
 @Composable
 fun SearchFilterRow(
@@ -44,7 +53,8 @@ fun SearchFilterRow(
     Row(
         modifier = modifier
             .horizontalScroll(scrollState)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .testTag(SearchFilterRowTestTag),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         // Day filter dropdown
@@ -57,7 +67,7 @@ fun SearchFilterRow(
                 onItemSelected = { day ->
                     onFilterToggle(SearchScreenEvent.Filter.Day(day))
                 },
-                modifier = Modifier,
+                modifier = Modifier.testTag(SearchFilterRowFilterDayChipTestTag),
             )
         }
 
@@ -71,7 +81,7 @@ fun SearchFilterRow(
                 onItemSelected = { category ->
                     onFilterToggle(SearchScreenEvent.Filter.Category(category))
                 },
-                modifier = Modifier,
+                modifier = Modifier.testTag(SearchFilterRowFilterCategoryChipTestTag),
             )
         }
 
@@ -85,7 +95,7 @@ fun SearchFilterRow(
                 onItemSelected = { sessionType ->
                     onFilterToggle(SearchScreenEvent.Filter.SessionType(sessionType))
                 },
-                modifier = Modifier,
+                modifier = Modifier.testTag(SearchFilterRowFilterSessionTypeChipTestTag),
             )
         }
 
@@ -99,7 +109,7 @@ fun SearchFilterRow(
                 onItemSelected = { language ->
                     onFilterToggle(SearchScreenEvent.Filter.Language(language))
                 },
-                modifier = Modifier,
+                modifier = Modifier.testTag(SearchFilterRowFilterLanguageChipTestTag),
             )
         }
     }
@@ -158,6 +168,7 @@ private fun <T> FilterDropdown(
         ) {
             items.forEach { item ->
                 DropdownMenuItem(
+                    modifier = Modifier.testTag(DropdownFilterChipTestTagPrefix.plus(item)),
                     text = { Text(itemLabel(item)) },
                     onClick = {
                         onItemSelected(item)
