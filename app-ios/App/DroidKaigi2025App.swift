@@ -11,12 +11,15 @@ import Theme
 
 @main
 struct DroidKaigi2025App: App {
+    private let inlineTitleFontSize: CGFloat = 20
+    private let titleFontSize: CGFloat = 28
+
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
 
-        let inlineTitleBase = UIFont(name: changoFontName, size: 20) ?? .systemFont(ofSize: 20)
-        let titleBase  = UIFont(name: changoFontName, size: 28) ?? .systemFont(ofSize: 28)
+        let inlineTitleBase = UIFont(name: changoFontName, size: inlineTitleFontSize) ?? .systemFont(ofSize: inlineTitleFontSize)
+        let titleBase  = UIFont(name: changoFontName, size: titleFontSize) ?? .systemFont(ofSize: titleFontSize)
 
         let inlineTitleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: inlineTitleBase)
         let titleFont  = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBase)
