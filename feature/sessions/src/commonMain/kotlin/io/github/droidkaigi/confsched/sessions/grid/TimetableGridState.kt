@@ -289,7 +289,7 @@ private fun TimetableItem.toLayout(
         )
         dayStartLocalTime.toInstant(timeZone)
     }
-    val displayEndsAt = endsAt.minus(1, DateTimeUnit.MINUTE)
+    val displayEndsAt = endsAt
     val height =
         ((displayEndsAt - startsAt).inWholeMinutes * minutePx).roundToInt()
     val width = with(density) { TimetableGridDefaults.columnWidth.roundToPx() }
