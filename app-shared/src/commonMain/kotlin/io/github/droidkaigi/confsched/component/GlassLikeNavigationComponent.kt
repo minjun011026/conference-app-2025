@@ -1,4 +1,4 @@
-package io.github.droidkaigi.confsched.component.glass
+package io.github.droidkaigi.confsched.component
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -25,7 +25,6 @@ import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeEffect
 import io.github.droidkaigi.confsched.common.graphics.isBlurSupported
-import io.github.droidkaigi.confsched.component.MainScreenTab
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
