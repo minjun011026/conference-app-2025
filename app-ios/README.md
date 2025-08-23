@@ -158,6 +158,19 @@ cd app-ios && make setup
 ```
 Note: This installs SwiftLint via nest. Make sure nest is installed first (`curl -s https://raw.githubusercontent.com/mtj0928/nest/main/Scripts/install.sh | bash`) and confirm `~/.nest/bin` is added to PATH.
 
+__【Example】__
+
+```bash
+# Open .zshrc
+vim ~/.zshrc
+
+# Write the following line and save
+export PATH="$PATH:~/.nest/bin"
+
+# Apply the changes
+source ~/.zshrc
+```
+
 4. Open the project:
 ```bash
 open DroidKaigi2025.xcodeproj
