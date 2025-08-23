@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
+
 @SingleIn(DataScope::class)
 @Inject
 public class UserDataStore(
