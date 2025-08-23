@@ -2,9 +2,11 @@ package io.github.droidkaigi.confsched.testing.di
 
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Binds
+import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.createGraph
+import io.github.droidkaigi.confsched.common.scope.TimetableDetailScope
 import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.data.about.FakeBuildConfigProvider
 import io.github.droidkaigi.confsched.data.about.FakeLicensesJsonReader
@@ -15,6 +17,7 @@ import io.github.droidkaigi.confsched.data.core.defaultJson
 import io.github.droidkaigi.confsched.data.eventmap.DefaultEventMapApiClient
 import io.github.droidkaigi.confsched.data.eventmap.DefaultEventMapQueryKey
 import io.github.droidkaigi.confsched.data.sessions.DefaultSessionsApiClient
+import io.github.droidkaigi.confsched.data.sessions.DefaultTimetableItemQueryKey
 import io.github.droidkaigi.confsched.data.sessions.DefaultTimetableQueryKey
 import io.github.droidkaigi.confsched.data.staff.DefaultStaffApiClient
 import io.github.droidkaigi.confsched.data.staff.DefaultStaffQueryKey
@@ -23,6 +26,7 @@ import io.github.droidkaigi.confsched.data.user.DefaultFavoriteTimetableItemIdMu
 import io.github.droidkaigi.confsched.model.contributors.ContributorsQueryKey
 import io.github.droidkaigi.confsched.model.data.FavoriteTimetableIdsSubscriptionKey
 import io.github.droidkaigi.confsched.model.data.FavoriteTimetableItemIdMutationKey
+import io.github.droidkaigi.confsched.model.data.TimetableItemQueryKey
 import io.github.droidkaigi.confsched.model.data.TimetableQueryKey
 import io.github.droidkaigi.confsched.model.eventmap.EventMapQueryKey
 import io.github.droidkaigi.confsched.model.staff.StaffQueryKey
@@ -90,6 +94,12 @@ internal interface IosTestAppGraph : TestAppGraph {
 
     @Provides
     fun provideFakeLicensesJsonReader(): FakeLicensesJsonReader = FakeLicensesJsonReader()
+}
+
+@ContributesTo(TimetableDetailScope::class)
+interface IosTimetableItemDetailGraph {
+    @Binds
+    val DefaultTimetableItemQueryKey.bind: TimetableItemQueryKey
 }
 
 internal actual fun createTestAppGraph(): TestAppGraph {
