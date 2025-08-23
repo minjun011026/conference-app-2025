@@ -18,17 +18,18 @@ struct DroidKaigi2025App: App {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
 
-        let inlineTitleBase = UIFont(name: changoFontName, size: inlineTitleFontSize) ?? .systemFont(ofSize: inlineTitleFontSize)
-        let titleBase  = UIFont(name: changoFontName, size: titleFontSize) ?? .systemFont(ofSize: titleFontSize)
+        let inlineTitleBase =
+            UIFont(name: changoFontName, size: inlineTitleFontSize) ?? .systemFont(ofSize: inlineTitleFontSize)
+        let titleBase = UIFont(name: changoFontName, size: titleFontSize) ?? .systemFont(ofSize: titleFontSize)
 
         let inlineTitleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: inlineTitleBase)
-        let titleFont  = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBase)
+        let titleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBase)
 
         appearance.titleTextAttributes = [
-            .font: inlineTitleFont,
+            .font: inlineTitleFont
         ]
         appearance.largeTitleTextAttributes = [
-            .font: titleFont,
+            .font: titleFont
         ]
 
         let bar = UINavigationBar.appearance()
