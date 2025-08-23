@@ -58,7 +58,11 @@ public class UserDataStore(
     public fun getProfileOrNull(): Flow<Profile?> {
         return dataStore.data.map {
             val profile = it[PROFILE_KEY] ?: return@map null
-            json.decodeFromString(profile)
+            try {
+                json.decodeFromString(profile)
+            } catch (_: Throwable) {
+                null
+            }
         }
     }
 
