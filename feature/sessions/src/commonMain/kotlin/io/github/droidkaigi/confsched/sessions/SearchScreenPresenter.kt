@@ -123,7 +123,7 @@ fun searchScreenPresenter(
 
 private fun <T> List<T>.toggle(item: T): List<T> {
     return if (contains(item)) {
-        filterNot { it == item }
+        minus(item)
     } else {
         plus(item)
     }
