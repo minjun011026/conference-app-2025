@@ -15,14 +15,14 @@ struct DroidKaigi2025App: App {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
 
-        let inlineBase = UIFont(name: changoFontName, size: 20) ?? .systemFont(ofSize: 20)
+        let inlineTitleBase = UIFont(name: changoFontName, size: 20) ?? .systemFont(ofSize: 20)
         let titleBase  = UIFont(name: changoFontName, size: 28) ?? .systemFont(ofSize: 28)
 
-        let inlineFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: inlineBase)
+        let inlineTitleFont = UIFontMetrics(forTextStyle: .headline).scaledFont(for: inlineTitleBase)
         let titleFont  = UIFontMetrics(forTextStyle: .headline).scaledFont(for: titleBase)
 
         appearance.titleTextAttributes = [
-            .font: inlineFont,
+            .font: inlineTitleFont,
         ]
         appearance.largeTitleTextAttributes = [
             .font: titleFont,
