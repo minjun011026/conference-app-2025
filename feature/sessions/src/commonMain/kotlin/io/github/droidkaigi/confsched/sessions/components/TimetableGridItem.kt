@@ -75,6 +75,7 @@ fun TimetableGridItem(
             modifier = modifier
                 .width(TimetableGridItemDefaults.width)
                 .height(scaledHeight)
+                .padding(all = TimetableGridItemDefaults.contentMargin)
                 .border(1.dp, LocalRoomTheme.current.primaryColor, shape)
                 .clip(shape)
                 .background(LocalRoomTheme.current.containerColor)
@@ -225,6 +226,7 @@ private fun TimetableTitle(
 private object TimetableGridItemDefaults {
     val width = 192.dp
     val unitOfHeight = 4.dp // 1 minute = 4dp
+    val contentMargin = 1.dp
     val contentPadding = 12.dp
     val scheduleToTitleSpace = 6.dp
     val scheduleHeight = 16.dp
