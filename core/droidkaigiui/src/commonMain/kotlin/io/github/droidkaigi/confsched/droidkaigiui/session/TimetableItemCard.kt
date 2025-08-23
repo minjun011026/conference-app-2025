@@ -47,6 +47,7 @@ import io.github.droidkaigi.confsched.droidkaigiui.extension.icon
 import io.github.droidkaigi.confsched.droidkaigiui.extension.roomTheme
 import io.github.droidkaigi.confsched.droidkaigiui.not_bookmarked
 import io.github.droidkaigi.confsched.droidkaigiui.rememberAsyncImagePainter
+import io.github.droidkaigi.confsched.model.core.Room
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
 import io.github.droidkaigi.confsched.model.sessions.TimetableSpeaker
 import io.github.droidkaigi.confsched.model.sessions.fake
@@ -233,13 +234,13 @@ private fun FavoriteButton(
             Icon(
                 Icons.Filled.Favorite,
                 contentDescription = stringResource(DroidkaigiuiRes.string.bookmarked),
-                tint = MaterialTheme.colorScheme.primaryFixed,
+                tint = LocalRoomTheme.current.primaryColor,
             )
         } else {
             Icon(
                 Icons.Outlined.FavoriteBorder,
                 contentDescription = stringResource(DroidkaigiuiRes.string.not_bookmarked),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = LocalRoomTheme.current.primaryColor,
             )
         }
     }
@@ -315,10 +316,12 @@ private fun TimetableItemCardPreview_WithError() {
 @Composable
 private fun FavoriteButton() {
     KaigiPreviewContainer {
-        FavoriteButton(
-            isBookmarked = false,
-            onClick = {},
-        )
+        ProvideRoomTheme(TimetableItem.Session.fake().room.roomTheme) {
+            FavoriteButton(
+                isBookmarked = false,
+                onClick = {},
+            )
+        }
     }
 }
 
@@ -326,10 +329,12 @@ private fun FavoriteButton() {
 @Composable
 private fun FavoriteButton_Bookmarked() {
     KaigiPreviewContainer {
-        FavoriteButton(
-            isBookmarked = true,
-            onClick = {},
-        )
+        ProvideRoomTheme(TimetableItem.Session.fake().room.roomTheme) {
+            FavoriteButton(
+                isBookmarked = true,
+                onClick = {},
+            )
+        }
     }
 }
 
