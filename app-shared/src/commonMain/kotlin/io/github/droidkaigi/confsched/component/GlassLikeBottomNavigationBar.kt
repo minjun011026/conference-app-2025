@@ -1,14 +1,14 @@
-package io.github.droidkaigi.confsched.component.glass
+package io.github.droidkaigi.confsched.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -33,12 +33,11 @@ import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.rememberHazeState
 import io.github.droidkaigi.confsched.common.graphics.isBlurSupported
-import io.github.droidkaigi.confsched.component.MainScreenTab
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun GlassLikeNavigationRailBar(
+fun GlassLikeBottomNavigationBar(
     hazeState: HazeState,
     currentTab: MainScreenTab,
     onTabSelected: (MainScreenTab) -> Unit,
@@ -46,15 +45,15 @@ fun GlassLikeNavigationRailBar(
     animatedColor: Color,
     modifier: Modifier = Modifier,
 ) {
-    val navigationItemsContentPadding = PaddingValues(vertical = 12.dp)
+    val navigationItemsContentPadding = PaddingValues(horizontal = 12.dp)
 
     Box(
         modifier = modifier
-            .fillMaxHeight()
-            .width(64.dp)
+            .fillMaxWidth()
+            .height(64.dp)
             .border(
                 width = Dp.Hairline,
-                brush = Brush.horizontalGradient(
+                brush = Brush.verticalGradient(
                     listOf(
                         Color.White.copy(alpha = 0.8f),
                         Color.White.copy(alpha = 0.2f),
@@ -66,13 +65,13 @@ fun GlassLikeNavigationRailBar(
             .glassEffect(hazeState),
         contentAlignment = Alignment.Center,
     ) {
-        NavigationRailItems(
+        BottomNavigationBarItems(
             currentTab = currentTab,
             onTabSelected = onTabSelected,
             modifier = Modifier.padding(navigationItemsContentPadding),
         )
 
-        SelectedTabCircleBlurredBackgroundVertical(
+        SelectedTabCircleBlurredBackground(
             color = animatedColor,
             animatedSelectedTabIndex = animatedSelectedTabIndex,
             modifier = Modifier
@@ -80,7 +79,7 @@ fun GlassLikeNavigationRailBar(
                 .matchParentSize(),
         )
 
-        SelectedTabSideLineIndicator(
+        SelectedTabBottomLineIndicator(
             color = animatedColor,
             animatedSelectedTabIndex = animatedSelectedTabIndex,
             modifier = Modifier.matchParentSize(),
@@ -89,28 +88,27 @@ fun GlassLikeNavigationRailBar(
 }
 
 @Composable
-private fun NavigationRailItems(
+private fun BottomNavigationBarItems(
     currentTab: MainScreenTab,
     onTabSelected: (MainScreenTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Row(
         modifier = modifier.selectableGroup(),
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         MainScreenTab.entries.forEach { tab ->
             NavigationTabItem(
                 tab = tab,
                 selected = currentTab == tab,
                 onTabSelected = onTabSelected,
-                modifier = Modifier.weight(1f).fillMaxWidth(),
+                modifier = Modifier.weight(1f).fillMaxHeight(),
             )
         }
     }
 }
 
 @Composable
-private fun SelectedTabCircleBlurredBackgroundVertical(
+private fun SelectedTabCircleBlurredBackground(
     animatedSelectedTabIndex: Float,
     color: Color,
     modifier: Modifier = Modifier,
@@ -126,12 +124,12 @@ private fun SelectedTabCircleBlurredBackgroundVertical(
             ),
     ) {
         // draw background for current tab
-        val tabHeight = size.height / MainScreenTab.entries.size
+        val tabWidth = size.width / MainScreenTab.entries.size
         val selectedTabCenter = Offset(
-            x = size.width / 2,
-            y = (tabHeight * animatedSelectedTabIndex) + (tabHeight / 2),
+            x = (tabWidth * animatedSelectedTabIndex) + (tabWidth / 2),
+            y = size.height / 2,
         )
-        val radius = size.width / 2
+        val radius = size.height / 2
 
         drawSelectedTabCircle(
             color = color,
@@ -142,30 +140,30 @@ private fun SelectedTabCircleBlurredBackgroundVertical(
 }
 
 @Composable
-private fun SelectedTabSideLineIndicator(
+private fun SelectedTabBottomLineIndicator(
     color: Color,
     animatedSelectedTabIndex: Float,
     modifier: Modifier = Modifier,
 ) {
     Canvas(modifier = modifier) {
         val path = Path().apply {
-            addRoundRect(RoundRect(size.toRect(), CornerRadius(size.width)))
+            addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
         }
         val length = PathMeasure().apply { setPath(path, false) }.length
 
-        val tabHeight = size.height / MainScreenTab.entries.size
+        val tabWidth = size.width / MainScreenTab.entries.size
 
         drawPath(
             path = path,
-            brush = Brush.verticalGradient(
+            brush = Brush.horizontalGradient(
                 colors = listOf(
                     color.copy(alpha = 0f),
                     color.copy(alpha = 1f),
                     color.copy(alpha = 1f),
                     color.copy(alpha = 0f),
                 ),
-                startY = tabHeight * animatedSelectedTabIndex,
-                endY = tabHeight * (animatedSelectedTabIndex + 1),
+                startX = tabWidth * animatedSelectedTabIndex,
+                endX = tabWidth * (animatedSelectedTabIndex + 1),
             ),
             style = Stroke(
                 width = 6f,
@@ -179,9 +177,9 @@ private fun SelectedTabSideLineIndicator(
 
 @Preview
 @Composable
-private fun GlassLikeNavigationRailBarPreview() {
+private fun GlassLikeBottomNavigationBarPreview() {
     KaigiPreviewContainer {
-        GlassLikeNavigationRailBar(
+        GlassLikeBottomNavigationBar(
             hazeState = rememberHazeState(),
             currentTab = MainScreenTab.Timetable,
             onTabSelected = {},
@@ -193,36 +191,36 @@ private fun GlassLikeNavigationRailBarPreview() {
 
 @Preview
 @Composable
-private fun NavigationRailItemsPreview() {
+private fun BottomNavigationBarItemsPreview() {
     KaigiPreviewContainer {
-        NavigationRailItems(
+        BottomNavigationBarItems(
             currentTab = MainScreenTab.Timetable,
             onTabSelected = {},
-            modifier = Modifier.padding(vertical = 12.dp),
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
     }
 }
 
 @Preview
 @Composable
-private fun SelectedTabCircleBlurredBackgroundVerticalPreview() {
+private fun SelectedTabCircleBlurredBackgroundPreview() {
     KaigiPreviewContainer {
-        SelectedTabCircleBlurredBackgroundVertical(
+        SelectedTabCircleBlurredBackground(
             animatedSelectedTabIndex = 0f,
             color = MaterialTheme.colorScheme.primaryFixed,
-            modifier = Modifier.fillMaxHeight().width(64.dp),
+            modifier = Modifier.fillMaxWidth().height(64.dp),
         )
     }
 }
 
 @Preview
 @Composable
-private fun SelectedTabSideLineIndicatorPreview() {
+private fun SelectedTabBottomLineIndicatorPreview() {
     KaigiPreviewContainer {
-        SelectedTabSideLineIndicator(
+        SelectedTabBottomLineIndicator(
             color = MaterialTheme.colorScheme.primaryFixed,
             animatedSelectedTabIndex = 0f,
-            modifier = Modifier.fillMaxHeight().width(64.dp),
+            modifier = Modifier.fillMaxWidth().height(64.dp),
         )
     }
 }

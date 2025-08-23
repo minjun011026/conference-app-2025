@@ -26,8 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowWidthSizeClass
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.rememberHazeState
-import io.github.droidkaigi.confsched.component.glass.GlassLikeBottomNavigationBar
-import io.github.droidkaigi.confsched.component.glass.GlassLikeNavigationRailBar
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.LocalBottomNavigationBarsPadding
 import io.github.droidkaigi.confsched.droidkaigiui.extension.Empty
