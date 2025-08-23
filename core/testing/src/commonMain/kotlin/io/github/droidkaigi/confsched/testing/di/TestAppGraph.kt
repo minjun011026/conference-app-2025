@@ -21,7 +21,8 @@ internal interface TestAppGraph :
     ContributorsScreenTestGraph,
     EventMapScreenTestGraph,
     StaffScreenTestGraph,
-    SettingsScreenTestGraph {
+    SettingsScreenTestGraph,
+    FavoritesScreenTestGraph {
 
     @Binds
     val FakeSessionsApiClient.binds: SessionsApiClient
