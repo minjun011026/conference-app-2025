@@ -16,7 +16,7 @@ struct DroidKaigi2025App: App {
 
     init() {
         ThemeFonts.registerAll()
-        
+
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
 
