@@ -115,7 +115,9 @@ actual fun KaigiAppUi() {
                 },
                 onBackClick = navController::popBackStack,
             )
-            profileTabNavGraph()
+            profileTabNavGraph(
+                onShareProfileCardClick = externalNavController::onShareProfileCardClick,
+            )
         }
     }
 }

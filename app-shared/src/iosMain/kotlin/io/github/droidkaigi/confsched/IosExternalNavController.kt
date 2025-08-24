@@ -3,12 +3,16 @@ package io.github.droidkaigi.confsched
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
+import io.github.vinceglb.filekit.dialogs.compose.util.encodeToByteArray
+import io.github.vinceglb.filekit.utils.toNSData
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ObjCObjectVar
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.datetime.toNSDate
 import platform.EventKit.EKEntityType
 import platform.EventKit.EKEvent
@@ -20,6 +24,7 @@ import platform.Foundation.NSURL
 import platform.Foundation.create
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
+import platform.UIKit.UIImage
 
 @Composable
 actual fun rememberExternalNavController(): ExternalNavController {
@@ -87,6 +92,21 @@ internal class IosExternalNavController : ExternalNavController {
     }
 
     override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
-        TODO("Not yet implemented")
+        MainScope().launch {
+            val image = UIImage(data = imageBitmap.encodeToByteArray().toNSData())
+
+            val activityItems = listOf(NSString.create(shareText), image)
+            val activityViewController = UIActivityViewController(
+                activityItems = activityItems,
+                applicationActivities = null,
+            )
+
+            val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+            rootViewController?.presentViewController(
+                viewControllerToPresent = activityViewController,
+                animated = true,
+                completion = null,
+            )
+        }
     }
 }
