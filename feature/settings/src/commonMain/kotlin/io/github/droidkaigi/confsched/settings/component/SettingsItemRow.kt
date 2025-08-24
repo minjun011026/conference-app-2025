@@ -17,10 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.rememberBooleanSaveable
 
-// TODO Define TestTag
+const val SettingsItemRowCurrentValueTextTestTag = "SettingsItemRowCurrentValueTextTestTag"
 
 @Composable
 fun SettingsItemRow(
@@ -62,8 +63,8 @@ fun SettingsItemRow(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primaryFixed,
                 )
-                // TODO Add TestTag
                 Text(
+                    modifier = Modifier.testTag(SettingsItemRowCurrentValueTextTestTag),
                     text = currentValue,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primaryFixed,

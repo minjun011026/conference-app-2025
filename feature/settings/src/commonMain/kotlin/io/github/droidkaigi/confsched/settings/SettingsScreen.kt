@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.util.plus
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
@@ -22,6 +23,8 @@ import io.github.droidkaigi.confsched.model.settings.KaigiFontFamily
 import io.github.droidkaigi.confsched.settings.section.accessibility
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+const val SettingsScreenLazyColumnTestTag = "SettingsScreen"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +51,8 @@ fun SettingsScreen(
         LazyColumn(
             Modifier
                 .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .testTag(SettingsScreenLazyColumnTestTag),
             contentPadding = padding + PaddingValues(vertical = 20.dp, horizontal = 16.dp),
             state = lazyListState,
         ) {

@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,9 @@ import io.github.droidkaigi.confsched.settings.section_title_accessibility
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
-// TODO Define TestTag
+const val SettingsAccessibilityUseFontFamilySettingsItemRowTestTag = "SettingsAccessibilityUseFontFamilySettingsItemRowTestTag"
+const val SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix =
+    "SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix:"
 
 fun LazyListScope.accessibility(
     modifier: Modifier = Modifier,
@@ -42,9 +45,8 @@ fun LazyListScope.accessibility(
         )
     }
     item {
-        // TODO Add TestTag
         SettingsItemRow(
-            modifier = modifier,
+            modifier = modifier.testTag(SettingsAccessibilityUseFontFamilySettingsItemRowTestTag),
             leadingIcon = vectorResource(SettingsRes.drawable.ic_brand_family),
             itemName = stringResource(SettingsRes.string.section_item_title_font),
             currentValue = uiState.useKaigiFontFamily.displayName,
@@ -57,13 +59,16 @@ fun LazyListScope.accessibility(
                         KaigiFontFamily.SystemDefault -> FontFamily.Default
                     }
                     Text(
-                        // TODO Add TestTag
                         modifier = Modifier
                             .clickable { onSelectUseFontFamily(fontFamily) }
                             .fillMaxWidth()
                             .height(72.dp)
                             .padding(start = 48.dp)
-                            .wrapContentHeight(Alignment.CenterVertically),
+                            .wrapContentHeight(Alignment.CenterVertically)
+                            .testTag(
+                                SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix
+                                    .plus(fontFamily.displayName),
+                            ),
                         text = fontFamily.displayName,
                         fontFamily = itemFont,
                         textAlign = TextAlign.Start,
