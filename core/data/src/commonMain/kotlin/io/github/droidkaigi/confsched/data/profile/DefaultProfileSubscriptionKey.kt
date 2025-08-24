@@ -25,18 +25,14 @@ public class DefaultProfileSubscriptionKey(
 
             if (profile.imagePath.isEmpty() || profile.link.isEmpty()) return@map ProfileWithImageBitmaps(profile)
 
-            val qrImageBitmap = profile.imagePath?.let {
-                QRCode.ofSquares()
-                    .build(it)
-                    .renderToBytes()
-                    .decodeToImageBitmap()
-            }
+            val qrImageBitmap = QRCode.ofSquares()
+                .build(profile.link)
+                .renderToBytes()
+                .decodeToImageBitmap()
 
-            val profileImageBitmap = profile.imagePath?.let {
-                PlatformFile(it)
-                    .readBytes()
-                    .decodeToImageBitmap()
-            }
+            val profileImageBitmap = PlatformFile(profile.imagePath)
+                .readBytes()
+                .decodeToImageBitmap()
 
             ProfileWithImageBitmaps(
                 profile = profile,
