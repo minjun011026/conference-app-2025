@@ -37,11 +37,13 @@ fun profilePresenter(
         }
     }
 
-    if (!isAllowedToShowCard || isInEditMode) return@providePresenterDefaults ProfileUiState.Edit(baseProfile = profileWithImageBitmaps.profile)
-
-    ProfileUiState.Card(
-        profile = requireNotNull(profileWithImageBitmaps.profile),
-        profileImageBitmap = requireNotNull(profileWithImageBitmaps.profileImageBitmap),
-        qrImageBitmap = requireNotNull(profileWithImageBitmaps.qrImageBitmap),
-    )
+    if (!isAllowedToShowCard || isInEditMode) {
+        ProfileUiState.Edit(baseProfile = profileWithImageBitmaps.profile)
+    } else {
+        ProfileUiState.Card(
+            profile = requireNotNull(profileWithImageBitmaps.profile),
+            profileImageBitmap = requireNotNull(profileWithImageBitmaps.profileImageBitmap),
+            qrImageBitmap = requireNotNull(profileWithImageBitmaps.qrImageBitmap),
+        )
+    }
 }
