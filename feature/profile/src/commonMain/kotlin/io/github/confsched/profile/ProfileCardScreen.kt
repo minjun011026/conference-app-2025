@@ -1,4 +1,4 @@
-package io.github.confsched.profile.card
+package io.github.confsched.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,12 +31,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import io.github.confsched.profile.components.FlippableProfileCard
-import io.github.confsched.profile.components.ProfileCardTheme
-import io.github.confsched.profile.components.ProfileCardUiState
 import io.github.confsched.profile.components.ShareableProfileCard
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
+import io.github.droidkaigi.confsched.model.profile.Profile
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.edit
 import io.github.droidkaigi.confsched.profile.profile_card_title
@@ -48,7 +47,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileCardScreen(
-    uiState: ProfileCardUiState,
+    uiState: ProfileUiState.Card,
     onEditClick: () -> Unit,
     onShareClick: (ImageBitmap) -> Unit,
     modifier: Modifier = Modifier,
@@ -59,9 +58,9 @@ fun ProfileCardScreen(
     ShareableProfileCard(
         theme = uiState.theme,
         qrImageBitmap = uiState.qrImageBitmap,
-        nickName = uiState.nickName,
-        occupation = uiState.occupation,
-        profileImagePath = uiState.profileImagePath,
+        nickName = uiState.profile.nickName,
+        occupation = uiState.profile.occupation,
+        profileImageBitmap = uiState.profileImageBitmap,
         onRenderResultUpdate = { sharableProfileCardRenderResult = it }
     )
 
@@ -126,12 +125,10 @@ fun ProfileCardScreen(
 private fun ProfileCardScreenPreview() {
     KaigiPreviewContainer {
         ProfileCardScreen(
-            uiState = ProfileCardUiState(
-                nickName = "mhidaka",
-                occupation = "Software Engineer",
+            uiState = ProfileUiState.Card(
+                profile = Profile(),
                 qrImageBitmap = ImageBitmap(160, 160),
-                theme = ProfileCardTheme.DarkPill,
-                profileImagePath = "",
+                profileImageBitmap = ImageBitmap(10, 10),
             ),
             onShareClick = {},
             onEditClick = {},

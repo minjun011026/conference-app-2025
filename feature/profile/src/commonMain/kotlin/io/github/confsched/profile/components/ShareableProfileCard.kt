@@ -26,7 +26,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun ShareableProfileCard(
     theme: ProfileCardTheme,
-    profileImagePath: String,
+    profileImageBitmap: ImageBitmap,
     qrImageBitmap: ImageBitmap,
     nickName: String,
     occupation: String,
@@ -47,7 +47,7 @@ fun ShareableProfileCard(
                 theme = theme,
                 nickName = nickName,
                 occupation = occupation,
-                profileImagePath = profileImagePath,
+                profileImageBitmap = profileImageBitmap,
             )
         }
 
@@ -79,7 +79,7 @@ fun ShareableProfileCard(
 }
 
 @Composable
-fun ShareableProfileCard(
+private fun ShareableProfileCard(
     theme: ProfileCardTheme,
     frontCardImageBitmap: ImageBitmap,
     backCardImageBitmap: ImageBitmap,
@@ -148,11 +148,8 @@ fun ShareableProfileCard(
 @Composable
 private fun ShareableProfileCardPreview() {
     ShareableProfileCard(
-        nickName = "Nickname",
-        occupation = "Software Engineer",
-        qrImageBitmap = ImageBitmap(160, 160),
         theme = ProfileCardTheme.DarkPill,
-        onRenderResultUpdate = {},
-        profileImagePath = "",
+        frontCardImageBitmap = ImageBitmap(1, 1),
+        backCardImageBitmap = ImageBitmap(1, 1),
     )
 }

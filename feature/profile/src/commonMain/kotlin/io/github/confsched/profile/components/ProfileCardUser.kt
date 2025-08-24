@@ -1,5 +1,6 @@
 package io.github.confsched.profile.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -13,18 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
-import io.github.vinceglb.filekit.PlatformFile
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ProfileCardUser(
     isDarkTheme: Boolean,
-    profileImageUrl: String,
+    profileImageBitmap: ImageBitmap,
     userName: String,
     occupation: String,
     profileShape: ProfileShape,
@@ -34,8 +34,8 @@ fun ProfileCardUser(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AsyncImage(
-            model = PlatformFile(profileImageUrl),
+        Image(
+            bitmap = profileImageBitmap,
             contentDescription = "User Profile Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -62,7 +62,7 @@ private fun ProfileCardUser() {
     KaigiPreviewContainer {
         ProfileCardUser(
             isDarkTheme = true,
-            profileImageUrl = "",
+            profileImageBitmap = ImageBitmap(0, 0),
             profileShape = ProfileShape.Pill,
             userName = "name",
             occupation = "Software Engineer",

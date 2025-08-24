@@ -11,6 +11,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
+            // Need to reference ImageBitmap
+            implementation(compose.ui)
 
             implementation(libs.kotlinxSerializationJson)
             api(libs.kotlinxDatetime)

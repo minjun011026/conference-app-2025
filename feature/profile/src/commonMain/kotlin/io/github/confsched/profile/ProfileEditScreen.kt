@@ -1,4 +1,4 @@
-package io.github.confsched.profile.edit
+package io.github.confsched.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.confsched.profile.components.ProfileCardTheme
 import io.github.confsched.profile.components.ThemeWithShape
-import io.github.confsched.profile.persistPermission
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
@@ -86,9 +85,14 @@ import soil.form.rule.notBlank
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(
-    form: Form<Profile>,
+    initialProfile: Profile?,
+    onCreateClick: (Profile) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val form: Form<Profile> = rememberForm(
+        initialValue = initialProfile ?: Profile(),
+        onSubmit = onCreateClick,
+    )
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
@@ -138,8 +142,8 @@ private fun Form<Profile>.Name() {
         stringResource(ProfileRes.string.nickname),
     )
     Field(
-        selector = { it.name },
-        updater = { copy(name = it) },
+        selector = { it.nickName },
+        updater = { copy(nickName = it) },
         validator = FieldValidator {
             notBlank { emptyNameErrorString }
         },
@@ -455,19 +459,19 @@ private fun ImagePicker(
 @Preview
 @Composable
 private fun ProfileEditScreenPreview() {
-    val form = rememberForm(
-        initialValue = Profile(
-            name = "John Doe",
-            occupation = "Software Engineer",
-            link = "https://example.com",
-            imagePath = "https://example.com/image.jpg",
-            image = ByteArray(0),
-            themeKey = ProfileCardTheme.DarkPill.themeKey,
-        ),
-        onSubmit = {},
-    )
+//    val form = rememberForm(
+//        initialValue = Profile(
+//            nickName = "John Doe",
+//            occupation = "Software Engineer",
+//            link = "https://example.com",
+//            imagePath = "https://example.com/image.jpg",
+//            image = ByteArray(0),
+//            themeKey = ProfileCardTheme.DarkPill.themeKey,
+//        ),
+//        onSubmit = {},
+//    )
     KaigiPreviewContainer {
-        ProfileEditScreen(form = form)
+//        ProfileEditScreen(form = form)
     }
 }
 

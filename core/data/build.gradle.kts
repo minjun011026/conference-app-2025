@@ -20,6 +20,8 @@ kotlin {
             implementation(libs.androidxDatastorePreferencesCore)
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.kotlinxCollectionsImmutable)
+            implementation(libs.qrcodeKotlin)
+            implementation(libs.filekitCoil)
 
             implementation(libs.ktorClientContentNegotiation)
             implementation(libs.ktorKotlinxSerializationJson)
