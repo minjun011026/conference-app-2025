@@ -21,13 +21,24 @@ public struct ProfileCardScreen: View {
 
     private var profileCardScrollView: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                profileCard
-                actionButtons
+            Group {
+                cardView
             }
-            .padding(.vertical, 20)
             .padding(.bottom, 80)  // Tab bar padding
         }
+    }
+    
+    private var editView: some View {
+        // TODO:
+        Text("Edit")
+    }
+    
+    private var cardView: some View {
+        VStack(spacing: 0) {
+            profileCard
+            actionButtons
+        }
+        .padding(.vertical, 20)
     }
 
     private var profileCard: some View {
