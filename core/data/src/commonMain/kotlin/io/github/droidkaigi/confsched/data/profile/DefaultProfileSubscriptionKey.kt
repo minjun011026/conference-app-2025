@@ -11,7 +11,7 @@ import soil.query.buildSubscriptionKey
 @ContributesBinding(DataScope::class)
 @Inject
 public class DefaultProfileSubscriptionKey(
-    private val dataStore: UserDataStore,
+    private val dataStore: ProfileDataStore,
 ) : ProfileSubscriptionKey by buildSubscriptionKey(
     id = SubscriptionId("profile"),
     subscribe = { dataStore.getProfileOrNull() },
