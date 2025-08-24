@@ -63,6 +63,7 @@ import io.github.droidkaigi.confsched.model.sponsors.SponsorsQueryKey
 import io.github.droidkaigi.confsched.model.staff.StaffQueryKey
 import io.github.droidkaigi.confsched.repository.ContributorsRepository
 import io.github.droidkaigi.confsched.repository.EventMapRepository
+import io.github.droidkaigi.confsched.repository.ProfileRepository
 import io.github.droidkaigi.confsched.repository.SessionsRepository
 import io.github.droidkaigi.confsched.repository.SettingsRepository
 import io.github.droidkaigi.confsched.repository.SponsorsRepository
@@ -108,6 +109,7 @@ interface IosAppGraph : AppGraph {
     val staffRepository: StaffRepository
     val settingsRepository: SettingsRepository
     val eventMapRepository: EventMapRepository
+    val profileRepository: ProfileRepository
 
     @Named("apiBaseUrl")
     @Provides
