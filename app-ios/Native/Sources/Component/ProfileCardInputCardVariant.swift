@@ -23,9 +23,7 @@ public struct ProfileCardInputCardVariant: View {
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(Model.ProfileCardVariant.allCases, id: \.self) { cardVariant in
                     Button {
-                        print("before: \(selectedCardVariant)")
                         selectedCardVariant = cardVariant
-                        print("card: \(selectedCardVariant)")
                     } label: {
                         (selectedCardVariant == cardVariant
                             ? cardVariant.selectedImage
@@ -78,4 +76,3 @@ extension Model.ProfileCardVariant {
         }
     }
 }
-
