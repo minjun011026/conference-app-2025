@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,8 +66,9 @@ fun LazyListScope.accessibility(
                             .padding(start = 48.dp)
                             .wrapContentHeight(Alignment.CenterVertically)
                             .testTag(
-                            SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix
-                                .plus(fontFamily.displayName),
+                                SettingsAccessibilityUseFontFamilySelectableItemColumnTestTagPrefix
+                                    .plus(fontFamily.displayName),
+                            ),
                         text = fontFamily.displayName,
                         fontFamily = itemFont,
                         textAlign = TextAlign.Start,
