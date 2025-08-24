@@ -3,6 +3,7 @@ import Model
 import SwiftUI
 import Theme
 
+// TODO: add varidation
 struct EditProfileCardForm: View {
     @Binding var presenter: ProfileCardPresenter
 
@@ -64,6 +65,17 @@ struct EditProfileCardForm: View {
                     }
                 ),
                 title: String(localized: "Image", bundle: .module)
+            )
+
+            ProfileCardInputCardVariant(
+                selectedCardType: .init(
+                    get: {
+                        presenter.formState.cardVariant
+                    },
+                    set: {
+                        presenter.setCardVariant($0)
+                    }
+                )
             )
 
             Button {

@@ -8,8 +8,8 @@ struct ProfileUseCaseImpl {
     private let occupationKey = "occupation"
     private let urlKey = "url"
     private let imageKey = "image"
-    private let cardVariantsKey = "cardVariants"
-    
+    private let cardVariantKey = "cardVariant"
+
     func load() -> any AsyncSequence<Model.Profile?, Never> {
         return UserDefaultsProfilePublisher()
     }
@@ -20,7 +20,7 @@ struct ProfileUseCaseImpl {
         userDefaults.set(profile.occupation, forKey: occupationKey)
         userDefaults.set(profile.url.absoluteString, forKey: urlKey)
         userDefaults.set(profile.image, forKey: imageKey)
-        userDefaults.set(profile.cardVariants.rawValue, forKey: cardVariantsKey)
+        userDefaults.set(profile.cardVariant.rawValue, forKey: cardVariantKey)
     }
 }
 
@@ -31,13 +31,13 @@ extension Model.Profile {
             let urlString = userDefaults.string(forKey: "url"),
             let url = URL(string: urlString),
             let imageData = userDefaults.data(forKey: "image"),
-            let cardVariantsString = userDefaults.string(forKey: "cardVariants"),
-            let cardVariants = Model.ProfileCardVariants(rawValue: cardVariantsString)
+            let cardVariantString = userDefaults.string(forKey: "cardVariant"),
+            let cardVariant = Model.ProfileCardVariant(rawValue: cardVariantString)
         else {
             return nil
         }
 
-        self = .init(name: name, occupation: occupation, url: url, image: imageData, cardVariants: cardVariants)
+        self = .init(name: name, occupation: occupation, url: url, image: imageData, cardVariant: cardVariant)
     }
 }
 
@@ -46,41 +46,43 @@ extension UserDefaults: @unchecked @retroactive Sendable {}
 struct UserDefaultsProfilePublisher: AsyncSequence {
     typealias Element = Model.Profile?
     typealias AsyncIterator = Iterator
-    
+
     private let userDefaults: UserDefaults
-    
+
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
-    
+
     func makeAsyncIterator() -> Iterator {
         Iterator(userDefaults: userDefaults)
     }
-    
+
     struct Iterator: AsyncIteratorProtocol {
         let userDefaults: UserDefaults
         var stream: AsyncStream<Model.Profile?>
         var streamIterator: AsyncStream<Model.Profile?>.Iterator
-        
+
         init(userDefaults: UserDefaults) {
             self.userDefaults = userDefaults
-            
+
             self.stream = AsyncStream<Model.Profile?> { [userDefaults] continuation in
                 let center = NotificationCenter.default
                 // observerはローカル変数で管理
-                let observer = center.addObserver(forName: UserDefaults.didChangeNotification, object: userDefaults, queue: nil) { [userDefaults] _ in
+                let observer = center.addObserver(
+                    forName: UserDefaults.didChangeNotification, object: userDefaults, queue: nil
+                ) { [userDefaults] _ in
                     continuation.yield(Model.Profile(userDefaults: userDefaults))
                 }
                 // 初期値も流す
                 continuation.yield(Model.Profile(userDefaults: userDefaults))
-                
+
                 continuation.onTermination = { [observer] _ in
                     center.removeObserver(observer)
                 }
             }
             self.streamIterator = stream.makeAsyncIterator()
         }
-        
+
         mutating func next() async -> Model.Profile?? {
             await streamIterator.next()
         }

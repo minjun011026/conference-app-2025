@@ -4,12 +4,13 @@ import Observation
 import Presentation
 import _PhotosUI_SwiftUI
 
+@Observable
 class FormState {
     var name: String
     var occupation: String
     var urlString: String
     var image: PhotosPickerItem?
-    var cardVariants: ProfileCardVariants
+    var cardVariant: ProfileCardVariant
 
     var nameError: String?
     var occupationError: String?
@@ -17,13 +18,13 @@ class FormState {
     var imageError: String?
 
     init(
-        name: String, occupation: String, urlString: String, image: PhotosPickerItem?, cardVariants: ProfileCardVariants
+        name: String, occupation: String, urlString: String, image: PhotosPickerItem?, cardVariant: ProfileCardVariant
     ) {
         self.name = name
         self.occupation = occupation
         self.urlString = urlString
         self.image = image
-        self.cardVariants = cardVariants
+        self.cardVariant = cardVariant
     }
 
     func validate() -> Bool {
@@ -47,7 +48,7 @@ class FormState {
             occupation: occupation,
             url: URL(string: urlString)!,
             image: imageData,
-            cardVariants: cardVariants
+            cardVariant: cardVariant
         )
     }
 }
@@ -65,7 +66,7 @@ final class ProfileCardPresenter {
     }
 
     init() {
-        formState = FormState(name: "", occupation: "", urlString: "", image: nil, cardVariants: .nightPill)
+        formState = FormState(name: "", occupation: "", urlString: "", image: nil, cardVariant: .nightPill)
         isEditing = false
     }
 
@@ -85,7 +86,7 @@ final class ProfileCardPresenter {
             urlString: profile.profile?.url.absoluteString ?? "",
             // TODO: enable to set loaded image
             image: nil,
-            cardVariants: profile.profile?.cardVariants ?? .nightPill
+            cardVariant: profile.profile?.cardVariant ?? .nightPill
         )
         isEditing = true
     }
@@ -115,5 +116,9 @@ final class ProfileCardPresenter {
 
     func setImage(_ image: PhotosPickerItem?) {
         formState.image = image
+    }
+
+    func setCardVariant(_ variant: ProfileCardVariant) {
+        formState.cardVariant = variant
     }
 }

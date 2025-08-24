@@ -7,7 +7,7 @@ import UseCase
 public final class ProfileProvider {
     @ObservationIgnored
     @Dependency(\.profileUseCase) private var profileUseCase
-    
+
     @ObservationIgnored
     private var fetchProfile: Task<Void, Never>?
 
@@ -19,9 +19,9 @@ public final class ProfileProvider {
     @MainActor
     public func subscribeProfileIfNeeded() {
         guard fetchProfile == nil else { return }
-        
+
         isLoading = true
-        
+
         self.fetchProfile = Task {
             for await profile in profileUseCase.load() {
                 self.profile = profile

@@ -11,7 +11,7 @@ enum ProfileCardShape: String {
     case flower
 }
 
-extension ProfileCardVariants {
+extension Model.ProfileCardVariant {
     var type: ProfileCardType {
         switch self {
         case .nightPill,
