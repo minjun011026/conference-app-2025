@@ -4,7 +4,7 @@ import Model
 
 @DependencyClient
 public struct ProfileUseCase: Sendable {
-    public var fetch: @Sendable () async -> Model.Profile? = { nil }
+    public var load: @Sendable () -> any AsyncSequence<Model.Profile?, Never> = { AsyncStream.never }
     public var save: @Sendable (_ profile: Model.Profile) async -> Void = { _ in }
 }
 

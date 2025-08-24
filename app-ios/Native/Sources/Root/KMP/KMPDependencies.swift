@@ -30,7 +30,7 @@ enum KMPDependencies {
 
         let profileUseCaseImpl = ProfileUseCaseImpl()
         dependencyValues.profileUseCase = .init(
-            fetch: profileUseCaseImpl.fetch,
+            load: profileUseCaseImpl.load,
             save: profileUseCaseImpl.save
         )
     }

@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Add Image" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "画像を追加"
-          }
-        }
-      }
-    },
     "Create Card" : {
       "localizations" : {
         "ja" : {

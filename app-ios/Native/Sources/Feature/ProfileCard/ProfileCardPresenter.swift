@@ -70,7 +70,7 @@ final class ProfileCardPresenter {
     }
 
     func loadInitial() {
-        profile.fetchProfile()
+        profile.subscribeProfileIfNeeded()
     }
 
     func shareProfileCard() {
@@ -97,7 +97,6 @@ final class ProfileCardPresenter {
         Task {
             let profileData = try await formState.createProfile()
             profile.saveProfile(profileData)
-            profile.fetchProfile()
             self.isEditing = false
         }
     }

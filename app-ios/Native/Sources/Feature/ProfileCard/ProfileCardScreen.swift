@@ -27,9 +27,13 @@ public struct ProfileCardScreen: View {
     @ViewBuilder
     private var profileCardScrollView: some View {
         let profile = presenter.profile.profile
+        let isLoading = presenter.profile.isLoading
         ScrollView {
             Group {
-                if presenter.shouldEditing {
+                if isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                } else if presenter.shouldEditing {
                     editView
                 } else {
                     cardView(profile!)
