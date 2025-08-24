@@ -29,7 +29,7 @@ public struct ProfileCardScreen: View {
         let profile = presenter.profile.profile
         ScrollView {
             Group {
-                if presenter.isEditing {
+                if presenter.shouldEditing {
                     editView
                 } else {
                     cardView(profile!)
@@ -40,7 +40,7 @@ public struct ProfileCardScreen: View {
     }
 
     private var editView: some View {
-        EditProfileCardForm()
+        EditProfileCardForm(presenter: $presenter)
     }
 
     @ViewBuilder

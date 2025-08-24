@@ -69,7 +69,7 @@ struct FrontCard: View {
     }
 
     private var avatarImage: some View {
-        Image(uiImage: UIImage(data: image))
+        Image(uiImage: UIImage(data: image)!)
             .resizable()
             .frame(width: 131, height: 131)
             .foregroundColor(.accentColor)
