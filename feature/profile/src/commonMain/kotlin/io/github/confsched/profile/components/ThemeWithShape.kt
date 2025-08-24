@@ -55,7 +55,7 @@ fun ThemeWithShape(
                     Modifier.background(color = Color.White)
                 } else {
                     Modifier
-                }
+                },
             )
             .clickable(onClick = onSelect),
         contentAlignment = Alignment.Center,
@@ -66,13 +66,13 @@ fun ThemeWithShape(
                     ProfileRes.drawable.card_front_background_night
                 } else {
                     ProfileRes.drawable.card_front_background_day
-                }
+                },
             ),
             contentScale = ContentScale.Crop,
             contentDescription = null,
             modifier = Modifier
                 .matchParentSize()
-                .clip(RoundedCornerShape(2.dp))
+                .clip(RoundedCornerShape(2.dp)),
         )
         Box(
             Modifier
@@ -81,7 +81,7 @@ fun ThemeWithShape(
                 .background(
                     color = MaterialTheme.colorScheme.onSurface,
                     shape = theme.profileShape.polygon.toShape(),
-                )
+                ),
         )
         Image(
             painter = painterResource(
@@ -89,7 +89,7 @@ fun ThemeWithShape(
                     ProfileRes.drawable.card_theme_selector_logo_day
                 } else {
                     ProfileRes.drawable.card_theme_selector_logo_night
-                }
+                },
             ),
             contentDescription = null,
             modifier = Modifier.height(30.dp),
@@ -100,31 +100,31 @@ fun ThemeWithShape(
                     .matchParentSize()
                     // draw outer border without changing the parent size
                     .drawWithContent {
-                            val strokeWidth = 3.dp.toPx()
-                            val halfStorkeWidth = strokeWidth / 2
+                        val strokeWidth = 3.dp.toPx()
+                        val halfStorkeWidth = strokeWidth / 2
 
-                            drawRoundRect(
-                                topLeft = Offset(-halfStorkeWidth, -halfStorkeWidth),
-                                size = size.copy(
-                                    width = size.width + strokeWidth,
-                                    height = size.height + strokeWidth,
-                                ),
-                                style = Stroke(3.dp.toPx()),
-                                cornerRadius = CornerRadius(2.dp.toPx()),
-                                color = Color.White,
-                            )
+                        drawRoundRect(
+                            topLeft = Offset(-halfStorkeWidth, -halfStorkeWidth),
+                            size = size.copy(
+                                width = size.width + strokeWidth,
+                                height = size.height + strokeWidth,
+                            ),
+                            style = Stroke(3.dp.toPx()),
+                            cornerRadius = CornerRadius(2.dp.toPx()),
+                            color = Color.White,
+                        )
 
-                            val triangleSize = size.height * 48f / 112f
+                        val triangleSize = size.height * 48f / 112f
 
-                            drawPath(
-                                path = Path().apply {
-                                    moveTo(size.width - triangleSize, 0f)
-                                    lineTo(size.width, triangleSize)
-                                    lineTo(size.width, 0f)
-                                    lineTo(size.width - triangleSize, 0f)
-                                },
-                                color = Color.White,
-                            )
+                        drawPath(
+                            path = Path().apply {
+                                moveTo(size.width - triangleSize, 0f)
+                                lineTo(size.width, triangleSize)
+                                lineTo(size.width, 0f)
+                                lineTo(size.width - triangleSize, 0f)
+                            },
+                            color = Color.White,
+                        )
                     },
             )
             Image(
@@ -133,7 +133,7 @@ fun ThemeWithShape(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(top = 4.dp, end = 4.dp)
-                    .size(20.dp)
+                    .size(20.dp),
             )
         }
     }
@@ -149,7 +149,7 @@ private fun ThemeWithShapePreview() {
             onSelect = {},
             modifier = Modifier
                 .padding(10.dp)
-                .width(190.dp)
+                .width(190.dp),
         )
     }
 }

@@ -28,7 +28,7 @@ fun ProfileCardUser(
     userName: String,
     occupation: String,
     profileShape: ProfileShape,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,

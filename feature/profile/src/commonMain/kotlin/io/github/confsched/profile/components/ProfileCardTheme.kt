@@ -19,7 +19,8 @@ enum class ProfileCardTheme(
     DarkDiamond(true, ProfileShape.Diamond, DarkBaseColor, "dark_diamond"),
     LightDiamond(false, ProfileShape.Diamond, LightBaseColor, "light_diamond"),
     DarkFlower(true, ProfileShape.Flower, DarkBaseColor, "dark_flower"),
-    LightFlower(false, ProfileShape.Flower, LightBaseColor, "light_flower");
+    LightFlower(false, ProfileShape.Flower, LightBaseColor, "light_flower"),
+    ;
 
     companion object Companion {
         fun fromThemeKey(themeKey: String): ProfileCardTheme {
@@ -32,5 +33,5 @@ enum class ProfileCardTheme(
 enum class ProfileShape(val polygon: RoundedPolygon) {
     Pill(MaterialShapes.Pill),
     Diamond(MaterialShapes.Diamond),
-    Flower(MaterialShapes.Flower);
+    Flower(MaterialShapes.Flower),
 }

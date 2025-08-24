@@ -61,7 +61,7 @@ fun ProfileCardScreen(
         nickName = uiState.profile.nickName,
         occupation = uiState.profile.occupation,
         profileImageBitmap = uiState.profileImageBitmap,
-        onRenderResultUpdate = { sharableProfileCardRenderResult = it }
+        onRenderResultUpdate = { sharableProfileCardRenderResult = it },
     )
 
     Scaffold(
@@ -96,12 +96,12 @@ fun ProfileCardScreen(
             ) {
                 Row(
                     horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Share,
                         contentDescription = "Share profile card",
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(18.dp),
                     )
                     Spacer(Modifier.width(8.dp))
                 }

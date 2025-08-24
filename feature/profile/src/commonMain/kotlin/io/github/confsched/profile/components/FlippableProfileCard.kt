@@ -72,7 +72,7 @@ fun FlippableProfileCard(
                 qrImageBitmap = uiState.qrImageBitmap,
                 modifier = Modifier.graphicsLayer {
                     rotationY = 180f
-                }
+                },
             )
         }
     }

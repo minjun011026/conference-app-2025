@@ -44,7 +44,7 @@ fun ProfileCardFront(
                     ProfileRes.drawable.card_front_background_night
                 } else {
                     ProfileRes.drawable.card_front_background_day
-                }
+                },
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop,
@@ -60,7 +60,7 @@ fun ProfileCardFront(
                 .align(Alignment.TopCenter)
                 .graphicsLayer {
                     translationY = 110.dp.toPx()
-                }
+                },
         )
         Image(
             painter = painterResource(ProfileRes.drawable.card_front_bottom_curve),
@@ -72,7 +72,7 @@ fun ProfileCardFront(
                 .graphicsLayer {
                     translationY = 36.18.dp.toPx()
                 }
-                .align(Alignment.BottomCenter)
+                .align(Alignment.BottomCenter),
         )
         Image(
             painter = if (theme.isDark) {

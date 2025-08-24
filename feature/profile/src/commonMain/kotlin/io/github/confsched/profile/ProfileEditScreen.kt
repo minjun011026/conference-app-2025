@@ -149,7 +149,7 @@ private fun Form<Profile>.Name() {
         },
         render = { field ->
             field.InputField(
-                label = stringResource(ProfileRes.string.nickname)
+                label = stringResource(ProfileRes.string.nickname),
             )
         },
     )
@@ -329,7 +329,7 @@ private fun Form<Profile>.Theme() {
                         }
                 }
             }
-        }
+        },
     )
 }
 
@@ -443,7 +443,7 @@ private fun ImagePicker(
             ),
             colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = MaterialTheme.colorScheme.primary,
-            )
+            ),
         ) {
             Icon(
                 imageVector = Icons.Default.Add,

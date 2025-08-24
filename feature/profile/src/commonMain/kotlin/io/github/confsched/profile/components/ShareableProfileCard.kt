@@ -37,11 +37,12 @@ fun ShareableProfileCard(
 
     CompositionLocalProvider(
         LocalDensity provides Density(
-            density = 1f, fontScale = 1f
+            density = 1f,
+            fontScale = 1f,
         ),
     ) {
         CaptureContainer(
-            onRendered = { frontCardImageBitmap = it }
+            onRendered = { frontCardImageBitmap = it },
         ) {
             ProfileCardFront(
                 theme = theme,
@@ -63,7 +64,7 @@ fun ShareableProfileCard(
         CaptureContainer(
             onRendered = {
                 onRenderResultUpdate(it)
-            }
+            },
         ) {
             frontCardImageBitmap?.let { frontCardImageBitmap ->
                 backCardImageBitmap?.let { backCardImageBitmap ->
@@ -100,7 +101,7 @@ private fun ShareableProfileCard(
                     ProfileRes.drawable.shareable_card_background_day
                 } else {
                     ProfileRes.drawable.shareable_card_background_night
-                }
+                },
             ),
             contentDescription = null,
             modifier = Modifier.matchParentSize(),
@@ -121,7 +122,7 @@ private fun ShareableProfileCard(
                 .size(
                     width = with(density) { 300.toDp() },
                     height = with(density) { 380.toDp() },
-                )
+                ),
         )
         Image(
             bitmap = backCardImageBitmap,
@@ -129,12 +130,12 @@ private fun ShareableProfileCard(
             modifier = Modifier
                 .offset(
                     x = with(density) { 620.toDp() },
-                    y = with(density) { 190.toDp() }
+                    y = with(density) { 190.toDp() },
                 )
                 .size(
                     width = with(density) { 300.toDp() },
                     height = with(density) { 380.toDp() },
-                )
+                ),
         )
         Image(
             painter = painterResource(ProfileRes.drawable.shareable_card_foreground_star_orbit),

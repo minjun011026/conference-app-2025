@@ -75,7 +75,7 @@ private fun ProfileCardBackPreview() {
         val canvas = Canvas(this)
         canvas.drawRect(
             rect = Rect(0f, 0f, 160f, 160f),
-            paint = Paint().apply { color = Color.Red }
+            paint = Paint().apply { color = Color.Red },
         )
     }
 
