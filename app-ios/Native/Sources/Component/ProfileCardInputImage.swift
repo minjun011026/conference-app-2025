@@ -3,13 +3,18 @@ import Theme
 import UIKit
 import _PhotosUI_SwiftUI
 
-struct ProfileCardInputImage: View {
+public struct ProfileCardInputImage: View {
     @State private var isPickerPresented = false
     @State private var selectedImage: Image?
     @Binding var selectedPhoto: PhotosPickerItem?
     var title: String
 
-    var body: some View {
+    public init(selectedPhoto: Binding<PhotosPickerItem?>, title: String) {
+        self._selectedPhoto = selectedPhoto
+        self.title = title
+    }
+
+    public var body: some View {
         VStack(alignment: .leading) {
             Text(title)
                 .typographyStyle(.titleMedium)
@@ -94,7 +99,9 @@ extension UIImage {
         }
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         draw(in: CGRect(origin: .zero, size: size))
-        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        guard let normalizedImage = UIGraphicsGetImageFromCurrentImageContext() else {
+            return self
+        }
         UIGraphicsEndImageContext()
         return normalizedImage
     }

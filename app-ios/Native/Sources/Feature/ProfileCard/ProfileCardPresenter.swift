@@ -59,7 +59,7 @@ final class ProfileCardPresenter {
 
     var formState: FormState
     var isEditing: Bool
-    
+
     var shouldEditing: Bool {
         isEditing || profile.profile == nil
     }

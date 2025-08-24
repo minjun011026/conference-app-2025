@@ -1,12 +1,18 @@
 import SwiftUI
 import Theme
 
-struct ProfileCardInputTextField: View {
+public struct ProfileCardInputTextField: View {
     var title: String
     var placeholder: String = ""
     @Binding var text: String
 
-    var body: some View {
+    public init(title: String, placeholder: String = "", text: Binding<String>) {
+        self.title = title
+        self.placeholder = placeholder
+        self._text = text
+    }
+
+    public var body: some View {
         VStack(alignment: .leading) {
             Text(title)
                 .typographyStyle(.titleMedium)
