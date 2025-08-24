@@ -84,6 +84,7 @@ fun ProfileCardScreen(
             FlippableProfileCard(uiState = uiState)
             Spacer(Modifier.height(32.dp))
             Button(
+                enabled = sharableProfileCardRenderResult != null,
                 onClick = {
                     sharableProfileCardRenderResult?.let {
                         coroutineScope.launch {
