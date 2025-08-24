@@ -15,6 +15,8 @@ struct DroidKaigi2025App: App {
     private let titleFontSize: CGFloat = 28
 
     init() {
+        ThemeFonts.registerAll()
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
 
