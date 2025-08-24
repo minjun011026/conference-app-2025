@@ -459,19 +459,11 @@ private fun ImagePicker(
 @Preview
 @Composable
 private fun ProfileEditScreenPreview() {
-//    val form = rememberForm(
-//        initialValue = Profile(
-//            nickName = "John Doe",
-//            occupation = "Software Engineer",
-//            link = "https://example.com",
-//            imagePath = "https://example.com/image.jpg",
-//            image = ByteArray(0),
-//            themeKey = ProfileCardTheme.DarkPill.themeKey,
-//        ),
-//        onSubmit = {},
-//    )
     KaigiPreviewContainer {
-//        ProfileEditScreen(form = form)
+        ProfileEditScreen(
+            initialProfile = null,
+            onCreateClick = {},
+        )
     }
 }
 
