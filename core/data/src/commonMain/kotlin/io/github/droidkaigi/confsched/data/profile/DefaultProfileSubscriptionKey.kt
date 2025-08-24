@@ -1,11 +1,10 @@
 package io.github.droidkaigi.confsched.data.profile
 
-import androidx.compose.ui.graphics.decodeToImageBitmap
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.model.profile.ProfileSubscriptionKey
-import io.github.droidkaigi.confsched.model.profile.ProfileWithImageBitmaps
+import io.github.droidkaigi.confsched.model.profile.ProfileWithImages
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.flow.map
@@ -21,23 +20,21 @@ public class DefaultProfileSubscriptionKey(
     id = SubscriptionId("profile"),
     subscribe = {
         dataStore.getProfileOrNull().map { profile ->
-            if (profile == null) return@map ProfileWithImageBitmaps()
+            if (profile == null) return@map ProfileWithImages()
 
-            if (profile.imagePath.isEmpty() || profile.link.isEmpty()) return@map ProfileWithImageBitmaps(profile)
+            if (profile.imagePath.isEmpty() || profile.link.isEmpty()) return@map ProfileWithImages(profile)
 
-            val qrImageBitmap = QRCode.ofSquares()
+            val qrImageByteArray = QRCode.ofSquares()
                 .build(profile.link)
                 .renderToBytes()
-                .decodeToImageBitmap()
 
-            val profileImageBitmap = PlatformFile(profile.imagePath)
+            val profileImageByteArray = PlatformFile(profile.imagePath)
                 .readBytes()
-                .decodeToImageBitmap()
 
-            ProfileWithImageBitmaps(
+            ProfileWithImages(
                 profile = profile,
-                profileImageBitmap = profileImageBitmap,
-                qrImageBitmap = qrImageBitmap,
+                profileImageByteArray = profileImageByteArray,
+                qrImageByteArray = qrImageByteArray,
             )
         }
     },
