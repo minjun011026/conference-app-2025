@@ -86,7 +86,7 @@ internal class IosExternalNavController : ExternalNavController {
         )
     }
 
-    override fun onShareProfileCardClick(imageBitmap: ImageBitmap) {
+    override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
         TODO("Not yet implemented")
     }
 }

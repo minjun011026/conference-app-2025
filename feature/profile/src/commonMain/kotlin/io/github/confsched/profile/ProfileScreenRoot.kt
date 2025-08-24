@@ -8,6 +8,7 @@ import io.github.droidkaigi.confsched.droidkaigiui.architecture.SoilDataBoundary
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.SoilFallbackDefaults
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.profile_card_title
+import io.github.droidkaigi.confsched.profile.share_description
 import org.jetbrains.compose.resources.stringResource
 import soil.query.compose.rememberSubscription
 
@@ -15,7 +16,7 @@ import soil.query.compose.rememberSubscription
 @Composable
 context(screenContext: ProfileScreenContext)
 fun ProfileScreenRoot(
-    onShareClick: (ImageBitmap) -> Unit,
+    onShareClick: (String, ImageBitmap) -> Unit,
 ) {
     SoilDataBoundary(
         state = rememberSubscription(screenContext.profileSubscriptionKey),
@@ -30,10 +31,14 @@ fun ProfileScreenRoot(
 
         when (uiState) {
             is ProfileUiState.Card -> {
+                val shareText = stringResource(ProfileRes.string.share_description)
+
                 ProfileCardScreen(
                     uiState = uiState,
                     onEditClick = { eventFlow.tryEmit(ProfileScreenEvent.EnterEditMode) },
-                    onShareClick = onShareClick,
+                    onShareClick = { shareableImageBitmap ->
+                        onShareClick(shareText, shareableImageBitmap)
+                    },
                 )
             }
 

@@ -94,9 +94,8 @@ class AndroidExternalNavController(
         }
     }
 
-    override fun onShareProfileCardClick(imageBitmap: ImageBitmap) {
+    override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
         val imageAbsolutePath = imageBitmap.saveToDisk(context)
-        val text = "Hogehoge"
 
         try {
             val file = File(imageAbsolutePath)
@@ -104,11 +103,12 @@ class AndroidExternalNavController(
 
             ShareCompat.IntentBuilder(context)
                 .setStream(uri)
-                .setText(text)
+                .setText(shareText)
                 .setType("image/png")
                 .startChooser()
         } catch (e: ActivityNotFoundException) {
-//            Logger.e("ActivityNotFoundException Fail startActivity: $e")
+            // TODO: consider logging
+            e.printStackTrace()
         }
     }
 

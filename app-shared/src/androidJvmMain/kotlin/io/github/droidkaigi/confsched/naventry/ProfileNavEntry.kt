@@ -11,7 +11,7 @@ import io.github.droidkaigi.confsched.navkey.ProfileNavKey
 
 context(appGraph: AppGraph)
 fun EntryProviderBuilder<NavKey>.profileNavEntry(
-    onShareProfileCardClick: (ImageBitmap) -> Unit,
+    onShareProfileCardClick: (String, ImageBitmap) -> Unit,
 ) {
     entry<ProfileNavKey> {
         with(rememberProfileScreenContextRetained()) {

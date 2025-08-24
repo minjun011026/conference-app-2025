@@ -11,5 +11,5 @@ interface ExternalNavController {
     fun navigate(url: String)
     fun navigateToCalendarRegistration(timetableItem: TimetableItem)
     fun onShareClick(timetableItem: TimetableItem)
-    fun onShareProfileCardClick(imageBitmap: ImageBitmap)
+    fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap)
 }

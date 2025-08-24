@@ -55,7 +55,7 @@ class JvmExternalNavController : ExternalNavController {
         TODO("Not yet implemented")
     }
 
-    override fun onShareProfileCardClick(imageBitmap: ImageBitmap) {
+    override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
         TODO("Not yet implemented")
     }
 }
