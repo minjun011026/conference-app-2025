@@ -20,18 +20,11 @@ import kotlinx.coroutines.CoroutineDispatcher
     excludes = [
         DefaultSessionsApiClient::class,
         DefaultContributorsApiClient::class,
-        DefaultEventMapApiClient::class,
         DefaultStaffApiClient::class,
         CoroutineDispatcher::class,
     ],
 )
-internal interface JvmTestAppGraph : TestAppGraph {
-    @Provides
-    fun provideFakeBuildConfigProvider(): FakeBuildConfigProvider = FakeBuildConfigProvider()
-
-    @Provides
-    fun provideFakeLicensesJsonReader(): FakeLicensesJsonReader = FakeLicensesJsonReader()
-}
+internal interface JvmTestAppGraph : TestAppGraph
 
 internal actual fun createTestAppGraph(): TestAppGraph {
     return createGraph<JvmTestAppGraph>()

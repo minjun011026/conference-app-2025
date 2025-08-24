@@ -49,7 +49,6 @@ import platform.Foundation.NSUserDomainMask
     excludes = [
         DefaultSessionsApiClient::class,
         DefaultContributorsApiClient::class,
-        DefaultEventMapApiClient::class,
         DefaultStaffApiClient::class,
         CoroutineDispatcher::class,
     ],
@@ -76,9 +75,6 @@ internal interface IosTestAppGraph : TestAppGraph {
     @Binds
     val DefaultContributorsQueryKey.bind: ContributorsQueryKey
 
-    @Binds
-    val DefaultEventMapQueryKey.bind: EventMapQueryKey
-
     @Provides
     fun provideJson(): Json {
         return defaultJson()
@@ -98,18 +94,6 @@ internal interface IosTestAppGraph : TestAppGraph {
             requireNotNull(documentDirectory).path + "/$fileName"
         }
     }
-
-    @Provides
-    fun provideFakeBuildConfigProvider(): FakeBuildConfigProvider = FakeBuildConfigProvider()
-
-    @Provides
-    fun provideFakeLicensesJsonReader(): FakeLicensesJsonReader = FakeLicensesJsonReader()
-}
-
-@ContributesTo(TimetableDetailScope::class)
-interface IosTimetableItemDetailGraph {
-    @Binds
-    val DefaultTimetableItemQueryKey.bind: TimetableItemQueryKey
 }
 
 internal actual fun createTestAppGraph(): TestAppGraph {
