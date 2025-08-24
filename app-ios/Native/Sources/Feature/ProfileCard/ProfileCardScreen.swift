@@ -40,8 +40,7 @@ public struct ProfileCardScreen: View {
     }
 
     private var editView: some View {
-        // TODO:
-        Text("Edit")
+        EditProfileCardForm()
     }
 
     @ViewBuilder
@@ -61,12 +60,14 @@ public struct ProfileCardScreen: View {
                     userRole: profile.occupation,
                     userName: profile.name,
                     cardType: profile.cardVariants.type,
+                    image: profile.image,
                     normal: (normal.x, normal.y, normal.z),
                 )
             },
             back: { normal in
                 BackCard(
                     cardType: profile.cardVariants.type,
+                    url: profile.url,
                     normal: (normal.x, normal.y, normal.z),
                 )
             }
