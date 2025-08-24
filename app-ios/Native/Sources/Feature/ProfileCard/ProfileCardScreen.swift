@@ -27,12 +27,12 @@ public struct ProfileCardScreen: View {
             .padding(.bottom, 80)  // Tab bar padding
         }
     }
-    
+
     private var editView: some View {
         // TODO:
         Text("Edit")
     }
-    
+
     private var cardView: some View {
         VStack(spacing: 0) {
             profileCard
