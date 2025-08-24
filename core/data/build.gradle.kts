@@ -21,7 +21,6 @@ kotlin {
             implementation(libs.kotlinxSerializationJson)
             implementation(libs.kotlinxCollectionsImmutable)
 
-            implementation(projects.core.common)
             implementation(libs.ktorClientContentNegotiation)
             implementation(libs.ktorKotlinxSerializationJson)
         }
