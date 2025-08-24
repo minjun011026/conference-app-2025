@@ -6,12 +6,18 @@ import Presentation
 @MainActor
 @Observable
 final class ProfileCardPresenter {
-    var userName: String = "DroidKaigi"
-    var userRole: String = "Android Developer"
-    var userCompany: String = "Tech Company"
-    var userBio: String = "Passionate about Android development and attending DroidKaigi 2025!"
+    let profile = ProfileProvider()
+    var editingProfile: Profile?
+
+    var isEditing: Bool {
+        editingProfile != nil || profile.profile == nil
+    }
 
     init() {}
+
+    func loadInitial() {
+        profile.fetchProfile()
+    }
 
     func shareProfileCard() {
         // print("Share profile card tapped")
@@ -19,7 +25,6 @@ final class ProfileCardPresenter {
     }
 
     func editProfile() {
-        // print("Edit profile tapped")
-        // TODO: Implement profile editing
+        editingProfile = profile.profile
     }
 }
