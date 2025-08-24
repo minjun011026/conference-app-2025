@@ -52,7 +52,7 @@ fun ProfileCardScreen(
     onShareClick: (ImageBitmap) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var sharableProfileCardRenderResult: ImageBitmap? by remember { mutableStateOf(null) }
+    var shareableProfileCardRenderResult: ImageBitmap? by remember { mutableStateOf(null) }
     val coroutineScope = rememberCoroutineScope()
     // Not displayed, just for generating shareable card image
     ShareableProfileCard(
@@ -61,7 +61,7 @@ fun ProfileCardScreen(
         nickName = uiState.profile.nickName,
         occupation = uiState.profile.occupation,
         profileImageBitmap = uiState.profileImageBitmap,
-        onRenderResultUpdate = { sharableProfileCardRenderResult = it },
+        onRenderResultUpdate = { shareableProfileCardRenderResult = it },
     )
 
     Scaffold(
@@ -84,9 +84,9 @@ fun ProfileCardScreen(
             FlippableProfileCard(uiState = uiState)
             Spacer(Modifier.height(32.dp))
             Button(
-                enabled = sharableProfileCardRenderResult != null,
+                enabled = shareableProfileCardRenderResult != null,
                 onClick = {
-                    sharableProfileCardRenderResult?.let {
+                    shareableProfileCardRenderResult?.let {
                         coroutineScope.launch {
                             onShareClick(it)
                         }
