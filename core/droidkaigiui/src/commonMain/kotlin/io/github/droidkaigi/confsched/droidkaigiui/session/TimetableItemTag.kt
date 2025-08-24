@@ -1,6 +1,8 @@
 package io.github.droidkaigi.confsched.droidkaigiui.session
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,8 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.TimetableItemTag
-import io.github.droidkaigi.confsched.droidkaigiui.extension.toResDrawable
-import io.github.droidkaigi.confsched.model.core.RoomIcon
+import io.github.droidkaigi.confsched.droidkaigiui.extension.icon
+import io.github.droidkaigi.confsched.droidkaigiui.extension.roomTheme
+import io.github.droidkaigi.confsched.model.core.RoomType
+import io.github.droidkaigi.confsched.model.core.toRoom
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -70,11 +74,16 @@ private fun TimetableItemLangTagPreview() {
 @Composable
 private fun TimetableItemRoomTagPreview() {
     KaigiPreviewContainer {
-        TimetableItemRoomTag(
-            icon = RoomIcon.Diamond.toResDrawable(),
-            text = "HEDGEHOG",
-            color = Color(0xFFFF974B),
-        )
+        Column {
+            RoomType.entries.forEach { roomType ->
+                TimetableItemRoomTag(
+                    modifier = Modifier.padding(top = 22.dp),
+                    icon = roomType.toRoom().icon,
+                    text = roomType.toRoom().name.enTitle,
+                    color = roomType.toRoom().roomTheme.primaryColor,
+                )
+            }
+        }
     }
 }
 

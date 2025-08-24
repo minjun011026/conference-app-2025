@@ -67,7 +67,7 @@ fun TimetableItemTag(
             .border(
                 width = 1.dp,
                 color = borderColor,
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(5.dp),
             )
             .padding(contentPadding),
     ) {
