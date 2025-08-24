@@ -11,7 +11,11 @@ context(appGraph: AppGraph)
 fun NavGraphBuilder.profileTabNavGraph() {
     composable<ProfileTabRoute> {
         with(rememberProfileScreenContextRetained()) {
-            ProfileScreenRoot()
+            ProfileScreenRoot(
+                onShareClick = {
+                    // TODO
+                },
+            )
         }
     }
 }

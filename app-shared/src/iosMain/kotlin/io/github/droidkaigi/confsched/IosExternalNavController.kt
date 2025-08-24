@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.ImageBitmap
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
@@ -83,5 +84,9 @@ internal class IosExternalNavController : ExternalNavController {
             animated = true,
             completion = null,
         )
+    }
+
+    override fun onShareProfileCardClick(imageBitmap: ImageBitmap) {
+        TODO("Not yet implemented")
     }
 }

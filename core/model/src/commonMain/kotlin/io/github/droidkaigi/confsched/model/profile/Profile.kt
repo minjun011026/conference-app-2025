@@ -9,6 +9,7 @@ data class Profile(
     val link: String,
     val imagePath: String,
     val image: ByteArray,
+    val themeKey: String,
 ) {
     override fun toString(): String {
         return """
@@ -16,6 +17,9 @@ data class Profile(
                 name='$name',
                 occupation='$occupation',
                 link='$link',
+                imagePath='$imagePath',
+                image=${image.contentToString()},
+                themeKey='$themeKey'
             )
         """.trimIndent()
     }
@@ -31,6 +35,7 @@ data class Profile(
         if (link != other.link) return false
         if (imagePath != other.imagePath) return false
         if (!image.contentEquals(other.image)) return false
+        if (themeKey != other.themeKey) return false
 
         return true
     }
@@ -41,6 +46,7 @@ data class Profile(
         result = 31 * result + link.hashCode()
         result = 31 * result + imagePath.hashCode()
         result = 31 * result + image.contentHashCode()
+        result = 31 * result + themeKey.hashCode()
         return result
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import io.github.confsched.profile.ProfileScreenContext
+import io.github.confsched.profile.components.ProfileCardTheme
 import io.github.droidkaigi.confsched.common.compose.EventEffect
 import io.github.droidkaigi.confsched.common.compose.EventFlow
 import io.github.droidkaigi.confsched.common.compose.providePresenterDefaults
@@ -32,6 +33,7 @@ fun profileEditScreenPresenter(
                 link = "",
                 imagePath = "",
                 image = ByteArray(0),
+                themeKey = ProfileCardTheme.DarkPill.themeKey,
             ),
             meta = formMeta,
         )
@@ -45,6 +47,7 @@ fun profileEditScreenPresenter(
     EventEffect(eventFlow) { event ->
         when (event) {
             is ProfileEditScreenEvent.Create -> {
+                println(event.profile)
                 profileMutation.mutate(event.profile)
                 created = true
             }

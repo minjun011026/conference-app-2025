@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.ImageBitmap
 import io.github.confsched.profile.card.ProfileCardScreenRoot
 import io.github.confsched.profile.edit.ProfileEditScreenRoot
 import io.github.droidkaigi.confsched.droidkaigiui.architecture.SoilDataBoundary
@@ -18,7 +19,9 @@ import soil.query.compose.rememberSubscription
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 context(screenContext: ProfileScreenContext)
-fun ProfileScreenRoot() {
+fun ProfileScreenRoot(
+    onShareClick: (ImageBitmap) -> Unit,
+) {
     SoilDataBoundary(
         state = rememberSubscription(screenContext.profileSubscriptionKey),
         fallback = SoilFallbackDefaults.appBar(stringResource(ProfileRes.string.profile_card_title)),
@@ -29,6 +32,7 @@ fun ProfileScreenRoot() {
                 ProfileCardScreenRoot(
                     profile = profile,
                     onEditClick = { isEditMode = true },
+                    onShareClick = onShareClick,
                 )
             }
 

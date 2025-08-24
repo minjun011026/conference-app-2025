@@ -1,3 +1,7 @@
 package io.github.confsched.profile.card
 
-sealed interface ProfileCardScreenEvent
+import androidx.compose.ui.graphics.ImageBitmap
+
+sealed interface ProfileCardScreenEvent {
+    data class ReadyToShare(val imageBitmap: ImageBitmap) : ProfileCardScreenEvent
+}
