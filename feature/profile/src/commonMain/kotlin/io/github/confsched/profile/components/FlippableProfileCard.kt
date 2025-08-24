@@ -15,10 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import io.github.confsched.profile.ProfileUiState
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.model.profile.Profile
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private const val ChangeFlipCardDeltaThreshold = 20f
@@ -82,14 +82,15 @@ fun FlippableProfileCard(
 @Composable
 private fun FlippableProfileCardPreview() {
     KaigiPreviewContainer {
-//        FlippableProfileCard(
-//            uiState = ProfileCardUiState(
-//                profileImageBitmap = "",
-//                nickName = "DroidKaigi",
-//                occupation = "Organizer",
-//                qrImageBitmap = ImageBitmap(160, 160),
-//                theme = ProfileCardTheme.DarkPill,
-//            )
-//        )
+        FlippableProfileCard(
+            uiState = ProfileUiState.Card(
+                profile = Profile(
+                    nickName = "DroidKaigi",
+                    occupation = "Software Engineer",
+                ),
+                profileImageBitmap = CardPreviewImageBitmaps.profileImage,
+                qrImageBitmap = CardPreviewImageBitmaps.qrImage,
+            ),
+        )
     }
 }

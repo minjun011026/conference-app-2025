@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
+import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.shareable_card_background_day
 import io.github.droidkaigi.confsched.profile.shareable_card_background_night
@@ -145,12 +146,14 @@ private fun ShareableProfileCard(
     }
 }
 
-@Preview(widthDp = 1200, heightDp = 630)
+@Preview
 @Composable
 private fun ShareableProfileCardPreview() {
-    ShareableProfileCard(
-        theme = ProfileCardTheme.DarkPill,
-        frontCardImageBitmap = ImageBitmap(1, 1),
-        backCardImageBitmap = ImageBitmap(1, 1),
-    )
+    KaigiPreviewContainer {
+        ShareableProfileCard(
+            theme = ProfileCardTheme.DarkPill,
+            frontCardImageBitmap = CardPreviewImageBitmaps.frontCardImage,
+            backCardImageBitmap = CardPreviewImageBitmaps.backCardImage,
+        )
+    }
 }
