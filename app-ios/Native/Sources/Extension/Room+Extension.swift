@@ -11,23 +11,21 @@ extension Room {
     public var color: Color {
         // NOTE: The color names in Figma do not match the room names.
         switch type {
-        case .roomF:
+        case .roomJ:
             // JELLYFISH
-            return AssetColors.iguana.swiftUIColor
-        case .roomG:
+            return AssetColors.jellyfish.swiftUIColor
+        case .roomK:
             // KOALA
             return AssetColors.hedgehog.swiftUIColor
-        case .roomH:
+        case .roomL:
             // LADYBUG
             return AssetColors.giraffe.swiftUIColor
-        case .roomI:
+        case .roomM:
             // MEERKAT
             return AssetColors.flamingo.swiftUIColor
-        case .roomJ:
+        case .roomN:
             // NARWHAL
-            return AssetColors.jellyfish.swiftUIColor
-        case .roomIJ:
-            return AssetColors.jellyfish.swiftUIColor
+            return AssetColors.iguana.swiftUIColor
         }
     }
 
@@ -50,27 +48,25 @@ extension Room {
 
     public var floorInfo: String {
         switch type {
-        case .roomF, .roomG:
+        case .roomJ, .roomK:
             return "1F"
-        case .roomH, .roomI, .roomJ, .roomIJ:
+        case .roomL, .roomM, .roomN:
             return "B1F"
         }
     }
 
     public var iconName: String {
         switch type {
-        case .roomF:
-            return "ic_rhombus"
-        case .roomG:
-            return "ic_circle"
-        case .roomH:
-            return "ic_diamond"
-        case .roomI:
-            return "ic_square"
         case .roomJ:
             return "ic_triangle"
-        case .roomIJ:
+        case .roomK:
+            return "ic_circle"
+        case .roomL:
+            return "ic_diamond"
+        case .roomM:
             return "ic_square"
+        case .roomN:
+            return "ic_rhombus"
         }
     }
 

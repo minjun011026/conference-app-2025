@@ -27,14 +27,14 @@ public struct RoomTag: View {
     }
 
     private var textColor: Color {
-        if room.type == .roomH {
+        if room.type == .roomL {
             return AssetColors.surface.swiftUIColor
         }
         return room.roomTheme.primaryColor
     }
 
     private var backgroundColor: Color {
-        if room.type == .roomH {
+        if room.type == .roomL {
             return room.roomTheme.primaryColor
         }
         return room.roomTheme.containerColor

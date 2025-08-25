@@ -225,7 +225,7 @@ extension Model.TimetableItemWithFavorite {
                 room: Model.Room(
                     id: 0,
                     name: Model.MultiLangText(jaTitle: "未定", enTitle: "TBD"),
-                    type: .roomIJ,
+                    type: .roomJ,
                     sort: 999
                 ),
                 targetAudience: "All",
@@ -270,7 +270,7 @@ extension Model.Timetable {
                     room: Model.Room(
                         id: 0,
                         name: Model.MultiLangText(jaTitle: "未定", enTitle: "TBD"),
-                        type: .roomIJ,
+                        type: .roomJ,
                         sort: 999
                     ),
                     targetAudience: "All",
