@@ -1,6 +1,7 @@
 package io.github.droidkaigi.confsched.sessions
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,6 +29,7 @@ fun SearchScreen(
                 onBackClick = onBackClick,
             )
         },
+        contentWindowInsets = WindowInsets(),
         modifier = modifier,
     ) { paddingValues ->
         Column(

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -63,6 +64,7 @@ fun SponsorsScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
+        contentWindowInsets = WindowInsets(),
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             LazyVerticalGrid(

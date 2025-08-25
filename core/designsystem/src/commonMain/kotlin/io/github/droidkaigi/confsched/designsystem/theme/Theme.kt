@@ -5,6 +5,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 
 private val fixedAccentColors = FixedAccentColors(
     primaryFixed = Color(0xFFD8E2FF),
@@ -339,6 +340,7 @@ data class FixedAccentColors(
 @Composable
 fun KaigiTheme(
     colorContrast: ColorContrast = ColorContrast.Default,
+    fontFamily: FontFamily? = changoFontFamily(),
     content: @Composable () -> Unit,
 ) {
     // currently, we do not support light theme
@@ -350,8 +352,8 @@ fun KaigiTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = AppTypography(fontFamily),
         content = content,
-        typography = AppTypography(),
     )
 }
 
