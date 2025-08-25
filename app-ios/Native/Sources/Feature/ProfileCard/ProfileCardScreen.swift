@@ -90,9 +90,12 @@ public struct ProfileCardScreen: View {
     }
 
     private var shareButton: some View {
-        Button {
-            presenter.shareProfileCard()
-        } label: {
+        let imageRenderer = ImageRenderer(content: OGPProfileShareImage(profile: presenter.profile.profile!))
+        let uiImage = imageRenderer.uiImage!
+        let ogpImage = uiImage.pngData()!
+        let shareText = String(localized: "Share Message", bundle: .module)
+        
+        return ShareLink(item: ShareOGPItem(ogpImage: ogpImage, text: shareText), preview: SharePreview(shareText, image: Image(uiImage: uiImage))) {
             HStack {
                 AssetImages.icShare.swiftUIImage
                     .resizable()
@@ -114,6 +117,17 @@ public struct ProfileCardScreen: View {
         }
         .textButtonStyle()
     }
+}
+
+struct ShareOGPItem: Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .png) { item in
+            item.ogpImage
+        }
+    }
+    
+    let ogpImage: Data
+    let text: String
 }
 
 #Preview {
