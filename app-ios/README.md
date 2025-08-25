@@ -145,21 +145,38 @@ graph LR
 1. Clone the repository:
 ```bash
 git clone https://github.com/DroidKaigi/conference-app-2025.git
-cd conference-app-2025/app-ios
 ```
 
-2. Setup the project:
+2. Assemble the shared KMP framework:
 ```bash
-make setup
+./gradlew app-shared:assembleSharedXCFramework
 ```
-Note: This installs SwiftLint via nest. Make sure nest is installed first (`brew install mtj0928/tap/nest`).
 
-3. Open the project:
+3. Setup the project:
+```bash
+cd app-ios && make setup
+```
+Note: This installs SwiftLint via nest. Make sure nest is installed first (`curl -s https://raw.githubusercontent.com/mtj0928/nest/main/Scripts/install.sh | bash`) and confirm `~/.nest/bin` is added to PATH.
+
+__【Example】__
+
+```bash
+# Open .zshrc
+vim ~/.zshrc
+
+# Write the following line and save
+export PATH="$PATH:~/.nest/bin"
+
+# Apply the changes
+source ~/.zshrc
+```
+
+4. Open the project:
 ```bash
 open DroidKaigi2025.xcodeproj
 ```
 
-4. Build and run:
+5. Build and run:
    - Select the `DroidKaigi2025` scheme
    - Choose your target device/simulator
    - Press `Cmd+R` to build and run

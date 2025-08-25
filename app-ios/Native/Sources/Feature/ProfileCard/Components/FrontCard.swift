@@ -5,6 +5,7 @@ struct FrontCard: View {
     let userRole: String
     let userName: String
     let cardType: ProfileCardType
+    let image: Data
     let normal: (Float, Float, Float)
 
     let shaderFunction = ShaderFunction(library: .bundle(.module), name: "kiraEffect")
@@ -67,9 +68,8 @@ struct FrontCard: View {
         .clipped(antialiased: true)
     }
 
-    // TODO: Replace user image
     private var avatarImage: some View {
-        Image(systemName: "person.circle.fill")
+        Image(uiImage: UIImage(data: image)!)
             .resizable()
             .frame(width: 131, height: 131)
             .foregroundColor(.accentColor)

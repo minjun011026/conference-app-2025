@@ -4,7 +4,7 @@ import io.github.droidkaigi.confsched.model.core.DroidKaigi2025Day
 import io.github.droidkaigi.confsched.model.core.Lang
 import io.github.droidkaigi.confsched.model.core.MultiLangText
 import io.github.droidkaigi.confsched.model.core.Room
-import io.github.droidkaigi.confsched.model.core.RoomType.RoomF
+import io.github.droidkaigi.confsched.model.core.RoomType.RoomJ
 import io.github.droidkaigi.confsched.model.core.defaultLang
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -126,6 +126,9 @@ sealed class TimetableItem {
             "https://2024.droidkaigi.jp/en/timetable/${id.value}"
         }
 
+    val isCancelledSession: Boolean
+        get() = message != null
+
     fun getSupportedLangString(isJapaneseLocale: Boolean): String {
         val japanese = if (isJapaneseLocale) "日本語" else "Japanese"
         val english = if (isJapaneseLocale) "英語" else "English"
@@ -170,7 +173,7 @@ fun TimetableItem.Session.Companion.fake(duration: Duration = 40.minutes): Timet
         room = Room(
             id = 1,
             name = MultiLangText("Room1", "Room2"),
-            type = RoomF,
+            type = RoomJ,
             sort = 1,
         ),
         targetAudience = "For App developer アプリ開発者向け",

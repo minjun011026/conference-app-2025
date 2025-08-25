@@ -29,6 +29,8 @@ kotlin {
             implementation(projects.feature.contributors)
             implementation(projects.feature.eventmap)
             implementation(projects.feature.staff)
+            implementation(projects.feature.settings)
+            implementation(projects.feature.favorites)
 
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
@@ -42,6 +44,8 @@ kotlin {
             implementation(libs.lifecycleRuntimeCompose)
             implementation(libs.androidxDatastorePreferencesCore)
             implementation(libs.material3)
+
+            implementation(kotlin("test"))
         }
 
         androidMain.dependencies {

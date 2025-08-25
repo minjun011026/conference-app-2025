@@ -21,6 +21,9 @@ public annotation class UserDataStoreQualifier
 @Qualifier
 public annotation class SessionCacheDataStoreQualifier
 
+@Qualifier
+public annotation class SettingsDataStoreQualifier
+
 @ContributesTo(DataScope::class)
 public interface DataStoreDependencyProviders {
     @SingleIn(DataScope::class)
@@ -53,8 +56,24 @@ public interface DataStoreDependencyProviders {
         )
     }
 
+    @SingleIn(DataScope::class)
+    @SettingsDataStoreQualifier
+    @Provides
+    public fun provideSettingsDataStore(
+        dataStorePathProducer: DataStorePathProducer,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.createWithPath(
+            corruptionHandler = ReplaceFileCorruptionHandler({ emptyPreferences() }),
+            migrations = emptyList(),
+            scope = CoroutineScope(ioDispatcher),
+            produceFile = { dataStorePathProducer.producePath(DATA_STORE_SETTINGS_FILE_NAME).toPath() },
+        )
+    }
+
     public companion object {
         public const val DATA_STORE_PREFERENCE_FILE_NAME: String = "confsched2025.preferences_pb"
         public const val DATA_STORE_CACHE_PREFERENCE_FILE_NAME: String = "confsched2025.cache.preferences_pb"
+        public const val DATA_STORE_SETTINGS_FILE_NAME: String = "confsched2025.settings.preferences_pb"
     }
 }

@@ -12,10 +12,12 @@ import io.github.droidkaigi.confsched.model.core.Filters
 import io.github.droidkaigi.confsched.model.core.Lang
 import io.github.droidkaigi.confsched.model.sessions.Timetable
 import io.github.droidkaigi.confsched.model.sessions.TimetableCategory
+import io.github.droidkaigi.confsched.model.sessions.TimetableItemId
 import io.github.droidkaigi.confsched.model.sessions.TimetableSessionType
 import io.github.takahirom.rin.rememberRetained
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentMap
+import soil.query.compose.rememberMutation
 
 @Composable
 context(screenContext: SearchScreenContext)
@@ -24,10 +26,11 @@ fun searchScreenPresenter(
     timetable: Timetable,
 ): SearchScreenUiState = providePresenterDefaults {
     var searchQuery by rememberRetained { mutableStateOf("") }
-    var selectedDay by rememberRetained { mutableStateOf<DroidKaigi2025Day?>(null) }
-    var selectedCategory by rememberRetained { mutableStateOf<TimetableCategory?>(null) }
-    var selectedSessionType by rememberRetained { mutableStateOf<TimetableSessionType?>(null) }
-    var selectedLanguage by rememberRetained { mutableStateOf<Lang?>(null) }
+    var selectedDays by rememberRetained { mutableStateOf<List<DroidKaigi2025Day>>(emptyList()) }
+    var selectedCategories by rememberRetained { mutableStateOf<List<TimetableCategory>>(emptyList()) }
+    var selectedSessionTypes by rememberRetained { mutableStateOf<List<TimetableSessionType>>(emptyList()) }
+    var selectedLanguages by rememberRetained { mutableStateOf<List<Lang>>(emptyList()) }
+    val favoriteTimetableItemIdMutation = rememberMutation(screenContext.favoriteTimetableItemIdMutationKey)
 
     EventEffect(eventFlow) { event ->
         when (event) {
@@ -35,45 +38,51 @@ fun searchScreenPresenter(
             is SearchScreenEvent.ToggleFilter -> {
                 when (val filter = event.filter) {
                     is SearchScreenEvent.Filter.Day -> {
-                        selectedDay = if (selectedDay == filter.day) null else filter.day
+                        selectedDays = selectedDays.toggle(filter.day)
                     }
+
                     is SearchScreenEvent.Filter.Category -> {
-                        selectedCategory = if (selectedCategory == filter.category) null else filter.category
+                        selectedCategories = selectedCategories.toggle(filter.category)
                     }
+
                     is SearchScreenEvent.Filter.SessionType -> {
-                        selectedSessionType = if (selectedSessionType == filter.sessionType) null else filter.sessionType
+                        selectedSessionTypes = selectedSessionTypes.toggle(filter.sessionType)
                     }
+
                     is SearchScreenEvent.Filter.Language -> {
-                        selectedLanguage = if (selectedLanguage == filter.language) null else filter.language
+                        selectedLanguages = selectedLanguages.toggle(filter.language)
                     }
                 }
             }
+
             is SearchScreenEvent.Bookmark -> {
-                // TODO: Implement bookmark mutation issue#188
+                val targetId = TimetableItemId(event.sessionId)
+                favoriteTimetableItemIdMutation.mutate(targetId)
             }
+
             SearchScreenEvent.ClearFilters -> {
-                selectedDay = null
-                selectedCategory = null
-                selectedSessionType = null
-                selectedLanguage = null
+                selectedDays = emptyList()
+                selectedCategories = emptyList()
+                selectedSessionTypes = emptyList()
+                selectedLanguages = emptyList()
             }
         }
     }
 
     val hasSearchCriteria = searchQuery.isNotEmpty() ||
-        selectedDay != null ||
-        selectedCategory != null ||
-        selectedSessionType != null ||
-        selectedLanguage != null
+        selectedDays.isNotEmpty() ||
+        selectedCategories.isNotEmpty() ||
+        selectedSessionTypes.isNotEmpty() ||
+        selectedLanguages.isNotEmpty()
 
     val filteredTimetable = if (hasSearchCriteria) {
         timetable.filtered(
             Filters(
                 searchWord = searchQuery,
-                days = selectedDay?.let { listOf(it) } ?: emptyList(),
-                categories = selectedCategory?.let { listOf(it) } ?: emptyList(),
-                sessionTypes = selectedSessionType?.let { listOf(it) } ?: emptyList(),
-                languages = selectedLanguage?.let { listOf(it) } ?: emptyList(),
+                days = selectedDays,
+                categories = selectedCategories,
+                sessionTypes = selectedSessionTypes,
+                languages = selectedLanguages,
             ),
         )
     } else {
@@ -98,15 +107,24 @@ fun searchScreenPresenter(
         searchQuery = searchQuery,
         groupedSessions = groupedSessions,
         availableFilters = SearchScreenUiState.Filters(
-            selectedDay = selectedDay,
-            selectedCategory = selectedCategory,
-            selectedSessionType = selectedSessionType,
-            selectedLanguage = selectedLanguage,
+            selectedDays = selectedDays,
+            selectedCategories = selectedCategories,
+            selectedSessionTypes = selectedSessionTypes,
+            selectedLanguages = selectedLanguages,
             availableDays = DroidKaigi2025Day.visibleDays(),
-            availableCategories = timetable.timetableItems.mapNotNull { it.category }.distinct(),
+            availableCategories = timetable.timetableItems.map { it.category }.distinct(),
             availableSessionTypes = timetable.timetableItems.map { it.sessionType }.distinct(),
             availableLanguages = listOf(Lang.JAPANESE, Lang.ENGLISH),
         ),
         hasSearchCriteria = hasSearchCriteria,
+        bookmarks = timetable.bookmarks,
     )
+}
+
+private fun <T> List<T>.toggle(item: T): List<T> {
+    return if (contains(item)) {
+        minus(item)
+    } else {
+        plus(item)
+    }
 }

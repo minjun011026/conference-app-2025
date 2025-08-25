@@ -25,11 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,6 +56,8 @@ import io.github.droidkaigi.confsched.sessions.schedule_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+const val SummaryCardTextTag = "SummaryCardTextTag:"
+
 @Composable
 fun TimetableItemDetailSummaryCard(
     timetableItem: TimetableItem,
@@ -67,40 +71,56 @@ fun TimetableItemDetailSummaryCard(
     ) {
         SummaryCardText(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag(
+                    SummaryCardTextTag.plus(stringResource(SessionsRes.string.schedule_title)),
+                ),
             imageVector = Icons.Outlined.Schedule,
             contentDescription = stringResource(SessionsRes.string.content_description_schedule),
             title = stringResource(SessionsRes.string.schedule_title),
             description = timetableItem.formattedDateTimeString,
+            isCancelledSession = timetableItem.isCancelledSession,
         )
         Spacer(Modifier.height(8.dp))
         SummaryCardText(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag(
+                    SummaryCardTextTag.plus(stringResource(SessionsRes.string.location_title)),
+                ),
             imageVector = Icons.Outlined.LocationOn,
             contentDescription = stringResource(SessionsRes.string.content_description_location),
             title = stringResource(SessionsRes.string.location_title),
             description = timetableItem.room.nameAndFloor,
+            isCancelledSession = timetableItem.isCancelledSession,
         )
         Spacer(Modifier.height(8.dp))
         SummaryCardText(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag(
+                    SummaryCardTextTag.plus(stringResource(SessionsRes.string.language_title)),
+                ),
             imageVector = Icons.Outlined.Language,
             contentDescription = stringResource(SessionsRes.string.content_description_language),
             title = stringResource(SessionsRes.string.language_title),
             description = timetableItem.getSupportedLangString(
                 getDefaultLocale() == Locale.JAPAN,
             ),
+            isCancelledSession = timetableItem.isCancelledSession,
         )
         Spacer(Modifier.height(8.dp))
         SummaryCardText(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag(
+                    SummaryCardTextTag.plus(stringResource(SessionsRes.string.category_title)),
+                ),
             imageVector = Icons.Outlined.Category,
             contentDescription = stringResource(SessionsRes.string.content_description_category),
             title = stringResource(SessionsRes.string.category_title),
             description = timetableItem.category.title.currentLangTitle,
+            isCancelledSession = timetableItem.isCancelledSession,
         )
     }
 }
@@ -111,6 +131,7 @@ private fun SummaryCardText(
     contentDescription: String,
     title: String,
     description: String,
+    isCancelledSession: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val iconInlineContentId = "icon"
@@ -120,6 +141,7 @@ private fun SummaryCardText(
     val annotatedString = createSummaryCardTextAnnotatedString(
         title = title,
         description = description,
+        isCancelledSession = isCancelledSession,
         iconInlineContentId = iconInlineContentId,
         spacer8dpInlineContentId = spacer8dpInlineContentId,
         spacer12dpInlineContentId = spacer12dpInlineContentId,
@@ -148,6 +170,7 @@ private fun SummaryCardText(
 private fun createSummaryCardTextAnnotatedString(
     title: String,
     description: String,
+    isCancelledSession: Boolean,
     iconInlineContentId: String,
     spacer8dpInlineContentId: String,
     spacer12dpInlineContentId: String,
@@ -175,6 +198,7 @@ private fun createSummaryCardTextAnnotatedString(
                 fontFamily = MaterialTheme.typography.bodyMedium.fontFamily,
                 fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                textDecoration = if (isCancelledSession) TextDecoration.LineThrough else null,
             ),
         ) {
             append(description)

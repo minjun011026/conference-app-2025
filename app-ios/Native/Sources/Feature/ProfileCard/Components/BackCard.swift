@@ -3,6 +3,7 @@ import Theme
 
 struct BackCard: View {
     let cardType: ProfileCardType
+    let url: URL
     let normal: (Float, Float, Float)
 
     let shaderFunction = ShaderFunction(library: .bundle(.module), name: "kiraEffect")
@@ -19,8 +20,7 @@ struct BackCard: View {
                 .scaledToFill()
             VStack(alignment: .center, spacing: 20) {
                 Image("\(cardType.rawValue)_card_title", bundle: .module)
-                // TODO: Replace with actual QR code generation
-                QrCodeView(data: "sample")
+                QrCodeView(data: url.absoluteString)
                     .frame(width: 160, height: 160)
                 Spacer()
             }
