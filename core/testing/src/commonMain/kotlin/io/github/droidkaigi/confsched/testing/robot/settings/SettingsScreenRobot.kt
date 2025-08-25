@@ -55,7 +55,7 @@ class SettingsScreenRobot(
             displayName = "Roboto Medium",
         ),
         SystemDefault(
-            displayName = "System Default",
+            displayName = "Default",
         ),
     }
 
