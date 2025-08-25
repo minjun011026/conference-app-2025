@@ -6,6 +6,7 @@ import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.model.profile.ProfileSubscriptionKey
 import io.github.droidkaigi.confsched.model.profile.ProfileWithImages
 import io.github.vinceglb.filekit.PlatformFile
+import io.github.vinceglb.filekit.exists
 import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.flow.map
 import qrcode.QRCode
@@ -28,8 +29,7 @@ public class DefaultProfileSubscriptionKey(
                 .build(profile.link)
                 .renderToBytes()
 
-            val profileImageByteArray = PlatformFile(profile.imagePath)
-                .readBytes()
+            val profileImageByteArray = PlatformFile(profile.imagePath).takeIf { it.exists() }?.readBytes()
 
             ProfileWithImages(
                 profile = profile,
