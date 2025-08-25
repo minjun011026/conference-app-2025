@@ -17,6 +17,7 @@ import dev.zacsweers.metro.createGraph
 import io.github.droidkaigi.confsched.common.scope.TimetableDetailScope
 import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.data.DataStoreDependencyProviders
+import io.github.droidkaigi.confsched.data.ProfileDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SessionCacheDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SettingsDataStoreQualifier
 import io.github.droidkaigi.confsched.data.UserDataStoreQualifier
@@ -62,6 +63,7 @@ import io.github.droidkaigi.confsched.model.sponsors.SponsorsQueryKey
 import io.github.droidkaigi.confsched.model.staff.StaffQueryKey
 import io.github.droidkaigi.confsched.repository.ContributorsRepository
 import io.github.droidkaigi.confsched.repository.EventMapRepository
+import io.github.droidkaigi.confsched.repository.ProfileRepository
 import io.github.droidkaigi.confsched.repository.SessionsRepository
 import io.github.droidkaigi.confsched.repository.SettingsRepository
 import io.github.droidkaigi.confsched.repository.SponsorsRepository
@@ -107,6 +109,7 @@ interface IosAppGraph : AppGraph {
     val staffRepository: StaffRepository
     val settingsRepository: SettingsRepository
     val eventMapRepository: EventMapRepository
+    val profileRepository: ProfileRepository
 
     @Named("apiBaseUrl")
     @Provides
@@ -230,6 +233,21 @@ interface IosAppGraph : AppGraph {
             migrations = emptyList(),
             scope = CoroutineScope(ioDispatcher + SupervisorJob()),
             produceFile = { dataStorePathProducer.producePath(DataStoreDependencyProviders.DATA_STORE_SETTINGS_FILE_NAME).toPath() },
+        )
+    }
+
+    @SingleIn(DataScope::class)
+    @ProfileDataStoreQualifier
+    @Provides
+    fun provideProfileDataStore(
+        dataStorePathProducer: DataStorePathProducer,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.createWithPath(
+            corruptionHandler = ReplaceFileCorruptionHandler({ emptyPreferences() }),
+            migrations = emptyList(),
+            scope = CoroutineScope(ioDispatcher + SupervisorJob()),
+            produceFile = { dataStorePathProducer.producePath(DataStoreDependencyProviders.DATA_STORE_PROFILE_FILE_NAME).toPath() },
         )
     }
 

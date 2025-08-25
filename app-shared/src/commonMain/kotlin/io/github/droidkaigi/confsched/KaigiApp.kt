@@ -42,7 +42,7 @@ fun KaigiApp() {
                 null -> null
             }
         } else {
-            changoFontFamily()
+            null
         }
 
         KaigiTheme(fontFamily = kaigiFontFamily) {

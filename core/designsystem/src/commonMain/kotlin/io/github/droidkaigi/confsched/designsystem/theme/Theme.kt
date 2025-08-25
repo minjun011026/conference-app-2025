@@ -340,7 +340,7 @@ data class FixedAccentColors(
 @Composable
 fun KaigiTheme(
     colorContrast: ColorContrast = ColorContrast.Default,
-    fontFamily: FontFamily? = changoFontFamily(),
+    fontFamily: FontFamily? = null,
     content: @Composable () -> Unit,
 ) {
     // currently, we do not support light theme

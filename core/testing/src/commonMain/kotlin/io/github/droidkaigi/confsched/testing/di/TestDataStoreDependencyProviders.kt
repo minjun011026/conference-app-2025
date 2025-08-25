@@ -7,6 +7,7 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.data.DataStoreDependencyProviders
+import io.github.droidkaigi.confsched.data.ProfileDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SessionCacheDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SettingsDataStoreQualifier
 import io.github.droidkaigi.confsched.data.UserDataStoreQualifier
@@ -39,6 +40,15 @@ interface TestDataStoreDependencyProviders {
     @SettingsDataStoreQualifier
     @Provides
     fun provideSettingsDataStore(
+        dataStorePathProducer: DataStorePathProducer,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ): DataStore<Preferences> {
+        return InMemoryDataStore(emptyPreferences())
+    }
+
+    @ProfileDataStoreQualifier
+    @Provides
+    fun provideProfileDataStore(
         dataStorePathProducer: DataStorePathProducer,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): DataStore<Preferences> {

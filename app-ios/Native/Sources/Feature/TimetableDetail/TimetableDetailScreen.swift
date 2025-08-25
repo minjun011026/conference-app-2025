@@ -348,7 +348,7 @@ public struct TimetableDetailScreen: View {
                 room: Room(
                     id: 1,
                     name: MultiLangText(jaTitle: "Arctic Fox", enTitle: "Arctic Fox"),
-                    type: .roomF,
+                    type: .roomJ,
                     sort: 1
                 ),
                 targetAudience: "初心者向け",
