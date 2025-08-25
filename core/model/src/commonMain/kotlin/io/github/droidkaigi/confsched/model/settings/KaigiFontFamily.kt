@@ -8,7 +8,7 @@ enum class KaigiFontFamily(
     val fileName: String? = null,
 ) {
     SystemDefault(
-        displayName = "System Default",
+        displayName = "Default",
     ),
     ChangoRegular(
         displayName = "Chango Regular",
