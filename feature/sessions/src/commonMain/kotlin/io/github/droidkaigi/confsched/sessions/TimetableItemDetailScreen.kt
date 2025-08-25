@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched.sessions
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeGestures
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +14,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.theme.ProvideRoomTheme
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.droidkaigiui.extension.plus
 import io.github.droidkaigi.confsched.droidkaigiui.extension.roomTheme
 import io.github.droidkaigi.confsched.model.core.Lang
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
@@ -62,12 +64,12 @@ fun TimetableItemDetailScreen(
             },
             contentWindowInsets = WindowInsets(),
             modifier = modifier,
-        ) { innerPadding ->
+        ) { contentPadding ->
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
                     .testTag(TimetableItemDetailScreenLazyColumnTestTag),
+                contentPadding = contentPadding + WindowInsets.navigationBars.asPaddingValues(),
             ) {
                 item {
                     TimetableItemDetailHeadline(
