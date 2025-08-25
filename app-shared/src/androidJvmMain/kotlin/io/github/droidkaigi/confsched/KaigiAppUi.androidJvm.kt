@@ -164,7 +164,9 @@ actual fun KaigiAppUi() {
                     },
                     onBackClick = { backStack.removeLastOrNull() },
                 )
-                profileNavEntry()
+                profileNavEntry(
+                    onShareProfileCardClick = externalNavController::onShareProfileCardClick,
+                )
             },
             modifier = Modifier
                 .fillMaxSize()

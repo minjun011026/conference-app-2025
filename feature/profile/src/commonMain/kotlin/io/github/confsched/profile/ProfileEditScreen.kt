@@ -1,24 +1,36 @@
-package io.github.confsched.profile.edit
+package io.github.confsched.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,28 +39,39 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import io.github.confsched.profile.persistPermission
+import io.github.confsched.profile.components.ThemeWithShape
+import io.github.confsched.profile.components.shapeValue
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
+import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
 import io.github.droidkaigi.confsched.model.profile.Profile
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.add_image
+import io.github.droidkaigi.confsched.profile.clear_button_icon
+import io.github.droidkaigi.confsched.profile.create_card
 import io.github.droidkaigi.confsched.profile.enter_validate_format
 import io.github.droidkaigi.confsched.profile.image
 import io.github.droidkaigi.confsched.profile.link
+import io.github.droidkaigi.confsched.profile.link_example_text
 import io.github.droidkaigi.confsched.profile.nickname
 import io.github.droidkaigi.confsched.profile.occupation
+import io.github.droidkaigi.confsched.profile.profile_card_edit_description
 import io.github.droidkaigi.confsched.profile.profile_card_title
+import io.github.droidkaigi.confsched.profile.select_theme
 import io.github.droidkaigi.confsched.profile.url_is_invalid
 import io.github.vinceglb.filekit.PlatformFile
 import io.github.vinceglb.filekit.absolutePath
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.exists
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import soil.form.FieldValidator
@@ -63,29 +86,51 @@ import soil.form.rule.notBlank
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(
-    form: Form<Profile>,
+    initialProfile: Profile?,
+    onCreateClick: (Profile) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val form: Form<Profile> = rememberForm(
+        initialValue = initialProfile ?: Profile(),
+        onSubmit = onCreateClick,
+    )
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
     Scaffold(
         topBar = {
             AnimatedTextTopAppBar(
                 title = stringResource(ProfileRes.string.profile_card_title),
+                scrollBehavior = scrollBehavior,
             )
         },
+        contentWindowInsets = WindowInsets.safeDrawingWithBottomNavBar,
         modifier = modifier,
     ) { contentPadding ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(contentPadding),
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp)
+                .padding(contentPadding),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-            form.Name()
-            form.Occupation()
-            form.Link()
-            form.Image()
+            Text(
+                text = stringResource(ProfileRes.string.profile_card_edit_description),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                form.Name()
+                form.Occupation()
+                form.Link()
+                form.Image()
+            }
+            form.Theme()
             Button(
                 onClick = { form.handleSubmit() },
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Create")
+                Text(stringResource(ProfileRes.string.create_card))
             }
         }
     }
@@ -98,17 +143,15 @@ private fun Form<Profile>.Name() {
         stringResource(ProfileRes.string.nickname),
     )
     Field(
-        selector = { it.name },
-        updater = {
-            copy(name = it)
-        },
+        selector = { it.nickName },
+        updater = { copy(nickName = it) },
         validator = FieldValidator {
             notBlank { emptyNameErrorString }
         },
         render = { field ->
-            field.InputField {
-                Text("Name")
-            }
+            field.InputField(
+                label = stringResource(ProfileRes.string.nickname),
+            )
         },
     )
 }
@@ -126,9 +169,9 @@ private fun Form<Profile>.Occupation() {
             notBlank { emptyOccupationErrorString }
         },
         render = { field ->
-            field.InputField {
-                Text("Occupation")
-            }
+            field.InputField(
+                label = stringResource(ProfileRes.string.occupation),
+            )
         },
     )
 }
@@ -151,9 +194,9 @@ private fun Form<Profile>.Link() {
             match(linkPattern) { invalidLinkErrorString }
         },
         render = { field ->
-            field.InputField {
-                Text("Link")
-            }
+            field.InputField(
+                label = stringResource(ProfileRes.string.link) + stringResource(ProfileRes.string.link_example_text),
+            )
         },
     )
 }
@@ -175,13 +218,21 @@ private fun Form<Profile>.Image() {
             notBlank { emptyImageErrorString }
         },
         render = { field ->
-            Column {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                InputLabel(label = stringResource(ProfileRes.string.image))
                 ImagePicker(
                     image = image,
                     onImageChange = { file ->
-                        image = file
-                        file.persistPermission()
-                        field.onValueChange(file.absolutePath())
+                        try {
+                            image = file
+                            file.persistPermission()
+                            field.onValueChange(file.absolutePath())
+                        } catch (e: Throwable) {
+                            // accessing the invalid file path may crash on iOS with FileKitNSURLNullPathException
+                            println("Failed to load image: ${e.stackTraceToString()}")
+                        }
                     },
                     onClear = {
                         image = null
@@ -252,26 +303,93 @@ private fun Form<Profile>.Image() {
 }
 
 @Composable
-private fun FormField<String>.InputField(
-    label: @Composable () -> Unit,
-) {
-    TextField(
-        value = value,
-        onValueChange = { onValueChange(it) },
-        label = label,
-        isError = hasError,
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next,
-        ),
-        supportingText = {
-            if (hasError) {
-                Text(
-                    text = error.messages.first(),
-                    color = MaterialTheme.colorScheme.error,
-                )
+private fun Form<Profile>.Theme() {
+    Field(
+        selector = { it.theme },
+        updater = { value.copy(theme = it) },
+        render = { field ->
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                InputLabel(label = stringResource(ProfileRes.string.select_theme))
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    ProfileCardTheme.entries
+                        .groupBy { it.shapeValue }
+                        .forEach { (_, themes) ->
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                themes.forEach { theme ->
+                                    ThemeWithShape(
+                                        selected = field.value == theme,
+                                        onSelect = {
+                                            field.onValueChange(theme)
+                                        },
+                                        theme = theme,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                }
+                            }
+                        }
+                }
             }
         },
+    )
+}
+
+@Composable
+private fun FormField<String>.InputField(label: String) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        InputLabel(label = label)
+        OutlinedTextField(
+            value = value,
+            onValueChange = { onValueChange(it) },
+            isError = hasError,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+            ),
+            trailingIcon = {
+                if (value.isNotEmpty()) {
+                    IconButton(
+                        onClick = { onValueChange("") },
+                        modifier = Modifier.size(40.dp),
+                    ) {
+                        Icon(
+                            painter = painterResource(ProfileRes.drawable.clear_button_icon),
+                            contentDescription = "clear text",
+                        )
+                    }
+                }
+            },
+            textStyle = MaterialTheme.typography.bodyLarge,
+            supportingText = {
+                if (hasError) {
+                    Text(
+                        text = error.messages.first(),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+private fun InputLabel(
+    label: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = label,
+        style = MaterialTheme.typography.titleMedium,
+        color = Color.White,
+        modifier = modifier,
     )
 }
 
@@ -321,7 +439,24 @@ private fun ImagePicker(
             }
         }
     } else {
-        Button(onClick = { launcher.launch() }) {
+        OutlinedButton(
+            onClick = { launcher.launch() },
+            contentPadding = PaddingValues(
+                top = 10.dp,
+                start = 16.dp,
+                end = 24.dp,
+                bottom = 10.dp,
+            ),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary,
+            ),
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                modifier = Modifier.size(18.dp),
+            )
+            Spacer(Modifier.width(8.dp))
             Text(stringResource(ProfileRes.string.add_image))
         }
     }
@@ -330,18 +465,11 @@ private fun ImagePicker(
 @Preview
 @Composable
 private fun ProfileEditScreenPreview() {
-    val form = rememberForm(
-        initialValue = Profile(
-            name = "John Doe",
-            occupation = "Software Engineer",
-            link = "https://example.com",
-            imagePath = "https://example.com/image.jpg",
-            image = ByteArray(0),
-        ),
-        onSubmit = {},
-    )
     KaigiPreviewContainer {
-        ProfileEditScreen(form = form)
+        ProfileEditScreen(
+            initialProfile = null,
+            onCreateClick = {},
+        )
     }
 }
 
