@@ -158,7 +158,7 @@ actual fun KaigiAppUi() {
                             }
                         }
                     },
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                 )
                 profileNavEntry()
             },
