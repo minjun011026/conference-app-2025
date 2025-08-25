@@ -4,10 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.decodeToImageBitmap
 import io.github.droidkaigi.confsched.common.compose.EventEffect
 import io.github.droidkaigi.confsched.common.compose.EventFlow
 import io.github.droidkaigi.confsched.common.compose.providePresenterDefaults
-import io.github.droidkaigi.confsched.model.profile.Profile
+import io.github.droidkaigi.confsched.model.profile.ProfileWithImages
 import io.github.takahirom.rin.rememberRetained
 import soil.query.compose.rememberMutation
 
@@ -15,9 +16,11 @@ import soil.query.compose.rememberMutation
 context(screenContext: ProfileScreenContext)
 fun profilePresenter(
     eventFlow: EventFlow<ProfileScreenEvent>,
-    profile: Profile?,
+    profileWithImages: ProfileWithImages,
 ): ProfileUiState = providePresenterDefaults {
-    val isAllowedToShowCard = profile != null && profile.isValid
+    val isAllowedToShowCard = profileWithImages.profile != null &&
+        profileWithImages.profileImageByteArray != null &&
+        profileWithImages.qrImageByteArray != null
 
     val profileMutation = rememberMutation(screenContext.profileMutationKey)
     var isInEditMode by rememberRetained { mutableStateOf(!isAllowedToShowCard) }
@@ -36,8 +39,12 @@ fun profilePresenter(
     }
 
     if (!isAllowedToShowCard || isInEditMode) {
-        ProfileUiState.Edit(profile = profile)
+        ProfileUiState.Edit(baseProfile = profileWithImages.profile)
     } else {
-        ProfileUiState.Card(profile = profile)
+        ProfileUiState.Card(
+            profile = requireNotNull(profileWithImages.profile),
+            profileImageBitmap = requireNotNull(profileWithImages.profileImageByteArray).decodeToImageBitmap(),
+            qrImageBitmap = requireNotNull(profileWithImages.qrImageByteArray).decodeToImageBitmap(),
+        )
     }
 }

@@ -63,7 +63,7 @@ private fun ProfileCardUser() {
     KaigiPreviewContainer {
         ProfileCardUser(
             isDarkTheme = true,
-            profileImageBitmap = CardPreviewResources.profileImage,
+            profileImageBitmap = CardPreviewImageBitmaps.profileImage,
             profileShape = ProfileCardTheme.DarkPill.shape,
             userName = "DroidKaigi",
             occupation = "Software Engineer",

@@ -21,12 +21,12 @@ fun ProfileScreenRoot(
     SoilDataBoundary(
         state = rememberSubscription(screenContext.profileSubscriptionKey),
         fallback = SoilFallbackDefaults.appBar(stringResource(ProfileRes.string.profile_card_title)),
-    ) { profile ->
+    ) { profileWithImageBitmaps ->
         val eventFlow = rememberEventFlow<ProfileScreenEvent>()
 
         val uiState = profilePresenter(
             eventFlow = eventFlow,
-            profile = profile,
+            profileWithImages = profileWithImageBitmaps,
         )
 
         when (uiState) {
@@ -44,7 +44,7 @@ fun ProfileScreenRoot(
 
             is ProfileUiState.Edit -> {
                 ProfileEditScreen(
-                    initialProfile = uiState.profile,
+                    initialProfile = uiState.baseProfile,
                     onCreateClick = { eventFlow.tryEmit(ProfileScreenEvent.CreateProfile(it)) },
                 )
             }

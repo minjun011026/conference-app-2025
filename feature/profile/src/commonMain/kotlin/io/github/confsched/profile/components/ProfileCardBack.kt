@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
@@ -70,7 +69,7 @@ private fun ProfileCardBackPreview() {
     KaigiPreviewContainer {
         ProfileCardBack(
             theme = ProfileCardTheme.DarkPill,
-            qrImageBitmap = CardPreviewResources.qrImageByteArray.decodeToImageBitmap(),
+            qrImageBitmap = CardPreviewImageBitmaps.qrImage,
         )
     }
 }

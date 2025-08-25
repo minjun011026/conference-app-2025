@@ -1,15 +1,16 @@
 package io.github.confsched.profile
 
-import androidx.compose.ui.graphics.decodeToImageBitmap
+import androidx.compose.ui.graphics.ImageBitmap
 import io.github.droidkaigi.confsched.model.profile.Profile
 
 sealed interface ProfileUiState {
-    val profile: Profile?
+    data class Card(
+        val profile: Profile,
+        val profileImageBitmap: ImageBitmap,
+        val qrImageBitmap: ImageBitmap,
+    ) : ProfileUiState
 
-    data class Card(override val profile: Profile) : ProfileUiState {
-        val qrImageBitmap = profile.qrCodeByteArray.decodeToImageBitmap()
-        val profileImageBitmap = profile.imageByteArray.decodeToImageBitmap()
-    }
-
-    data class Edit(override val profile: Profile?) : ProfileUiState
+    data class Edit(
+        val baseProfile: Profile?,
+    ) : ProfileUiState
 }
