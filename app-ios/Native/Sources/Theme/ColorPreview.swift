@@ -268,20 +268,20 @@ private struct ColorWithDim: View {
         }
         GridRow {
             ColorPreview(
-                color: AssetColors.iguana.swiftUIColor,
-                colorName: "Iguana"
+                color: AssetColors.narwhal.swiftUIColor,
+                colorName: "Narwhal"
             )
             ColorPreview(
-                color: AssetColors.hedgehog.swiftUIColor,
-                colorName: "Hedgehog"
+                color: AssetColors.koala.swiftUIColor,
+                colorName: "Koala"
             )
             ColorPreview(
-                color: AssetColors.giraffe.swiftUIColor,
-                colorName: "Giraffe"
+                color: AssetColors.ladybug.swiftUIColor,
+                colorName: "Ladybug"
             )
             ColorPreview(
-                color: AssetColors.flamingo.swiftUIColor,
-                colorName: "Flamingo"
+                color: AssetColors.meerkat.swiftUIColor,
+                colorName: "Meerkat"
             )
             ColorPreview(
                 color: AssetColors.jellyfish.swiftUIColor,
@@ -290,20 +290,20 @@ private struct ColorWithDim: View {
         }
         GridRow {
             ColorPreview(
-                color: AssetColors.iguanaContainer.swiftUIColor,
-                colorName: "Iguana Container"
+                color: AssetColors.narwhalContainer.swiftUIColor,
+                colorName: "Narwhal Container"
             )
             ColorPreview(
-                color: AssetColors.hedgehogContainer.swiftUIColor,
-                colorName: "Hedgehog Container"
+                color: AssetColors.koalaContainer.swiftUIColor,
+                colorName: "Koala Container"
             )
             ColorPreview(
-                color: AssetColors.giraffeContainer.swiftUIColor,
-                colorName: "Giraffe Container"
+                color: AssetColors.ladybugContainer.swiftUIColor,
+                colorName: "Ladybug Container"
             )
             ColorPreview(
-                color: AssetColors.flamingoContainer.swiftUIColor,
-                colorName: "Flamingo Container"
+                color: AssetColors.meerkatContainer.swiftUIColor,
+                colorName: "Meerkat Container"
             )
             ColorPreview(
                 color: AssetColors.jellyfishContainer.swiftUIColor,
@@ -312,20 +312,20 @@ private struct ColorWithDim: View {
         }
         GridRow {
             ColorPreview(
-                color: AssetColors.iguanaDim.swiftUIColor,
-                colorName: "Iguana Dim"
+                color: AssetColors.narwhalDim.swiftUIColor,
+                colorName: "Narwhal Dim"
             )
             ColorPreview(
-                color: AssetColors.hedgehogDim.swiftUIColor,
-                colorName: "Hedgehog Dim"
+                color: AssetColors.koalaDim.swiftUIColor,
+                colorName: "Koala Dim"
             )
             ColorPreview(
-                color: AssetColors.giraffeDim.swiftUIColor,
-                colorName: "Giraffe Dim"
+                color: AssetColors.ladybugDim.swiftUIColor,
+                colorName: "Ladybug Dim"
             )
             ColorPreview(
-                color: AssetColors.flamingoDim.swiftUIColor,
-                colorName: "Flamingo Dim"
+                color: AssetColors.meerkatDim.swiftUIColor,
+                colorName: "Meerkat Dim"
             )
             ColorPreview(
                 color: AssetColors.jellyfishDim.swiftUIColor,

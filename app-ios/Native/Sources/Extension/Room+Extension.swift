@@ -16,16 +16,16 @@ extension Room {
             return AssetColors.jellyfish.swiftUIColor
         case .roomK:
             // KOALA
-            return AssetColors.hedgehog.swiftUIColor
+            return AssetColors.koala.swiftUIColor
         case .roomL:
             // LADYBUG
-            return AssetColors.giraffe.swiftUIColor
+            return AssetColors.ladybug.swiftUIColor
         case .roomM:
             // MEERKAT
-            return AssetColors.flamingo.swiftUIColor
+            return AssetColors.meerkat.swiftUIColor
         case .roomN:
             // NARWHAL
-            return AssetColors.iguana.swiftUIColor
+            return AssetColors.narwhal.swiftUIColor
         }
     }
 
