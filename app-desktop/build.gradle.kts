@@ -58,6 +58,11 @@ aboutLibraries.export {
 compose.desktop {
     application {
         nativeDistributions {
+            // For display name of “app-desktop.app” in Finder/Dock/DMG
+            packageName = "DroidKaigi 2025"
+            // If necessary, modify the code to obtain and load packageVersion from a single source on all platforms.
+            packageVersion = "1.0.0"
+
             targetFormats(
                 // for MacOS
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
@@ -70,6 +75,7 @@ compose.desktop {
             )
 
             macOS {
+                bundleID = macOS.bundleID
                 iconFile.set(project.file("src/desktopMain/resources/DroidKaigi2025.icns"))
             }
             windows {
