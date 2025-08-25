@@ -90,6 +90,8 @@ jobs:
           -configuration Debug \
           -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
           -derivedDataPath ./DerivedData \
+          -skipPackagePluginValidation \
+          -skipMacroValidation \
           ONLY_ACTIVE_ARCH=YES \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
