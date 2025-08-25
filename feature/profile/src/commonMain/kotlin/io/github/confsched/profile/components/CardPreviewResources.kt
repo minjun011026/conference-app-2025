@@ -4,10 +4,11 @@ import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Paint
-import org.jetbrains.compose.resources.decodeToImageBitmap
+import io.github.droidkaigi.confsched.model.profile.Profile
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import qrcode.QRCode
 
-object CardPreviewImageBitmaps {
+object CardPreviewResources {
     val profileImage = ImageBitmap(160, 160).apply {
         val canvas = Canvas(this)
         canvas.drawRect(
@@ -47,8 +48,19 @@ object CardPreviewImageBitmaps {
         )
     }
 
-    val qrImage = QRCode.ofSquares()
+    val qrImageByteArray = QRCode.ofSquares()
         .build("https://2025.droidkaigi.jp/")
         .renderToBytes()
-        .decodeToImageBitmap()
+
+    val profileImageByteArray = ByteArray(0)
+
+    val dummyProfile: Profile = Profile(
+        nickName = "DroidKaigi",
+        occupation = "Software Engineer",
+        theme = ProfileCardTheme.DarkPill,
+        link = "https://2025.droidkaigi.jp/",
+        imagePath = "dummy_path",
+        imageByteArray = profileImageByteArray,
+        qrCodeByteArray = qrImageByteArray,
+    )
 }

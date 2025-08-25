@@ -96,7 +96,7 @@ private fun ProfileCardFrontPreview() {
     KaigiPreviewContainer {
         ProfileCardFront(
             theme = ProfileCardTheme.DarkPill,
-            profileImageBitmap = CardPreviewImageBitmaps.profileImage,
+            profileImageBitmap = CardPreviewResources.profileImage,
             nickName = "DroidKaigi",
             occupation = "Software Engineer",
         )

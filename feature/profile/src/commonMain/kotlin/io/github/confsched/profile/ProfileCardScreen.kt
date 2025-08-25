@@ -30,13 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
-import io.github.confsched.profile.components.CardPreviewImageBitmaps
+import io.github.confsched.profile.components.CardPreviewResources
 import io.github.confsched.profile.components.FlippableProfileCard
 import io.github.confsched.profile.components.ShareableProfileCard
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
-import io.github.droidkaigi.confsched.model.profile.Profile
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.edit
 import io.github.droidkaigi.confsched.profile.profile_card_title
@@ -127,14 +126,7 @@ fun ProfileCardScreen(
 private fun ProfileCardScreenPreview() {
     KaigiPreviewContainer {
         ProfileCardScreen(
-            uiState = ProfileUiState.Card(
-                profile = Profile(
-                    nickName = "DroidKaigi",
-                    occupation = "Software Engineer",
-                ),
-                qrImageBitmap = CardPreviewImageBitmaps.qrImage,
-                profileImageBitmap = CardPreviewImageBitmaps.profileImage,
-            ),
+            uiState = ProfileUiState.Card(profile = CardPreviewResources.dummyProfile),
             onShareClick = {},
             onEditClick = {},
         )

@@ -6,7 +6,6 @@ import dev.zacsweers.metro.Inject
 import io.github.droidkaigi.confsched.data.profile.ProfileDataStore
 import io.github.droidkaigi.confsched.model.profile.Profile
 import io.github.droidkaigi.confsched.model.profile.ProfileSubscriptionKey
-import io.github.droidkaigi.confsched.model.profile.ProfileWithImages
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -20,14 +19,14 @@ class ProfileRepository(
     private val profileDataStore: ProfileDataStore,
 ) {
     @OptIn(ExperimentalSoilQueryApi::class)
-    fun profileFlow(): Flow<ProfileWithImages> = moleculeFlow(RecompositionMode.Immediate) {
+    fun profileFlow(): Flow<Profile> = moleculeFlow(RecompositionMode.Immediate) {
         soilDataBoundary(state = rememberSubscription(profileSubscriptionKey))
     }
         .filterNotNull()
         .distinctUntilChanged()
         .catch {
             // Errors thrown inside flow can't be caught on iOS side, so we catch it here.
-            emit(ProfileWithImages())
+            emit(Profile())
         }
 
     @Throws(Throwable::class)

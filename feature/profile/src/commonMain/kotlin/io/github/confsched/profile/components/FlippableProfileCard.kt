@@ -84,12 +84,7 @@ private fun FlippableProfileCardPreview() {
     KaigiPreviewContainer {
         FlippableProfileCard(
             uiState = ProfileUiState.Card(
-                profile = Profile(
-                    nickName = "DroidKaigi",
-                    occupation = "Software Engineer",
-                ),
-                profileImageBitmap = CardPreviewImageBitmaps.profileImage,
-                qrImageBitmap = CardPreviewImageBitmaps.qrImage,
+                profile = CardPreviewResources.dummyProfile,
             ),
         )
     }

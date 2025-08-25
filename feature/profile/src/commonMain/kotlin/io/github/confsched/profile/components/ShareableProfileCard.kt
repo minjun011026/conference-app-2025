@@ -153,8 +153,8 @@ private fun ShareableProfileCardPreview() {
     KaigiPreviewContainer {
         ShareableProfileCard(
             theme = ProfileCardTheme.DarkPill,
-            frontCardImageBitmap = CardPreviewImageBitmaps.frontCardImage,
-            backCardImageBitmap = CardPreviewImageBitmaps.backCardImage,
+            frontCardImageBitmap = CardPreviewResources.frontCardImage,
+            backCardImageBitmap = CardPreviewResources.backCardImage,
         )
     }
 }
