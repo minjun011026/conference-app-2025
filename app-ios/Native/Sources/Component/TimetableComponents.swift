@@ -13,30 +13,20 @@ public struct RoomTag: View {
     public var body: some View {
         HStack(spacing: 4) {
             Image(room.iconName, bundle: .module)
+                .renderingMode(.template)
             Text(room.displayName)
                 .font(Typography.labelSmall)
-                .foregroundStyle(textColor)
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(backgroundColor, in: RoundedRectangle(cornerRadius: 6))
+        .foregroundStyle(room.roomTheme.primaryColor)
         .overlay {
             RoundedRectangle(cornerRadius: 6)
                 .stroke(room.roomTheme.primaryColor, lineWidth: 1)
         }
     }
-
-    private var textColor: Color {
-        if room.type == .roomL {
-            return AssetColors.surface.swiftUIColor
-        }
-        return room.roomTheme.primaryColor
-    }
-
     private var backgroundColor: Color {
-        if room.type == .roomL {
-            return room.roomTheme.primaryColor
-        }
         return room.roomTheme.containerColor
     }
 }
