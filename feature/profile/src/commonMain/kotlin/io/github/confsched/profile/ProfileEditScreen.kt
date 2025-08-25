@@ -224,9 +224,14 @@ private fun Form<Profile>.Image() {
                 ImagePicker(
                     image = image,
                     onImageChange = { file ->
-                        image = file
-                        file.persistPermission()
-                        field.onValueChange(file.absolutePath())
+                        try {
+                            image = file
+                            file.persistPermission()
+                            field.onValueChange(file.absolutePath())
+                        } catch (e: Throwable) {
+                            // accessing the invalid file path may crash on iOS with FileKitNSURLNullPathException
+                            println("Failed to load image: ${e.stackTraceToString()}")
+                        }
                     },
                     onClear = {
                         image = null
