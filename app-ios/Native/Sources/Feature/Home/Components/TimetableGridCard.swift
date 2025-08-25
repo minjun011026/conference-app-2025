@@ -85,8 +85,8 @@ private enum PreviewData {
         sessionType: .regular,
         room: Room(
             id: 1,
-            name: MultiLangText(jaTitle: "ルームF", enTitle: "Room F"),
-            type: .roomF,
+            name: MultiLangText(jaTitle: "ルームJ", enTitle: "Room J"),
+            type: .roomJ,
             sort: 1
         ),
         targetAudience: "All levels",

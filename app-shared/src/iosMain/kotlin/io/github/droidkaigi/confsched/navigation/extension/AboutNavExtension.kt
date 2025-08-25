@@ -3,6 +3,7 @@ package io.github.droidkaigi.confsched.navigation.extension
 import androidx.navigation.NavController
 import io.github.droidkaigi.confsched.navigation.route.AboutTabRoute
 import io.github.droidkaigi.confsched.navigation.route.LicensesRoute
+import io.github.droidkaigi.confsched.navigation.route.SettingsRoute
 
 fun NavController.navigateToAboutTab() {
     navigate(AboutTabRoute) {
@@ -13,4 +14,8 @@ fun NavController.navigateToAboutTab() {
 
 fun NavController.navigateToLicenses() {
     navigate(LicensesRoute)
+}
+
+fun NavController.navigateToSettings() {
+    navigate(SettingsRoute)
 }

@@ -63,6 +63,7 @@ navigationCompose = "2.9.0-beta04"
 aboutLibraries = "12.1.1"
 
 filekit = "0.10.0"
+qrcodeKotlin = "4.3.0"
 
 [libraries]
 # gradle plugins
@@ -159,6 +160,8 @@ aboutLibrariesComposeM3 = { module = "com.mikepenz:aboutlibraries-compose-m3", v
 
 filekitDialogsCompose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 filekitCoil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
+
+qrcodeKotlin = { module = "io.github.g0dkar:qrcode-kotlin", version.ref = "qrcodeKotlin" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

@@ -277,8 +277,8 @@ private fun TimetableGridItemPreview_WelcomeTalk() {
                 speakers = persistentListOf(),
                 room = Room(
                     id = 1,
-                    name = MultiLangText("Jellyfish", "Jellyfish"),
-                    type = RoomType.RoomJ,
+                    name = MultiLangText("NARWHAL", "NARWHAL"),
+                    type = RoomType.RoomN,
                     sort = 1,
                 ),
             ),

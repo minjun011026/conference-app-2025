@@ -1,10 +1,12 @@
 import Component
+import Model
+import Observation
+import Presentation
 import SwiftUI
 import Theme
 
 public struct ProfileCardScreen: View {
     @State private var presenter = ProfileCardPresenter()
-    @State private var cardType: ProfileCardType = .night
 
     public init() {}
 
@@ -16,33 +18,60 @@ public struct ProfileCardScreen: View {
                 #if os(iOS)
                     .navigationBarTitleDisplayMode(.large)
                 #endif
+                .onAppear {
+                    presenter.loadInitial()
+                }
         }
     }
 
+    @ViewBuilder
     private var profileCardScrollView: some View {
+        let profile = presenter.profile.profile
+        let isLoading = presenter.profile.isLoading
         ScrollView {
-            VStack(spacing: 0) {
-                profileCard
-                actionButtons
+            Group {
+                if isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                } else if presenter.shouldEditing {
+                    editView
+                } else {
+                    cardView(profile!)
+                }
             }
-            .padding(.vertical, 20)
             .padding(.bottom, 80)  // Tab bar padding
         }
     }
 
-    private var profileCard: some View {
+    private var editView: some View {
+        EditProfileCardForm(presenter: $presenter)
+    }
+
+    @ViewBuilder
+    private func cardView(_ profile: Model.Profile) -> some View {
+        VStack(spacing: 0) {
+            profileCard(profile)
+            actionButtons
+        }
+        .padding(.vertical, 20)
+    }
+
+    @ViewBuilder
+    private func profileCard(_ profile: Model.Profile) -> some View {
         TiltFlipCard(
             front: { normal in
                 FrontCard(
-                    userRole: presenter.userRole,
-                    userName: presenter.userName,
-                    cardType: cardType,
+                    userRole: profile.occupation,
+                    userName: profile.name,
+                    cardType: profile.cardVariant.type,
+                    image: profile.image,
                     normal: (normal.x, normal.y, normal.z),
                 )
             },
             back: { normal in
                 BackCard(
-                    cardType: cardType,
+                    cardType: profile.cardVariant.type,
+                    url: profile.url,
                     normal: (normal.x, normal.y, normal.z),
                 )
             }
@@ -79,11 +108,6 @@ public struct ProfileCardScreen: View {
     private var editButton: some View {
         Button {
             presenter.editProfile()
-            if cardType == .night {
-                cardType = .day
-            } else {
-                cardType = .night
-            }
         } label: {
             Text(String(localized: "Edit", bundle: .module))
                 .frame(maxWidth: .infinity)

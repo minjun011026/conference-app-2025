@@ -38,7 +38,9 @@ import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.designsystem.theme.LocalRoomTheme
 import io.github.droidkaigi.confsched.designsystem.theme.ProvideRoomTheme
@@ -49,7 +51,6 @@ import io.github.droidkaigi.confsched.droidkaigiui.extension.icon
 import io.github.droidkaigi.confsched.droidkaigiui.extension.roomTheme
 import io.github.droidkaigi.confsched.droidkaigiui.not_bookmarked
 import io.github.droidkaigi.confsched.droidkaigiui.rememberAsyncImagePainter
-import io.github.droidkaigi.confsched.model.core.Room
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
 import io.github.droidkaigi.confsched.model.sessions.TimetableSpeaker
 import io.github.droidkaigi.confsched.model.sessions.fake
@@ -105,7 +106,7 @@ fun TimetableItemCard(
                 ) {
                     TimetableItemRoomTag(
                         icon = timetableItem.room.icon,
-                        text = timetableItem.room.name.currentLangTitle,
+                        text = timetableItem.room.name.currentLangTitle.toUpperCase(Locale.current),
                         color = LocalRoomTheme.current.primaryColor,
                         modifier = Modifier.background(LocalRoomTheme.current.containerColor),
                     )

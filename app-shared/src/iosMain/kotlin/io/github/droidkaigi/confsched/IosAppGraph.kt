@@ -17,7 +17,9 @@ import dev.zacsweers.metro.createGraph
 import io.github.droidkaigi.confsched.common.scope.TimetableDetailScope
 import io.github.droidkaigi.confsched.data.DataScope
 import io.github.droidkaigi.confsched.data.DataStoreDependencyProviders
+import io.github.droidkaigi.confsched.data.ProfileDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SessionCacheDataStoreQualifier
+import io.github.droidkaigi.confsched.data.SettingsDataStoreQualifier
 import io.github.droidkaigi.confsched.data.UserDataStoreQualifier
 import io.github.droidkaigi.confsched.data.about.DefaultLicensesQueryKey
 import io.github.droidkaigi.confsched.data.annotations.IoDispatcher
@@ -36,6 +38,8 @@ import io.github.droidkaigi.confsched.data.sessions.DefaultSessionsApiClient
 import io.github.droidkaigi.confsched.data.sessions.DefaultTimetableItemQueryKey
 import io.github.droidkaigi.confsched.data.sessions.DefaultTimetableQueryKey
 import io.github.droidkaigi.confsched.data.sessions.SessionsApiClient
+import io.github.droidkaigi.confsched.data.settings.DefaultSettingsMutationKey
+import io.github.droidkaigi.confsched.data.settings.DefaultSettingsSubscriptionKey
 import io.github.droidkaigi.confsched.data.sponsors.DefaultSponsorsApiClient
 import io.github.droidkaigi.confsched.data.sponsors.DefaultSponsorsQueryKey
 import io.github.droidkaigi.confsched.data.sponsors.SponsorsApiClient
@@ -53,11 +57,15 @@ import io.github.droidkaigi.confsched.model.data.TimetableQueryKey
 import io.github.droidkaigi.confsched.model.eventmap.EventMapQueryKey
 import io.github.droidkaigi.confsched.model.profile.ProfileMutationKey
 import io.github.droidkaigi.confsched.model.profile.ProfileSubscriptionKey
+import io.github.droidkaigi.confsched.model.settings.SettingsMutationKey
+import io.github.droidkaigi.confsched.model.settings.SettingsSubscriptionKey
 import io.github.droidkaigi.confsched.model.sponsors.SponsorsQueryKey
 import io.github.droidkaigi.confsched.model.staff.StaffQueryKey
 import io.github.droidkaigi.confsched.repository.ContributorsRepository
 import io.github.droidkaigi.confsched.repository.EventMapRepository
+import io.github.droidkaigi.confsched.repository.ProfileRepository
 import io.github.droidkaigi.confsched.repository.SessionsRepository
+import io.github.droidkaigi.confsched.repository.SettingsRepository
 import io.github.droidkaigi.confsched.repository.SponsorsRepository
 import io.github.droidkaigi.confsched.repository.StaffRepository
 import io.ktor.client.HttpClient
@@ -99,7 +107,9 @@ interface IosAppGraph : AppGraph {
     val contributorsRepository: ContributorsRepository
     val sponsorsRepository: SponsorsRepository
     val staffRepository: StaffRepository
+    val settingsRepository: SettingsRepository
     val eventMapRepository: EventMapRepository
+    val profileRepository: ProfileRepository
 
     @Named("apiBaseUrl")
     @Provides
@@ -152,6 +162,12 @@ interface IosAppGraph : AppGraph {
     @Binds
     val DefaultProfileMutationKey.bind: ProfileMutationKey
 
+    @Binds
+    val DefaultSettingsMutationKey.bind: SettingsMutationKey
+
+    @Binds
+    val DefaultSettingsSubscriptionKey.bind: SettingsSubscriptionKey
+
     @Provides
     fun provideJson(): Json {
         return defaultJson()
@@ -202,6 +218,36 @@ interface IosAppGraph : AppGraph {
             migrations = emptyList(),
             scope = CoroutineScope(ioDispatcher + SupervisorJob()),
             produceFile = { dataStorePathProducer.producePath(DataStoreDependencyProviders.DATA_STORE_CACHE_PREFERENCE_FILE_NAME).toPath() },
+        )
+    }
+
+    @SingleIn(DataScope::class)
+    @SettingsDataStoreQualifier
+    @Provides
+    fun provideSettingsDataStore(
+        dataStorePathProducer: DataStorePathProducer,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.createWithPath(
+            corruptionHandler = ReplaceFileCorruptionHandler({ emptyPreferences() }),
+            migrations = emptyList(),
+            scope = CoroutineScope(ioDispatcher + SupervisorJob()),
+            produceFile = { dataStorePathProducer.producePath(DataStoreDependencyProviders.DATA_STORE_SETTINGS_FILE_NAME).toPath() },
+        )
+    }
+
+    @SingleIn(DataScope::class)
+    @ProfileDataStoreQualifier
+    @Provides
+    fun provideProfileDataStore(
+        dataStorePathProducer: DataStorePathProducer,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.createWithPath(
+            corruptionHandler = ReplaceFileCorruptionHandler({ emptyPreferences() }),
+            migrations = emptyList(),
+            scope = CoroutineScope(ioDispatcher + SupervisorJob()),
+            produceFile = { dataStorePathProducer.producePath(DataStoreDependencyProviders.DATA_STORE_PROFILE_FILE_NAME).toPath() },
         )
     }
 
