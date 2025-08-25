@@ -77,9 +77,19 @@ internal class IosExternalNavController : ExternalNavController {
             "${timetableItem.title.currentLangTitle}\n" +
             timetableItem.url
 
-        val activityItems = listOf(NSString.create(text))
+        share(listOf(NSString.create(text)))
+    }
+
+    override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
+        MainScope().launch {
+            val image = UIImage(data = imageBitmap.encodeToByteArray().toNSData())
+            share(listOf(NSString.create(shareText), image))
+        }
+    }
+
+    private fun share(items: List<*>) {
         val activityViewController = UIActivityViewController(
-            activityItems = activityItems,
+            activityItems = items,
             applicationActivities = null,
         )
 
@@ -89,24 +99,5 @@ internal class IosExternalNavController : ExternalNavController {
             animated = true,
             completion = null,
         )
-    }
-
-    override fun onShareProfileCardClick(shareText: String, imageBitmap: ImageBitmap) {
-        MainScope().launch {
-            val image = UIImage(data = imageBitmap.encodeToByteArray().toNSData())
-
-            val activityItems = listOf(NSString.create(shareText), image)
-            val activityViewController = UIActivityViewController(
-                activityItems = activityItems,
-                applicationActivities = null,
-            )
-
-            val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
-            rootViewController?.presentViewController(
-                viewControllerToPresent = activityViewController,
-                animated = true,
-                completion = null,
-            )
-        }
     }
 }
