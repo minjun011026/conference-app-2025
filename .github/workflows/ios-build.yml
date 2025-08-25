@@ -88,7 +88,7 @@ jobs:
           -project DroidKaigi2025.xcodeproj \
           -scheme DroidKaigi2025 \
           -configuration Debug \
-          -destination 'platform=iOS Simulator,name=iPhone 15 Pro' \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
           -derivedDataPath ./DerivedData \
           ONLY_ACTIVE_ARCH=YES \
           CODE_SIGN_IDENTITY="" \
