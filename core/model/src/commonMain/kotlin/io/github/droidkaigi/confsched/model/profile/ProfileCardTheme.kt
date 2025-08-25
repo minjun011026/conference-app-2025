@@ -6,5 +6,5 @@ enum class ProfileCardTheme {
     DarkDiamond,
     LightDiamond,
     DarkFlower,
-    LightFlower;
+    LightFlower,
 }

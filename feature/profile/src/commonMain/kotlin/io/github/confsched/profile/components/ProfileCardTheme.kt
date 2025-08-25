@@ -19,11 +19,13 @@ val ProfileCardTheme.isDark: Boolean
     get() = when (this) {
         ProfileCardTheme.DarkPill,
         ProfileCardTheme.DarkDiamond,
-        ProfileCardTheme.DarkFlower -> true
+        ProfileCardTheme.DarkFlower,
+        -> true
 
         ProfileCardTheme.LightPill,
         ProfileCardTheme.LightDiamond,
-        ProfileCardTheme.LightFlower -> false
+        ProfileCardTheme.LightFlower,
+        -> false
     }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -35,14 +37,14 @@ val ProfileCardTheme.shape: Shape
 val ProfileCardTheme.shapeValue: RoundedPolygon
     get() = when (this) {
         ProfileCardTheme.DarkPill,
-        ProfileCardTheme.LightPill
-            -> MaterialShapes.Pill
+        ProfileCardTheme.LightPill,
+        -> MaterialShapes.Pill
 
         ProfileCardTheme.DarkDiamond,
-        ProfileCardTheme.LightDiamond
-            -> MaterialShapes.Diamond
+        ProfileCardTheme.LightDiamond,
+        -> MaterialShapes.Diamond
 
         ProfileCardTheme.DarkFlower,
-        ProfileCardTheme.LightFlower
-            -> MaterialShapes.Flower
+        ProfileCardTheme.LightFlower,
+        -> MaterialShapes.Flower
     }
