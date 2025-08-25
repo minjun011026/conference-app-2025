@@ -46,18 +46,13 @@ extension Model.MultiLangText {
 extension Model.RoomType {
     init(from shared: shared.RoomType) {
         switch shared {
-        case .roomF:
-            self = .roomF
-        case .roomG:
-            self = .roomG
-        case .roomH:
-            self = .roomH
-        case .roomI:
-            self = .roomI
         case .roomJ:
             self = .roomJ
         case .roomIj:
             self = .roomIJ
+        default:
+            // Map any unknown room types to roomJ as a fallback
+            self = .roomJ
         }
     }
 }
