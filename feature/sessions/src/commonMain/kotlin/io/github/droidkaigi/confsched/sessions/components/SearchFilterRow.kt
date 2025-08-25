@@ -61,7 +61,7 @@ fun SearchFilterRow(
         if (filters.availableDays.isNotEmpty()) {
             FilterDropdown(
                 label = stringResource(SessionsRes.string.filter_chip_day),
-                selectedItem = filters.selectedDay,
+                selectedItems = filters.selectedDays,
                 items = filters.availableDays,
                 itemLabel = { it.monthAndDay() },
                 onItemSelected = { day ->
@@ -75,7 +75,7 @@ fun SearchFilterRow(
         if (filters.availableCategories.isNotEmpty()) {
             FilterDropdown(
                 label = stringResource(SessionsRes.string.filter_chip_category),
-                selectedItem = filters.selectedCategory,
+                selectedItems = filters.selectedCategories,
                 items = filters.availableCategories,
                 itemLabel = { it.title.currentLangTitle },
                 onItemSelected = { category ->
@@ -89,7 +89,7 @@ fun SearchFilterRow(
         if (filters.availableSessionTypes.isNotEmpty()) {
             FilterDropdown(
                 label = stringResource(SessionsRes.string.filter_chip_session_type),
-                selectedItem = filters.selectedSessionType,
+                selectedItems = filters.selectedSessionTypes,
                 items = filters.availableSessionTypes,
                 itemLabel = { it.label.currentLangTitle },
                 onItemSelected = { sessionType ->
@@ -103,7 +103,7 @@ fun SearchFilterRow(
         if (filters.availableLanguages.isNotEmpty()) {
             FilterDropdown(
                 label = stringResource(SessionsRes.string.filter_chip_supported_language),
-                selectedItem = filters.selectedLanguage,
+                selectedItems = filters.selectedLanguages,
                 items = filters.availableLanguages,
                 itemLabel = { it.name },
                 onItemSelected = { language ->
@@ -118,7 +118,7 @@ fun SearchFilterRow(
 @Composable
 private fun <T> FilterDropdown(
     label: String,
-    selectedItem: T?,
+    selectedItems: List<T>,
     items: List<T>,
     itemLabel: (T) -> String,
     onItemSelected: (T) -> Unit,
@@ -128,22 +128,22 @@ private fun <T> FilterDropdown(
 
     Box(modifier = modifier) {
         FilterChip(
-            selected = selectedItem != null,
+            selected = selectedItems.isNotEmpty(),
             onClick = { expanded = true },
             label = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    if (selectedItem != null) {
+                    if (selectedItems.isNotEmpty()) {
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = null,
                         )
                     }
                     Text(
-                        text = if (selectedItem != null) {
-                            itemLabel(selectedItem)
+                        text = if (selectedItems.isNotEmpty()) {
+                            selectedItems.joinToString { itemLabel(it) }
                         } else {
                             label
                         },
@@ -169,6 +169,14 @@ private fun <T> FilterDropdown(
             items.forEach { item ->
                 DropdownMenuItem(
                     modifier = Modifier.testTag(DropdownFilterChipTestTagPrefix.plus(item)),
+                    leadingIcon = {
+                        if (selectedItems.contains(item)) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                            )
+                        }
+                    },
                     text = { Text(itemLabel(item)) },
                     onClick = {
                         onItemSelected(item)

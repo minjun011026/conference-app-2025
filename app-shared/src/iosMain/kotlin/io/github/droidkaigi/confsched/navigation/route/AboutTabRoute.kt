@@ -13,3 +13,6 @@ data object AboutRoute
 
 @Serializable
 data object LicensesRoute
+
+@Serializable
+data object SettingsRoute
