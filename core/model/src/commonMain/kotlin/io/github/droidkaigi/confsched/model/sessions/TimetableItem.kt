@@ -121,9 +121,9 @@ sealed class TimetableItem {
 
     val url: String
         get() = if (defaultLang() == Lang.JAPANESE) {
-            "https://2024.droidkaigi.jp/timetable/${id.value}"
+            "https://2025.droidkaigi.jp/timetable/${id.value}"
         } else {
-            "https://2024.droidkaigi.jp/en/timetable/${id.value}"
+            "https://2025.droidkaigi.jp/en/timetable/${id.value}"
         }
 
     val isCancelledSession: Boolean
