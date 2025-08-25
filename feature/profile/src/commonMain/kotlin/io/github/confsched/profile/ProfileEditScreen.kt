@@ -46,7 +46,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.confsched.profile.components.ThemeWithShape
-import io.github.confsched.profile.components.shape
+import io.github.confsched.profile.components.shapeValue
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
@@ -316,7 +316,7 @@ private fun Form<Profile>.Theme() {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     ProfileCardTheme.entries
-                        .groupBy { it.shape }
+                        .groupBy { it.shapeValue }
                         .forEach { (_, themes) ->
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
