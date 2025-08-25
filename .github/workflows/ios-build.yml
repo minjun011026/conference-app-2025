@@ -83,6 +83,9 @@ jobs:
     
     - name: Build iOS App
       working-directory: app-ios
+      env:
+        CI: true
+        GITHUB_ACTIONS: true
       run: |
         xcodebuild build \
           -project DroidKaigi2025.xcodeproj \
