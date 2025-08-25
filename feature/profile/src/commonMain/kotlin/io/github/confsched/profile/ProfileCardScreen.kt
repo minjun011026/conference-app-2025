@@ -30,8 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
-import io.github.confsched.profile.components.FlippableProfileCard
 import io.github.confsched.profile.components.CardPreviewImageBitmaps
+import io.github.confsched.profile.components.FlippableProfileCard
 import io.github.confsched.profile.components.ShareableProfileCard
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar

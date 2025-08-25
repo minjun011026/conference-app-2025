@@ -19,8 +19,8 @@ fun profilePresenter(
     profileWithImages: ProfileWithImages,
 ): ProfileUiState = providePresenterDefaults {
     val isAllowedToShowCard = profileWithImages.profile != null &&
-            profileWithImages.profileImageByteArray != null &&
-            profileWithImages.qrImageByteArray != null
+        profileWithImages.profileImageByteArray != null &&
+        profileWithImages.qrImageByteArray != null
 
     val profileMutation = rememberMutation(screenContext.profileMutationKey)
     var isInEditMode by rememberRetained { mutableStateOf(!isAllowedToShowCard) }
