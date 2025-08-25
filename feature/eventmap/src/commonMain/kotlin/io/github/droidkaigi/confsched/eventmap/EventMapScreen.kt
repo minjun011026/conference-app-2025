@@ -68,7 +68,7 @@ private fun EventMapScreenPreview() {
         EventMapScreen(
             uiState = EventMapUiState(
                 events = EventMapEvent.Companion.fakes(),
-                selectedFloor = FloorLevel.Ground
+                selectedFloor = FloorLevel.Ground,
             ),
             onSelectFloor = {},
             onClickReadMore = {},
