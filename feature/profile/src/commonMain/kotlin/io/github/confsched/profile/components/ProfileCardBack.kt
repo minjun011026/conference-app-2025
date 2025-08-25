@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.card_back_background_frame_day
 import io.github.droidkaigi.confsched.profile.card_back_background_frame_night

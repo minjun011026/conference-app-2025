@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.shareable_card_background_day
 import io.github.droidkaigi.confsched.profile.shareable_card_background_night

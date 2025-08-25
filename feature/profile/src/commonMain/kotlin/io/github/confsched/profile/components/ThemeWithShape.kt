@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.card_front_background_day
 import io.github.droidkaigi.confsched.profile.card_front_background_night
@@ -80,7 +81,7 @@ fun ThemeWithShape(
                 .aspectRatio(1f)
                 .background(
                     color = MaterialTheme.colorScheme.onSurface,
-                    shape = theme.profileShape.polygon.toShape(),
+                    shape = theme.shape,
                 ),
         )
         Image(

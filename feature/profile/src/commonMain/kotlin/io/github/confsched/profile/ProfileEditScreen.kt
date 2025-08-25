@@ -45,12 +45,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import io.github.confsched.profile.components.ProfileCardTheme
 import io.github.confsched.profile.components.ThemeWithShape
+import io.github.confsched.profile.components.shape
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import io.github.droidkaigi.confsched.droidkaigiui.compositionlocal.safeDrawingWithBottomNavBar
 import io.github.droidkaigi.confsched.model.profile.Profile
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.add_image
 import io.github.droidkaigi.confsched.profile.clear_button_icon
@@ -304,8 +305,8 @@ private fun Form<Profile>.Image() {
 @Composable
 private fun Form<Profile>.Theme() {
     Field(
-        selector = { it.themeKey },
-        updater = { value.copy(themeKey = it) },
+        selector = { it.theme },
+        updater = { value.copy(theme = it) },
         render = { field ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -315,16 +316,16 @@ private fun Form<Profile>.Theme() {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     ProfileCardTheme.entries
-                        .groupBy { it.profileShape }
+                        .groupBy { it.shape }
                         .forEach { (_, themes) ->
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                             ) {
                                 themes.forEach { theme ->
                                     ThemeWithShape(
-                                        selected = field.value == theme.themeKey,
+                                        selected = field.value == theme,
                                         onSelect = {
-                                            field.onValueChange(theme.themeKey)
+                                            field.onValueChange(theme)
                                         },
                                         theme = theme,
                                         modifier = Modifier.weight(1f),

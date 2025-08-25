@@ -8,5 +8,5 @@ data class Profile(
     val occupation: String = "",
     val link: String = "",
     val imagePath: String = "",
-    val themeKey: String = "",
+    val theme: ProfileCardTheme = ProfileCardTheme.DarkPill,
 )

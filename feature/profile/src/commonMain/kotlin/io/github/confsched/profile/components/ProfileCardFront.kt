@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
+import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import io.github.droidkaigi.confsched.profile.ProfileRes
 import io.github.droidkaigi.confsched.profile.card_front_background_day
 import io.github.droidkaigi.confsched.profile.card_front_background_night
@@ -57,7 +58,7 @@ fun ProfileCardFront(
             isDarkTheme = theme.isDark,
             profileImageBitmap = profileImageBitmap,
             userName = nickName,
-            profileShape = theme.profileShape,
+            profileShape = theme.shape,
             occupation = occupation,
             modifier = Modifier
                 .align(Alignment.TopCenter)

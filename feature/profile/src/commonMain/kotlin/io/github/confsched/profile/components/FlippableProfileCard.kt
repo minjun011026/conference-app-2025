@@ -61,14 +61,14 @@ fun FlippableProfileCard(
     ) {
         if (isFront) {
             ProfileCardFront(
-                theme = uiState.theme,
+                theme = uiState.profile.theme,
                 profileImageBitmap = uiState.profileImageBitmap,
                 nickName = uiState.profile.nickName,
                 occupation = uiState.profile.occupation,
             )
         } else {
             ProfileCardBack(
-                theme = uiState.theme,
+                theme = uiState.profile.theme,
                 qrImageBitmap = uiState.qrImageBitmap,
                 modifier = Modifier.graphicsLayer {
                     rotationY = 180f

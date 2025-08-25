@@ -57,7 +57,7 @@ fun ProfileCardScreen(
     val coroutineScope = rememberCoroutineScope()
     // Not displayed, just for generating shareable card image
     ShareableProfileCard(
-        theme = uiState.theme,
+        theme = uiState.profile.theme,
         qrImageBitmap = uiState.qrImageBitmap,
         nickName = uiState.profile.nickName,
         occupation = uiState.profile.occupation,
