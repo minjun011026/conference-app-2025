@@ -48,8 +48,14 @@ extension Model.RoomType {
         switch shared {
         case .roomJ:
             self = .roomJ
-        case .roomIj:
-            self = .roomIJ
+        case .roomK:
+            self = .roomK
+        case .roomL:
+            self = .roomL
+        case .roomM:
+            self = .roomM
+        case .roomN:
+            self = .roomN
         default:
             // Map any unknown room types to roomJ as a fallback
             self = .roomJ
