@@ -60,11 +60,11 @@ extension Room {
         case .roomJ:
             return "ic_square"
         case .roomK:
-            return "ic_rhombus"
+            return "ic_diamond"
         case .roomL:
             return "ic_circle"
         case .roomM:
-            return "ic_diamond"
+            return "ic_rhombus"
         case .roomN:
             return "ic_triangle"
         }
