@@ -58,15 +58,15 @@ extension Room {
     public var iconName: String {
         switch type {
         case .roomJ:
-            return "ic_triangle"
-        case .roomK:
-            return "ic_circle"
-        case .roomL:
-            return "ic_diamond"
-        case .roomM:
             return "ic_square"
-        case .roomN:
+        case .roomK:
             return "ic_rhombus"
+        case .roomL:
+            return "ic_circle"
+        case .roomM:
+            return "ic_diamond"
+        case .roomN:
+            return "ic_triangle"
         }
     }
 
