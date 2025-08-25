@@ -8,7 +8,7 @@ data class Settings(
 ) {
     companion object {
         val Default = Settings(
-            useKaigiFontFamily = KaigiFontFamily.ChangoRegular,
+            useKaigiFontFamily = KaigiFontFamily.SystemDefault,
         )
     }
 }
