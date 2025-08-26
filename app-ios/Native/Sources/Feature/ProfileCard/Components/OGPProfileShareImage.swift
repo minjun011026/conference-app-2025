@@ -7,9 +7,9 @@ public struct OGPProfileShareImage: View {
     public var body: some View {
         ZStack(alignment: .topLeading) {
             backgroundImage(profile.cardVariant)
-            FrontCard(userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type, image: profile.image, normal: (0, 0, 0.5))
+            FrontCard(userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type, image: profile.image, effectEnabled: false)
                 .offset(x: 280, y: 60)
-            BackCard(cardType: profile.cardVariant.type, url: profile.url, normal: (0, 0, 0))
+            BackCard(cardType: profile.cardVariant.type, url: profile.url, effectEnabled: false)
                 .offset(x: 620, y: 190)
             Image(.ogpTopStar)
         }
