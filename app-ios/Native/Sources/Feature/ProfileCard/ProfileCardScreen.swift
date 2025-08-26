@@ -64,6 +64,7 @@ public struct ProfileCardScreen: View {
                     userRole: profile.occupation,
                     userName: profile.name,
                     cardType: profile.cardVariant.type,
+                    cardShape: profile.cardVariant.shape,
                     image: profile.image,
                     normal: (normal.x, normal.y, normal.z),
                 )
