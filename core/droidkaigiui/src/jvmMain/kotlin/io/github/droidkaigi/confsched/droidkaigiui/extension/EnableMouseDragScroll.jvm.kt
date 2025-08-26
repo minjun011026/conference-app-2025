@@ -24,12 +24,12 @@ import kotlin.math.abs
 
 private data class NestedScrollConsumption(
     val requestedScrollToChild: Float,
-    val childScrollConsumed: Float
+    val childScrollConsumed: Float,
 )
 
 @Composable
 actual fun Modifier.enableMouseDragScroll(
-    lazyListState: LazyListState
+    lazyListState: LazyListState,
 ): Modifier {
     val scope = rememberCoroutineScope()
     val decaySpec: DecayAnimationSpec<Float> = remember { exponentialDecay() }
@@ -37,13 +37,13 @@ actual fun Modifier.enableMouseDragScroll(
 
     fun ScrollScope.performNestedScrollStep(
         deltaY: Float,
-        source: NestedScrollSource
+        source: NestedScrollSource,
     ): NestedScrollConsumption {
         val availableDelta = Offset(0f, deltaY)
 
         val parentPreConsumed = nestedDispatcher.dispatchPreScroll(
             available = availableDelta,
-            source = source
+            source = source,
         )
 
         val deltaToChild = availableDelta.y - parentPreConsumed.y
@@ -55,12 +55,12 @@ actual fun Modifier.enableMouseDragScroll(
         nestedDispatcher.dispatchPostScroll(
             consumed = totalConsumedForParent,
             available = remainingDelta,
-            source = source
+            source = source,
         )
 
         return NestedScrollConsumption(
             requestedScrollToChild = deltaToChild,
-            childScrollConsumed = childConsumedDelta
+            childScrollConsumed = childConsumedDelta,
         )
     }
 
@@ -76,7 +76,7 @@ actual fun Modifier.enableMouseDragScroll(
         lazyListState.scroll {
             performNestedScrollStep(
                 deltaY = dragDeltaY,
-                source = NestedScrollSource.UserInput
+                source = NestedScrollSource.UserInput,
             )
         }
     }
@@ -86,7 +86,7 @@ actual fun Modifier.enableMouseDragScroll(
             var lastValue = 0f
             val anim = AnimationState(
                 initialValue = 0f,
-                initialVelocity = initialVelocityY
+                initialVelocity = initialVelocityY,
             )
             anim.animateDecay(decaySpec) {
                 val frameDelta = value - lastValue
@@ -95,7 +95,7 @@ actual fun Modifier.enableMouseDragScroll(
                 if (hasFrameDelta) {
                     val consumption = performNestedScrollStep(
                         deltaY = frameDelta,
-                        source = NestedScrollSource.SideEffect
+                        source = NestedScrollSource.SideEffect,
                     )
                     val reachedEdge = didHitScrollEdge(consumption)
                     if (reachedEdge) {
