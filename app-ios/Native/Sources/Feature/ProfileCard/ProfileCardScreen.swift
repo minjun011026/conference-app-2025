@@ -95,14 +95,16 @@ public struct ProfileCardScreen: View {
         let uiImage = imageRenderer.uiImage!
         let ogpImage = uiImage.pngData()!
         let shareText = String(localized: "Share Message", bundle: .module)
-        
-        return ShareLink(item: ShareOGPItem(ogpImage: ogpImage), message: Text(shareText), preview: SharePreview(shareText, image: Image(uiImage: uiImage))) {
+
+        return ShareLink(
+            item: ShareOGPItem(ogpImage: ogpImage), message: Text(shareText),
+            preview: SharePreview(shareText, image: Image(uiImage: uiImage))
+        ) {
             HStack {
                 AssetImages.icShare.swiftUIImage
                     .resizable()
                     .frame(width: 18, height: 18)
                 Text(String(localized: "Share", bundle: .module))
-
             }
             .frame(maxWidth: .infinity)
         }
@@ -126,7 +128,7 @@ struct ShareOGPItem: Transferable {
             item.ogpImage
         }
     }
-    
+
     let ogpImage: Data
 }
 

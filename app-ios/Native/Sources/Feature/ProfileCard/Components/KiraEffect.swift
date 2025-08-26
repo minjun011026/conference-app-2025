@@ -5,7 +5,7 @@ private struct KiraEffect: ViewModifier {
     let normal: (Float, Float, Float)
     let monochromeImage: Image
     let isEnabled: Bool
-    
+
     func body(content: Content) -> some View {
         if isEnabled {
             content.layerEffect(
@@ -22,7 +22,10 @@ private struct KiraEffect: ViewModifier {
 }
 
 extension View {
-    func kiraEffect(function: ShaderFunction, normal: (Float, Float, Float), monochromeImage: Image, isEnabled: Bool = true) -> some View {
-        self.modifier(KiraEffect(function: function, normal: normal, monochromeImage: monochromeImage, isEnabled: isEnabled))
+    func kiraEffect(
+        function: ShaderFunction, normal: (Float, Float, Float), monochromeImage: Image, isEnabled: Bool = true
+    ) -> some View {
+        self.modifier(
+            KiraEffect(function: function, normal: normal, monochromeImage: monochromeImage, isEnabled: isEnabled))
     }
 }

@@ -1,21 +1,24 @@
-import SwiftUI
 import Model
+import SwiftUI
 
 public struct OGPProfileShareImage: View {
     let profile: Model.Profile
-    
+
     public var body: some View {
         ZStack(alignment: .topLeading) {
             backgroundImage(profile.cardVariant)
-            FrontCard(userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type, cardShape: profile.cardVariant.shape, image: profile.image, effectEnabled: false)
-                .offset(x: 280, y: 60)
+            FrontCard(
+                userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type,
+                cardShape: profile.cardVariant.shape, image: profile.image, effectEnabled: false
+            )
+            .offset(x: 280, y: 60)
             BackCard(cardType: profile.cardVariant.type, url: profile.url, effectEnabled: false)
                 .offset(x: 620, y: 190)
             Image(.ogpTopStar)
         }
         .frame(width: 1200, height: 630)
     }
-    
+
     private func backgroundImage(_ cardVariant: ProfileCardVariant) -> some View {
         let resource: ImageResource
         switch cardVariant.type {
@@ -24,7 +27,7 @@ public struct OGPProfileShareImage: View {
         default:
             resource = .dayOgpBase
         }
-        
+
         return Image(resource)
             .resizable()
     }
@@ -36,7 +39,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .dayPill
         )
     )
@@ -48,7 +53,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .dayFlower
         )
     )
@@ -60,7 +67,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .dayDiamond
         )
     )
@@ -72,7 +81,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .nightPill
         )
     )
@@ -84,7 +95,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .nightFlower
         )
     )
@@ -96,7 +109,9 @@ public struct OGPProfileShareImage: View {
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white))
+                .uiImage!
+                .pngData()!,
             cardVariant: .nightDiamond
         )
     )

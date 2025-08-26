@@ -9,8 +9,11 @@ struct FrontCard: View {
     let image: Data
     let normal: (Float, Float, Float)
     let effectEnabled: Bool
-    
-    init(userRole: String, userName: String, cardType: ProfileCardType, cardShape: ProfileCardShape, image: Data, normal: (Float, Float, Float) = (0, 0, 0), effectEnabled: Bool = true) {
+
+    init(
+        userRole: String, userName: String, cardType: ProfileCardType, cardShape: ProfileCardShape, image: Data,
+        normal: (Float, Float, Float) = (0, 0, 0), effectEnabled: Bool = true
+    ) {
         self.userRole = userRole
         self.userName = userName
         self.cardType = cardType

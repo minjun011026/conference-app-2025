@@ -6,7 +6,7 @@ struct BackCard: View {
     let url: URL
     let normal: (Float, Float, Float)
     let effectEnabled: Bool
-    
+
     init(cardType: ProfileCardType, url: URL, normal: (Float, Float, Float) = (0, 0, 0), effectEnabled: Bool = true) {
         self.cardType = cardType
         self.url = url
