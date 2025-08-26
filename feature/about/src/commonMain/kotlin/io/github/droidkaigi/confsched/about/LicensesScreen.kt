@@ -7,7 +7,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.style.TextOverflow
 import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import io.github.droidkaigi.confsched.droidkaigiui.component.AnimatedTextTopAppBar
 import org.jetbrains.compose.resources.stringResource
@@ -32,6 +34,10 @@ fun LicensesScreen(
         LibrariesContainer(
             libraries = libraries,
             contentPadding = innerPadding,
+            textStyles = LibraryDefaults.libraryTextStyles(
+                nameOverflow = TextOverflow.Visible,
+                nameMaxLines = 3,
+            ),
             modifier = Modifier
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
