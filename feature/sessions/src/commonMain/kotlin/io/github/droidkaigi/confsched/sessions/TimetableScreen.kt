@@ -165,7 +165,6 @@ fun TimetableScreen(
 }
 
 private object TimetableDefaults {
-    val dayTabHeight = 40.dp
     val dayTabWidth = 104.dp
 }
 
