@@ -30,26 +30,74 @@ public struct OGPProfileShareImage: View {
     }
 }
 
-#Preview("OGPProfileShareImage(day)", traits: .sizeThatFitsLayout) {
+#Preview("OGPProfileShareImage(dayPill)", traits: .sizeThatFitsLayout) {
     OGPProfileShareImage(
         profile: Model.Profile(
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 131, height: 131).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
             cardVariant: .dayPill
         )
     )
 }
 
-#Preview("OGPProfileShareImage(night)", traits: .sizeThatFitsLayout) {
+#Preview("OGPProfileShareImage(dayFlower)", traits: .sizeThatFitsLayout) {
     OGPProfileShareImage(
         profile: Model.Profile(
             name: "Test Test",
             occupation: "Android App Engineer",
             url: URL(string: "https://2025.droidkaigi.jp/")!,
-            image: ImageRenderer(content: Text("TEST Icon").frame(width: 131, height: 131).background(Color.white)).uiImage!.pngData()!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            cardVariant: .dayFlower
+        )
+    )
+}
+
+#Preview("OGPProfileShareImage(dayDiamond)", traits: .sizeThatFitsLayout) {
+    OGPProfileShareImage(
+        profile: Model.Profile(
+            name: "Test Test",
+            occupation: "Android App Engineer",
+            url: URL(string: "https://2025.droidkaigi.jp/")!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            cardVariant: .dayDiamond
+        )
+    )
+}
+
+#Preview("OGPProfileShareImage(nightPill)", traits: .sizeThatFitsLayout) {
+    OGPProfileShareImage(
+        profile: Model.Profile(
+            name: "Test Test",
+            occupation: "Android App Engineer",
+            url: URL(string: "https://2025.droidkaigi.jp/")!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
             cardVariant: .nightPill
+        )
+    )
+}
+
+#Preview("OGPProfileShareImage(nightFlower)", traits: .sizeThatFitsLayout) {
+    OGPProfileShareImage(
+        profile: Model.Profile(
+            name: "Test Test",
+            occupation: "Android App Engineer",
+            url: URL(string: "https://2025.droidkaigi.jp/")!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            cardVariant: .nightFlower
+        )
+    )
+}
+
+#Preview("OGPProfileShareImage(nightDiamond)", traits: .sizeThatFitsLayout) {
+    OGPProfileShareImage(
+        profile: Model.Profile(
+            name: "Test Test",
+            occupation: "Android App Engineer",
+            url: URL(string: "https://2025.droidkaigi.jp/")!,
+            image: ImageRenderer(content: Text("TEST Icon").frame(width: 160, height: 160).background(Color.white)).uiImage!.pngData()!,
+            cardVariant: .nightDiamond
         )
     )
 }

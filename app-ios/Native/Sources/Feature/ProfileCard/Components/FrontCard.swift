@@ -84,7 +84,7 @@ struct FrontCard: View {
     private var avatarImage: some View {
         Image(uiImage: UIImage(data: image)!)
             .resizable()
-            .frame(width: 131, height: 131)
+            .frame(width: 160, height: 160)
             .foregroundColor(.accentColor)
             .mask {
                 Image(cardShape == .pill ? .pill : cardShape == .flower ? .flower : .diamond)
