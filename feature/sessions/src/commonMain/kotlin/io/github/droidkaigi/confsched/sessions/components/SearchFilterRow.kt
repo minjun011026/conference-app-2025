@@ -20,9 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.sessions.SearchScreenEvent
@@ -32,6 +35,7 @@ import io.github.droidkaigi.confsched.sessions.filter_chip_category
 import io.github.droidkaigi.confsched.sessions.filter_chip_day
 import io.github.droidkaigi.confsched.sessions.filter_chip_session_type
 import io.github.droidkaigi.confsched.sessions.filter_chip_supported_language
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 const val SearchFilterRowTestTag = "SearchFilterRowTestTag"
@@ -124,12 +128,20 @@ private fun <T> FilterDropdown(
     onItemSelected: (T) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     var expanded by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     Box(modifier = modifier) {
         FilterChip(
             selected = selectedItems.isNotEmpty(),
-            onClick = { expanded = true },
+            onClick = {
+                scope.launch {
+                    withFrameNanos {
+                        keyboardController?.hide()
+                    }
+                }.invokeOnCompletion { expanded = true }
+            },
             label = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
