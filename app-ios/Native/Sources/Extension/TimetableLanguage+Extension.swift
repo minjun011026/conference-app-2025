@@ -20,6 +20,7 @@ extension TimetableLanguage {
             if let interpretationLanguage = languageCodes.first(where: { $0 != speakerLanguageCode }) {
                 components.append(interpretationLanguage)
             }
+        }
 
         return components
     }
