@@ -60,7 +60,7 @@ android {
             buildConfigField(
                 type = "Boolean",
                 name = "USE_PRODUCTION_API",
-                value = "true",
+                value = "false",
             )
         }
 
@@ -74,7 +74,7 @@ android {
             buildConfigField(
                 type = "Boolean",
                 name = "USE_PRODUCTION_API",
-                value = "false",
+                value = "true",
             )
         }
     }
