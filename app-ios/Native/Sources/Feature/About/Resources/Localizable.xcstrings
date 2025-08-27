@@ -2,22 +2,50 @@
   "sourceLanguage" : "en",
   "strings" : {
     "2025.09.11(Thu) - 12(Fri)" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2024.09.11(水) 〜 13(金) "
+          }
+        }
+      }
     },
     "About" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigiについて"
+          }
+        }
+      }
     },
     "App Version" : {
 
     },
     "Bellesalle Shibuya Garden" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベルサール渋谷ガーデン"
+          }
+        }
+      }
     },
     "Cancel" : {
 
     },
     "Check Map" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地図を見る"
+          }
+        }
+      }
     },
     "Code of Conduct" : {
       "extractionState" : "manual",
@@ -88,10 +116,24 @@
       }
     },
     "Date:" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日時"
+          }
+        }
+      }
     },
     "DroidKaigi is a conference for Android developers" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigiはAndroid技術情報の共有とコミュニケーションを目的に開催されるエンジニアが主役のAndroidカンファレンスです。"
+          }
+        }
+      }
     },
     "Licenses" : {
       "extractionState" : "manual",
@@ -111,7 +153,14 @@
       }
     },
     "Location:" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "場所"
+          }
+        }
+      }
     },
     "Others" : {
       "extractionState" : "manual",

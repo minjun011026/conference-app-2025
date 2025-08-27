@@ -27,7 +27,6 @@ public struct AboutScreen: View {
         ScrollView {
             VStack(spacing: 32) {
                 KeyVisual()
-                    .padding(.top, 28)
 
                 VStack(spacing: 32) {
                     creditsSection
