@@ -5,19 +5,17 @@ struct FrontCard: View {
     let userRole: String
     let userName: String
     let cardType: ProfileCardType
-    let cardShape: ProfileCardShape
     let image: Data
     let normal: (Float, Float, Float)
     let effectEnabled: Bool
 
     init(
-        userRole: String, userName: String, cardType: ProfileCardType, cardShape: ProfileCardShape, image: Data,
+        userRole: String, userName: String, cardType: ProfileCardType, image: Data,
         normal: (Float, Float, Float) = (0, 0, 0), effectEnabled: Bool = true
     ) {
         self.userRole = userRole
         self.userName = userName
         self.cardType = cardType
-        self.cardShape = cardShape
         self.image = image
         self.normal = normal
         self.effectEnabled = effectEnabled
@@ -89,9 +87,5 @@ struct FrontCard: View {
             .resizable()
             .frame(width: 160, height: 160)
             .foregroundColor(.accentColor)
-            .mask {
-                Image(cardShape == .pill ? .pill : cardShape == .flower ? .flower : .diamond)
-                    .resizable()
-            }
     }
 }

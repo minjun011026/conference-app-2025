@@ -9,8 +9,7 @@ public struct OGPProfileShareImage: View {
             Image(profile.cardVariant.type == .day ? .nightOgpBase : .dayOgpBase)
                 .resizable()
             FrontCard(
-                userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type,
-                cardShape: profile.cardVariant.shape, image: profile.image, effectEnabled: false
+                userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type, image: profile.image, effectEnabled: false
             )
             .offset(x: 280, y: 60)
             BackCard(cardType: profile.cardVariant.type, url: profile.url, effectEnabled: false)
