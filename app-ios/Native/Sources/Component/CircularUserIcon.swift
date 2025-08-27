@@ -3,26 +3,6 @@ import Model
 import SwiftUI
 import Theme
 
-public struct LanguageTag: View {
-    let language: TimetableLanguage
-
-    public init(language: TimetableLanguage) {
-        self.language = language
-    }
-
-    public var body: some View {
-        Text(language.displayLanguage)
-            .font(Typography.labelSmall)
-            .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 3)
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(AssetColors.outline.swiftUIColor, lineWidth: 1)
-            )
-    }
-}
-
 public struct CircularUserIcon: View {
     let imageUrl: String?
 
@@ -39,13 +19,19 @@ public struct CircularUserIcon: View {
             } placeholder: {
                 Image(systemName: "person.circle.fill")
                     .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .foregroundStyle(AssetColors.outline.swiftUIColor)
             }
             .clipShape(Circle())
         } else {
             Image(systemName: "person.circle.fill")
                 .resizable()
+                .aspectRatio(contentMode: .fill)
                 .foregroundStyle(AssetColors.outline.swiftUIColor)
         }
     }
+}
+
+#Preview {
+    CircularUserIcon(imageUrl: "https://placeholder.jp/150x150.png")
 }
