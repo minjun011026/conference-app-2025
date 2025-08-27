@@ -100,7 +100,8 @@ fun AboutScreen(
     }
 }
 
-@Preview
+@Preview(name = "AboutScreenPreview - Portrait", widthDp = 360, heightDp = 640)
+@Preview(name = "AboutScreenPreview - Landscape", widthDp = 640, heightDp = 360)
 @Composable
 private fun AboutScreenPreview() {
     KaigiPreviewContainer {
