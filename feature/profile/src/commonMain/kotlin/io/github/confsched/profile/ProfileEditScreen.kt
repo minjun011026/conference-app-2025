@@ -35,6 +35,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -83,6 +85,27 @@ import soil.form.compose.rememberForm
 import soil.form.rule.match
 import soil.form.rule.notBlank
 
+private val profileSaver: Saver<Profile, Any> = listSaver(
+    save = {
+        listOf(
+            it.nickName,
+            it.occupation,
+            it.link,
+            it.imagePath,
+            it.theme.name,
+        )
+    },
+    restore = { list: List<String?> ->
+        Profile(
+            nickName = list[0] as String,
+            occupation = list[1] as String,
+            link = list[2] as String,
+            imagePath = list[3] as String,
+            theme = ProfileCardTheme.valueOf(list[4] as String),
+        )
+    },
+)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileEditScreen(
@@ -92,6 +115,7 @@ fun ProfileEditScreen(
 ) {
     val form: Form<Profile> = rememberForm(
         initialValue = initialProfile ?: Profile(),
+        saver = profileSaver,
         onSubmit = onCreateClick,
     )
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
