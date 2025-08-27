@@ -56,8 +56,8 @@ fun TimetableItemTag(
 fun TimetableItemTag(
     tagText: String,
     contentTextColor: Color,
-    contentBackgroundColor: Color? = null,
     borderColor: Color,
+    contentBackgroundColor: Color? = null,
     modifier: Modifier = Modifier,
     icon: DrawableResource? = null,
     contentPadding: PaddingValues = PaddingValues(horizontal = 6.dp, vertical = 4.dp),
