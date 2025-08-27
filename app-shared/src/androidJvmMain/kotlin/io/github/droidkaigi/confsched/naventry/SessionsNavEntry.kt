@@ -82,7 +82,7 @@ fun EntryProviderBuilder<NavKey>.searchEntry(
     onBackClick: () -> Unit = {},
     onTimetableItemClick: (TimetableItemId) -> Unit = {},
 ) {
-    entry<SearchNavKey> {
+    entry<SearchNavKey>(metadata = listDetailSceneStrategyListPaneMetaData()) {
         with(rememberSearchScreenContextRetained()) {
             SearchScreenRoot(
                 onBackClick = onBackClick,
