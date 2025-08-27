@@ -115,7 +115,7 @@
         }
       }
     },
-    "Ongoing sessions:%@" : {
+    "Ongoing sessions: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -15,7 +15,7 @@ struct GetOngoingSessionsIntent: AppIntent {
             dialog = IntentDialog("Not found ongoing session")
         } else {
             let titles = ongoingSessions.map { $0.title }.joined(separator: ", ")
-            dialog = IntentDialog("Ongoing sessions:\(titles)")
+            dialog = IntentDialog("Ongoing sessions: \(titles)")
         }
         return .result(value: ongoingSessions, dialog: dialog)
     }

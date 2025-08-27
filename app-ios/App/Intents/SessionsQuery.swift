@@ -10,7 +10,7 @@ private struct LoadSessions {
         let firstItem = await flow.first(where: { _ in true })
         guard let firstItem else { return [] }
         let timetable = Model.Timetable(from: firstItem)
-        let sessions = timetable.timetableItems.compactMap { item -> SessionEntity in
+        let sessions = timetable.timetableItems.map { item -> SessionEntity in
             .init(from: item)
         }
         return sessions
