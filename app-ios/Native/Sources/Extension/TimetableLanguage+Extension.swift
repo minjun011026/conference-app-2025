@@ -17,8 +17,9 @@ extension TimetableLanguage {
 
         // Add interpretation indicator if needed
         if isInterpretationTarget {
-            components.append(languageCodes.first(where: { $0 != speakerLanguageCode })!)
-        }
+            if let interpretationLanguage = languageCodes.first(where: { $0 != speakerLanguageCode }) {
+                components.append(interpretationLanguage)
+            }
 
         return components
     }
