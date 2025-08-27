@@ -53,7 +53,7 @@ struct KeyVisual: View {
 
                     Text(String(localized: "Bellesalle Shibuya Garden", bundle: .module))
                         .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                        .font(.system(size: 14, weight: .regular))
+                        .font(Typography.titleSmall)
                         .lineSpacing(-6)
 
                     if let mapURL = URL(string: "https://goo.gl/maps/vv9sE19JvRjYKtSP9") {
