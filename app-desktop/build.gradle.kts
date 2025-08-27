@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
@@ -18,8 +18,6 @@ compose {
 val aboutLibrariesTargetDir = "${layout.buildDirectory.get().asFile.path}/generated/aboutlibraries"
 
 kotlin {
-    jvm("desktop")
-
     // JDK Version 21 is required to create the distribution materials.
     jvmToolchain(21)
 
@@ -28,28 +26,25 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.appShared)
-                implementation(projects.core.data)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.ui)
-            }
-        }
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(libs.navigationeventDesktop)
-                implementation(libs.lifecycleRuntimeCompose)
-                implementation(compose.uiUtil)
-            }
+        main {
             resources.srcDir(aboutLibrariesTargetDir)
         }
     }
 }
 
 compose.desktop.application.mainClass = "io.github.droidkaigi.confsched.MainKt"
+
+dependencies {
+    implementation(projects.appShared)
+    implementation(projects.core.data)
+    implementation(compose.desktop.currentOs)
+    implementation(compose.foundation)
+    implementation(compose.runtime)
+    implementation(libs.navigationeventDesktop)
+    implementation(libs.lifecycleRuntimeCompose)
+    implementation(compose.ui)
+    implementation(compose.uiUtil)
+}
 
 aboutLibraries.export {
     outputFile.set(file("${aboutLibrariesTargetDir}/licenses.json"))
@@ -76,13 +71,13 @@ compose.desktop {
 
             macOS {
                 bundleID = macOS.bundleID
-                iconFile.set(project.file("src/desktopMain/resources/DroidKaigi2025.icns"))
+                iconFile.set(project.file("src/main/resources/DroidKaigi2025.icns"))
             }
             windows {
-                iconFile.set(project.file("src/desktopMain/resources/DroidKaigi2025.ico"))
+                iconFile.set(project.file("src/main/resources/DroidKaigi2025.ico"))
             }
             linux {
-                iconFile.set(project.file("src/desktopMain/resources/ic_app_512.png"))
+                iconFile.set(project.file("src/main/resources/ic_app_512.png"))
             }
         }
     }
@@ -93,7 +88,7 @@ compose.desktop {
  *
  * The following tasks are covered:
  *
- * - **desktopProcessResources** — Resource processing task for the KMP `jvm("desktop")` target.
+ * - **processResources** — Resource processing task for the JVM target.
  * - **createDistributable** — Creates the base distributable package for desktop apps.
  * - **packageDmg** — Builds a macOS DMG installer.
  * - **packageMsi** — Builds a Windows MSI installer.
@@ -106,7 +101,7 @@ compose.desktop {
  * in the build outputs.
  */
 listOf(
-    "desktopProcessResources",
+    "processResources",
     "createDistributable",
     "packageDmg",
     "packageMsi", "packageExe",

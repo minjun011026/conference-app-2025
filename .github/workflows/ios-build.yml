@@ -6,12 +6,14 @@ on:
     paths:
       - 'app-ios/**'
       - 'app-shared/**'
+      - 'core/model/**'
       - '.github/workflows/ios-build.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'app-ios/**'
       - 'app-shared/**'
+      - 'core/model/**'
       - '.github/workflows/ios-build.yml'
 
 concurrency:
