@@ -94,7 +94,7 @@ fun ProfileCardScreen(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(18.dp),
             ) {
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -115,6 +115,7 @@ fun ProfileCardScreen(
                 onClick = onEditClick,
                 modifier = Modifier.fillMaxWidth(),
                 border = null,
+                contentPadding = PaddingValues(18.dp),
             ) {
                 Text(stringResource(ProfileRes.string.edit))
             }

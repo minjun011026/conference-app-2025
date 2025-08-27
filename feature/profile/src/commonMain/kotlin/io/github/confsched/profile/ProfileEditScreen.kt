@@ -153,6 +153,7 @@ fun ProfileEditScreen(
             Button(
                 onClick = { form.handleSubmit() },
                 modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(18.dp),
             ) {
                 Text(stringResource(ProfileRes.string.create_card))
             }
