@@ -118,28 +118,28 @@ public struct TimetableDetailScreen: View {
             VStack(spacing: 16) {
                 InformationRow(
                     icon: AssetImages.icSchedule.swiftUIImage,
-                    title: "日時",
+                    title: String(localized: "DateTime"),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: formattedDateTimeString,
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icLocationOn.swiftUIImage,
-                    title: "場所",
+                    title: String(localized: "Location"),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: presenter.timetableItem.timetableItem.room.displayNameWithFloor,
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icLanguage.swiftUIImage,
-                    title: "対応言語",
+                    title: String(localized: "Supported Languages"),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: getSupportedLangString(),
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icCategory.swiftUIImage,
-                    title: "カテゴリ",
+                    title: String(localized: "Category"),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: presenter.timetableItem.timetableItem.category.title.currentLangTitle,
                     isStrikethrough: presenter.isCancelledSession
@@ -163,7 +163,7 @@ public struct TimetableDetailScreen: View {
 
     var targetAudience: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("対象者")
+            Text(String(localized: "Target Audience"))
                 .font(Typography.titleLarge)
                 .foregroundStyle(presenter.timetableItem.timetableItem.room.roomTheme.primaryColor)
 
@@ -192,8 +192,11 @@ public struct TimetableDetailScreen: View {
                                     AssetImages.icFav.swiftUIImage
                                 }
 
-                                Text(presenter.isFavorite ? "ブックマークを解除" : "ブックマークに登録")
-                                    .font(Typography.titleMedium)
+                                Text(
+                                    presenter.isFavorite
+                                        ? String(localized: "Remove bookmark") : String(localized: "Add to bookmark")
+                                )
+                                .font(Typography.titleMedium)
                             }
                             .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
                             .padding(.horizontal, 24)
@@ -209,7 +212,7 @@ public struct TimetableDetailScreen: View {
                             HStack(spacing: 8) {
                                 AssetImages.icTimetable.swiftUIImage
 
-                                Text("カレンダーに登録")
+                                Text(String(localized: "Add to calendar"))
                                     .font(Typography.titleMedium)
                             }
                             .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -224,7 +227,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icShare.swiftUIImage
 
-                                    Text("リンクをシェア")
+                                    Text(String(localized: "Share link"))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -246,7 +249,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icDescription.swiftUIImage
 
-                                    Text("発表スライドを開く")
+                                    Text(String(localized: "Open presentation slides"))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -268,7 +271,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icPlayCircle.swiftUIImage
 
-                                    Text("動画を見る")
+                                    Text(String(localized: "Watch video"))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
