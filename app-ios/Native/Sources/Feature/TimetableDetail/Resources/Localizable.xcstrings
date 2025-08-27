@@ -21,6 +21,9 @@
         }
       }
     },
+    "Add to favorites" : {
+
+    },
     "Category" : {
       "localizations" : {
         "ja" : {
@@ -71,6 +74,9 @@
         }
       }
     },
+    "Remove from favorites" : {
+
+    },
     "Share link" : {
       "localizations" : {
         "ja" : {
@@ -107,6 +113,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "動画を見る"
+          }
+        }
+      }
+    },
+    "Read more" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "続きを読む"
           }
         }
       }
