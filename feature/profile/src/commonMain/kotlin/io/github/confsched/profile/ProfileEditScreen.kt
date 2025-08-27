@@ -243,7 +243,7 @@ private fun Form<Profile>.Image() {
                 }
                 ?.let { safePath ->
                     runCatching { PlatformFile(safePath).takeIf { it.exists() } }.getOrNull()
-                }
+                },
         )
     }
 
