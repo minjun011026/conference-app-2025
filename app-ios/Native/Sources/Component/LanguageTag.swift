@@ -11,7 +11,15 @@ public struct LanguageTag: View {
     }
     
     public var body: some View {
-        Text(language.displayLanguage)
+        HStack(spacing: 4) {
+            ForEach(language.displayLanguages, id: \.self) {
+                eachTag($0)
+            }
+        }
+    }
+    
+    func eachTag(_ languageCode: String) -> some View {
+        Text(languageCode)
             .font(Typography.labelMedium)
             .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
             .padding(.horizontal, 6)
@@ -24,5 +32,5 @@ public struct LanguageTag: View {
 }
 
 #Preview {
-    LanguageTag(language: TimetableLanguage(langOfSpeaker: "en", isInterpretationTarget: false))
+    LanguageTag(language: TimetableLanguage(langOfSpeaker: "english", isInterpretationTarget: true))
 }

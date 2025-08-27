@@ -16,6 +16,10 @@ public struct CircularUserIcon: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
+                    .overlay {
+                        Circle()
+                            .stroke(AssetColors.outline.swiftUIColor)
+                    }
             } placeholder: {
                 Image(systemName: "person.circle.fill")
                     .resizable()
