@@ -50,13 +50,13 @@ fun ProfileCardUser(
             text = occupation,
             style = MaterialTheme.typography.bodyMedium,
             color = if (isDarkTheme) Color.White else Color.Black,
-            fontFamily = robotoRegularFontFamily()
+            fontFamily = robotoRegularFontFamily(),
         )
         Text(
             text = userName,
             style = MaterialTheme.typography.headlineSmall,
             color = if (isDarkTheme) Color.White else Color.Black,
-            fontFamily = changoFontFamily()
+            fontFamily = changoFontFamily(),
         )
     }
 }
