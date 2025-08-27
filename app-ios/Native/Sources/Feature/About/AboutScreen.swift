@@ -42,7 +42,7 @@ public struct AboutScreen: View {
             .padding(.bottom, 80)  // Tab bar padding
         }
         .background(AssetColors.surface.swiftUIColor)
-        .navigationTitle("About")
+        .navigationTitle(String(localized: "About", bundle: .module))
         #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
         #endif
