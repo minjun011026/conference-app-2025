@@ -25,6 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.droidkaigi.confsched2025"
+        versionCode = 1
         minSdk = 24
         targetSdk = 36
     }
@@ -85,6 +86,12 @@ android {
         }
         debug {
             signingConfig = null
+        }
+    }
+
+    packaging {
+        resources {
+            excludes += "META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
