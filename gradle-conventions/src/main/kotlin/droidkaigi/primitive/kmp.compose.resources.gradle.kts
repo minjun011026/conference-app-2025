@@ -1,7 +1,9 @@
 package droidkaigi.primitive
 
 import org.gradle.internal.extensions.stdlib.capitalized
-import util.commonMainImplementation
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import util.getDefaultPackageName
 
 plugins {
@@ -9,8 +11,15 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+val configurationName = when {
+    extensions.findByType(KotlinMultiplatformExtension::class.java) != null -> "commonMainImplementation"
+    extensions.findByType(KotlinJvmProjectExtension::class.java) != null -> "implementation"
+    extensions.findByType(KotlinAndroidProjectExtension::class.java) != null -> "implementation"
+    else -> "implementation"
+}
+
 dependencies {
-    commonMainImplementation(compose.components.resources)
+    add(configurationName, compose.components.resources)
 }
 
 compose {
