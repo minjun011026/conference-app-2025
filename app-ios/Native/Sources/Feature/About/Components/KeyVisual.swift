@@ -14,7 +14,7 @@ struct KeyVisual: View {
             // Conference description text
             Text(String(localized: "DroidKaigi is a conference for Android developers", bundle: .module))
                 .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                .typographyStyle(.titleMedium)
+                .font(Typography.titleMedium)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 20)
