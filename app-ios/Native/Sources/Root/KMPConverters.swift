@@ -351,13 +351,13 @@ extension Model.Staff {
     init(from shared: shared.Staff) {
         // Use FileManager URL as a safe fallback
         let fallbackURL = URL(fileURLWithPath: "/")
-        let iconURL = URL(string: shared.icon) ?? fallbackURL
+        let iconURL = URL(string: shared.iconUrl) ?? fallbackURL
 
         self.init(
-            id: shared.id,
-            name: shared.name,
+            id: String(shared.id),
+            name: shared.username,
             iconUrl: iconURL,
-            profileUrl: shared.profileUrl.flatMap { URL(string: $0) },
+            profileUrl: URL(string: shared.profileUrl),
             role: nil  // KMP Staff doesn't have role field
         )
     }
