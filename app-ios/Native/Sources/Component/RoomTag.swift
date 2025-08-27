@@ -40,7 +40,7 @@ public struct RoomTag: View {
 
 #Preview {
     RoomTag(
-        room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: true)
+        room: Room(id: 0, name: .init(jaTitle: "JELLYFISH", enTitle: "JELLYFISH"), type: .roomJ, sort: 0), isOn: true)
     RoomTag(
-        room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: false)
+        room: Room(id: 0, name: .init(jaTitle: "JELLYFISH", enTitle: "JELLYFISH"), type: .roomJ, sort: 0), isOn: false)
 }
