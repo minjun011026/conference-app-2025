@@ -101,21 +101,9 @@ fun AboutScreen(
 }
 
 @Preview(widthDp = 360, heightDp = 640)
-@Composable
-private fun AboutScreenPortraitPreview() {
-    KaigiPreviewContainer {
-        AboutScreen(
-            uiState = AboutScreenUiState(
-                versionName = "1.0.0",
-            ),
-            onAboutItemClick = {},
-        )
-    }
-}
-
 @Preview(widthDp = 640, heightDp = 360)
 @Composable
-private fun AboutScreenLandscapePreview() {
+private fun AboutScreenPreview() {
     KaigiPreviewContainer {
         AboutScreen(
             uiState = AboutScreenUiState(
