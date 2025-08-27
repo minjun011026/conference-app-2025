@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import io.github.droidkaigi.confsched.designsystem.theme.changoFontFamily
+import io.github.droidkaigi.confsched.designsystem.theme.robotoRegularFontFamily
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.model.profile.ProfileCardTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -48,11 +50,13 @@ fun ProfileCardUser(
             text = occupation,
             style = MaterialTheme.typography.bodyMedium,
             color = if (isDarkTheme) Color.White else Color.Black,
+            fontFamily = robotoRegularFontFamily(),
         )
         Text(
             text = userName,
             style = MaterialTheme.typography.headlineSmall,
             color = if (isDarkTheme) Color.White else Color.Black,
+            fontFamily = changoFontFamily(),
         )
     }
 }
