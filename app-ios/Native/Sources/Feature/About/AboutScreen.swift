@@ -27,7 +27,6 @@ public struct AboutScreen: View {
         ScrollView {
             VStack(spacing: 32) {
                 KeyVisual()
-                    .padding(.top, 28)
 
                 VStack(spacing: 32) {
                     creditsSection
@@ -43,7 +42,7 @@ public struct AboutScreen: View {
             .padding(.bottom, 80)  // Tab bar padding
         }
         .background(AssetColors.surface.swiftUIColor)
-        .navigationTitle("About")
+        .navigationTitle(String(localized: "About", bundle: .module))
         #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
         #endif
