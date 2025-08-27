@@ -11,21 +11,21 @@ import kotlinx.serialization.json.Json
 public abstract class DataScope private constructor()
 
 @Qualifier
-public annotation class UseProductionApiBaseUrl
+public annotation class UseProductionApi
 
 @Qualifier
 public annotation class ApiBaseUrl
 
 @ContributesTo(DataScope::class)
 public interface DataGraph {
-    @UseProductionApiBaseUrl
-    public val useProductionApiBaseUrl: Boolean
+    @UseProductionApi
+    public val useProductionApi: Boolean
 
     @Provides
     @ApiBaseUrl
     public fun provideApiBaseUrl(
-        @UseProductionApiBaseUrl useProductionApiBaseUrl: Boolean,
-    ): String = if (useProductionApiBaseUrl) {
+        @UseProductionApi useProductionApi: Boolean,
+    ): String = if (useProductionApi) {
         "https://ssot-api.droidkaigi.jp/"
     } else {
         "https://ssot-api-staging.an.r.appspot.com/"

@@ -4,7 +4,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
 import io.github.droidkaigi.confsched.data.DataScope
-import io.github.droidkaigi.confsched.data.UseProductionApiBaseUrl
+import io.github.droidkaigi.confsched.data.UseProductionApi
 import io.github.droidkaigi.confsched.data.about.LicensesJsonReader
 
 @DependencyGraph(
@@ -17,7 +17,7 @@ interface JvmAppGraph : AppGraph {
     fun interface Factory {
         fun createJvmAppGraph(
             @Provides licensesJsonReader: LicensesJsonReader,
-            @Provides @UseProductionApiBaseUrl useProductionApiBaseUrl: Boolean,
+            @Provides @UseProductionApi useProductionApi: Boolean,
         ): JvmAppGraph
     }
 }

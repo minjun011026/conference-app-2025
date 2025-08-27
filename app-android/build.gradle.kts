@@ -59,7 +59,7 @@ android {
             dimension = "network"
             buildConfigField(
                 type = "Boolean",
-                name = "USE_PRODUCTION_API_BASE_URL",
+                name = "USE_PRODUCTION_API",
                 value = "true",
             )
         }
@@ -73,7 +73,7 @@ android {
             }
             buildConfigField(
                 type = "Boolean",
-                name = "USE_PRODUCTION_API_BASE_URL",
+                name = "USE_PRODUCTION_API",
                 value = "false",
             )
         }

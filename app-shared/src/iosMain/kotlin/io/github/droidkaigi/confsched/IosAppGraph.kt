@@ -20,7 +20,7 @@ import io.github.droidkaigi.confsched.data.DataStoreDependencyProviders
 import io.github.droidkaigi.confsched.data.ProfileDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SessionCacheDataStoreQualifier
 import io.github.droidkaigi.confsched.data.SettingsDataStoreQualifier
-import io.github.droidkaigi.confsched.data.UseProductionApiBaseUrl
+import io.github.droidkaigi.confsched.data.UseProductionApi
 import io.github.droidkaigi.confsched.data.UserDataStoreQualifier
 import io.github.droidkaigi.confsched.data.about.DefaultLicensesQueryKey
 import io.github.droidkaigi.confsched.data.annotations.IoDispatcher
@@ -115,8 +115,8 @@ interface IosAppGraph : AppGraph {
     @Provides
     @ApiBaseUrl
     fun provideApiBaseUrl(
-        @UseProductionApiBaseUrl useProductionApiBaseUrl: Boolean,
-    ): String = if (useProductionApiBaseUrl) {
+        @UseProductionApi useProductionApi: Boolean,
+    ): String = if (useProductionApi) {
         "https://ssot-api.droidkaigi.jp/"
     } else {
         "https://ssot-api-staging.an.r.appspot.com/"
@@ -293,7 +293,7 @@ interface IosAppGraph : AppGraph {
     @DependencyGraph.Factory
     fun interface Factory {
         fun createIosAppGraph(
-            @Provides @UseProductionApiBaseUrl useProductionApiBaseUrl: Boolean,
+            @Provides @UseProductionApi useProductionApi: Boolean,
         ): IosAppGraph
     }
 }
@@ -307,6 +307,6 @@ interface IosTimetableItemDetailGraph {
 fun createIosAppGraph(useProductionApiBaseUrl: Boolean): IosAppGraph {
     return createGraphFactory<IosAppGraph.Factory>()
         .createIosAppGraph(
-            useProductionApiBaseUrl = useProductionApiBaseUrl,
+            useProductionApi = useProductionApiBaseUrl,
         )
 }
