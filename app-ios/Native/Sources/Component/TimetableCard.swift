@@ -29,14 +29,14 @@ public struct TimetableCard: View {
             HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: 8) {
                     headerRow
-                    
+
                     VStack(alignment: .leading, spacing: 6) {
                         Text(timetableItem.title.currentLangTitle)
                             .font(Typography.titleLarge)
                             .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                        
+
                         if !timetableItem.speakers.isEmpty {
                             speakersList
                         }
@@ -130,20 +130,22 @@ public struct TimetableCard: View {
             language: TimetableLanguage(langOfSpeaker: "JA", isInterpretationTarget: true),
             asset: TimetableAsset(videoUrl: nil, slideUrl: nil),
             levels: ["Beginner"],
-            speakers: [Speaker(
-                id: "speaker-1",
-                name: "Test Speaker",
-                iconUrl: "https://example.com/icon.png",
-                bio: "Speaker bio",
-                tagLine: "Test Engineer"
-            )],
+            speakers: [
+                Speaker(
+                    id: "speaker-1",
+                    name: "Test Speaker",
+                    iconUrl: "https://example.com/icon.png",
+                    bio: "Speaker bio",
+                    tagLine: "Test Engineer"
+                )
+            ],
             description: MultiLangText(jaTitle: "説明", enTitle: "Description"),
             message: nil,
             day: .conferenceDay1
         ),
         isFavorite: false,
         onTap: { _ in },
-        onTapFavorite: { _,_  in }
+        onTapFavorite: { _, _ in }
     )
     .padding()
     .background(AssetColors.surface.swiftUIColor)

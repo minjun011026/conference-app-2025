@@ -6,12 +6,12 @@ import Theme
 public struct RoomTag: View {
     let room: Room
     let isOn: Bool
-    
+
     public init(room: Room, isOn: Bool = true) {
         self.room = room
         self.isOn = isOn
     }
-    
+
     public var body: some View {
         HStack(spacing: 4) {
             Image(room.iconName, bundle: .module)
@@ -28,17 +28,19 @@ public struct RoomTag: View {
                 .stroke(room.roomTheme.primaryColor, lineWidth: 1)
         }
     }
-    
+
     private var surfaceColor: Color {
         return isOn ? AssetColors.surface.swiftUIColor : room.roomTheme.primaryColor
     }
-    
+
     private var backgroundColor: Color {
         return isOn ? room.roomTheme.primaryColor : room.roomTheme.containerColor
     }
 }
 
 #Preview {
-    RoomTag(room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: true)
-    RoomTag(room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: false)
+    RoomTag(
+        room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: true)
+    RoomTag(
+        room: Room(id: 0, name: .init(jaTitle: "JERRYFISH", enTitle: "JERRYFISH"), type: .roomJ, sort: 0), isOn: false)
 }

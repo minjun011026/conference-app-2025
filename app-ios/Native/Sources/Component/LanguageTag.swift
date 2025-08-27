@@ -5,11 +5,11 @@ import Theme
 
 public struct LanguageTag: View {
     let language: TimetableLanguage
-    
+
     public init(language: TimetableLanguage) {
         self.language = language
     }
-    
+
     public var body: some View {
         HStack(spacing: 4) {
             ForEach(language.displayLanguages, id: \.self) {
@@ -17,7 +17,7 @@ public struct LanguageTag: View {
             }
         }
     }
-    
+
     func eachTag(_ languageCode: String) -> some View {
         Text(languageCode)
             .font(Typography.labelMedium)

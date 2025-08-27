@@ -7,9 +7,9 @@ extension TimetableLanguage {
         if langOfSpeaker.uppercased() == "MIXED" {
             return [langOfSpeaker]
         }
-        
+
         var components: [String] = []
-        
+
         let speakerLanguageCode = String(langOfSpeaker.uppercased().prefix(2))
 
         // Language of speaker
