@@ -233,7 +233,18 @@ private fun Form<Profile>.Image() {
         stringResource(ProfileRes.string.image),
     )
     var image: PlatformFile? by remember(value.imagePath) {
-        mutableStateOf(PlatformFile(value.imagePath).takeIf { it.exists() })
+        mutableStateOf(
+            value.imagePath
+                .takeIf { it.isNotBlank() }
+                ?.takeIf { path ->
+                    path.startsWith("file://") ||
+                        path.startsWith("content://") ||
+                        !path.contains("://")
+                }
+                ?.let { safePath ->
+                    runCatching { PlatformFile(safePath).takeIf { it.exists() } }.getOrNull()
+                }
+        )
     }
 
     Field(
