@@ -149,7 +149,7 @@ git clone https://github.com/DroidKaigi/conference-app-2025.git
 
 2. Assemble the shared KMP framework:
 ```bash
-./gradlew app-shared:assembleSharedXCFramework
+./gradlew app-shared:assembleSharedDebugXCFramework
 ```
 
 3. Setup the project:
