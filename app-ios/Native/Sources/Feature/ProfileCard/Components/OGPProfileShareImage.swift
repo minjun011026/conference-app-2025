@@ -6,7 +6,8 @@ public struct OGPProfileShareImage: View {
 
     public var body: some View {
         ZStack(alignment: .topLeading) {
-            backgroundImage(profile.cardVariant)
+            Image(profile.cardVariant.type == .day ? .nightOgpBase : .dayOgpBase)
+                .resizable()
             FrontCard(
                 userRole: profile.occupation, userName: profile.name, cardType: profile.cardVariant.type,
                 cardShape: profile.cardVariant.shape, image: profile.image, effectEnabled: false
@@ -18,18 +19,10 @@ public struct OGPProfileShareImage: View {
         }
         .frame(width: 1200, height: 630)
     }
-
-    private func backgroundImage(_ cardVariant: ProfileCardVariant) -> some View {
-        let resource: ImageResource
-        switch cardVariant.type {
-        case .day:
-            resource = .nightOgpBase
-        default:
-            resource = .dayOgpBase
-        }
-
-        return Image(resource)
-            .resizable()
+    
+    public func render() -> UIImage? {
+        let renderer = ImageRenderer(content: self)
+        return renderer.uiImage
     }
 }
 

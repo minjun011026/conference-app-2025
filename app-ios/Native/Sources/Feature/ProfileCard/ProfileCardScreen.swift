@@ -91,8 +91,7 @@ public struct ProfileCardScreen: View {
     }
 
     private var shareButton: some View {
-        let imageRenderer = ImageRenderer(content: OGPProfileShareImage(profile: presenter.profile.profile!))
-        let uiImage = imageRenderer.uiImage!
+        let uiImage = OGPProfileShareImage(profile: presenter.profile.profile!).render()!
         let ogpImage = uiImage.pngData()!
         let shareText = String(localized: "Share Message", bundle: .module)
 
