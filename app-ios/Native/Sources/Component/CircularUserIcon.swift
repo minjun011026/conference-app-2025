@@ -11,7 +11,7 @@ public struct CircularUserIcon: View {
     }
 
     public var body: some View {
-        if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+        if let imageUrl, let url = URL(string: imageUrl) {
             AsyncImage(url: url) { image in
                 image
                     .resizable()
