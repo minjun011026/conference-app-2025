@@ -8,6 +8,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -86,7 +88,7 @@ private fun KaigiNavigationScaffold(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    Row(modifier = modifier) {
+    Row(modifier = modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
         AnimatedVisibility(currentTab != null && navigationBarType == NavigationBarType.NavigationRail) {
             GlassLikeNavigationRailBar(
                 currentTab = currentTab ?: MainScreenTab.Timetable,
