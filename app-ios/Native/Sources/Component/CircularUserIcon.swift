@@ -3,34 +3,6 @@ import Model
 import SwiftUI
 import Theme
 
-public struct RoomTag: View {
-    let room: Room
-
-    public init(room: Room) {
-        self.room = room
-    }
-
-    public var body: some View {
-        HStack(spacing: 4) {
-            Image(room.iconName, bundle: .module)
-                .renderingMode(.template)
-            Text(room.displayName)
-                .font(Typography.labelSmall)
-        }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(backgroundColor, in: RoundedRectangle(cornerRadius: 6))
-        .foregroundStyle(room.roomTheme.primaryColor)
-        .overlay {
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(room.roomTheme.primaryColor, lineWidth: 1)
-        }
-    }
-    private var backgroundColor: Color {
-        return room.roomTheme.containerColor
-    }
-}
-
 public struct LanguageTag: View {
     let language: TimetableLanguage
 
@@ -66,6 +38,7 @@ public struct CircularUserIcon: View {
                     .aspectRatio(contentMode: .fill)
             } placeholder: {
                 Image(systemName: "person.circle.fill")
+                    .resizable()
                     .foregroundStyle(AssetColors.outline.swiftUIColor)
             }
             .clipShape(Circle())
