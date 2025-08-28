@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,10 +42,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.confsched.profile.components.ThemeWithShape
@@ -119,6 +123,7 @@ fun ProfileEditScreen(
         onSubmit = onCreateClick,
     )
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -146,7 +151,7 @@ fun ProfileEditScreen(
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 form.Name()
                 form.Occupation()
-                form.Link()
+                form.Link(focusManager = focusManager)
                 form.Image()
             }
             form.Theme()
@@ -202,7 +207,7 @@ private fun Form<Profile>.Occupation() {
 }
 
 @Composable
-private fun Form<Profile>.Link() {
+private fun Form<Profile>.Link(focusManager: FocusManager) {
     val emptyLinkErrorString = stringResource(
         ProfileRes.string.enter_validate_format,
         stringResource(ProfileRes.string.link),
@@ -221,6 +226,13 @@ private fun Form<Profile>.Link() {
         render = { field ->
             field.InputField(
                 label = stringResource(ProfileRes.string.link) + stringResource(ProfileRes.string.link_example_text),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Uri,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { focusManager.clearFocus() },
+                ),
             )
         },
     )
@@ -365,7 +377,11 @@ private fun Form<Profile>.Theme() {
 }
 
 @Composable
-private fun FormField<String>.InputField(label: String) {
+private fun FormField<String>.InputField(
+    label: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -375,9 +391,8 @@ private fun FormField<String>.InputField(label: String) {
             onValueChange = { onValueChange(it) },
             isError = hasError,
             maxLines = 1,
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-            ),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             trailingIcon = {
                 if (value.isNotEmpty()) {
                     IconButton(
