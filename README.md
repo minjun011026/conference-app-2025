@@ -21,7 +21,7 @@ The DroidKaigi 2025 official app offers a variety of features to enhance your co
 
 ## Android
 
-<a href="https://play.google.com/store/apps/details?id=io.github.droidkaigi.confsched2025"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70"></a>
+<a href="https://play.google.com/store/apps/details?id=io.github.droidkaigi.confsched2025"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70" alt="Get it on Google Play"></a>
 
 ## iOS
 
