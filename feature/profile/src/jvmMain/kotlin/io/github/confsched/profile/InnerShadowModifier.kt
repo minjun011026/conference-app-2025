@@ -10,6 +10,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.unit.Dp
+import org.jetbrains.skia.BlendMode
+import org.jetbrains.skia.FilterBlurMode
+import org.jetbrains.skia.MaskFilter
 
 actual fun Modifier.innerShadow(
     color: Color,
@@ -18,29 +21,31 @@ actual fun Modifier.innerShadow(
     offsetY: Dp,
     offsetX: Dp,
     spread: Dp
-) = this.drawWithContent {
+): Modifier = this.drawWithContent {
     drawContent()
 
     drawIntoCanvas { canvas ->
-        val shadowSize = Size(size.width + spread.toPx(), size.height + spread.toPx())
+
+        val shadowSize = Size(size.width, size.height + spread.toPx())
         val shadowOutline = shape.createOutline(shadowSize, layoutDirection, this)
 
-        val paint = Paint().apply {
-            this.color = color
-        }
+        val paint = Paint()
+        paint.color = Color.White.copy(alpha = 0.6f)
 
         canvas.saveLayer(size.toRect(), paint)
+
         canvas.drawOutline(shadowOutline, paint)
 
-        paint.asFrameworkPaint().apply {
-            xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-            if (blur.toPx() > 0) {
-                maskFilter = BlurMaskFilter(blur.toPx(), BlurMaskFilter.Blur.NORMAL)
-            }
+        val frameworkPaint = paint.asFrameworkPaint()
+        val blurPx = blur.toPx() - 5
+
+        frameworkPaint.blendMode = BlendMode.DST_OUT
+        if (blurPx > 0) {
+            frameworkPaint.maskFilter = MaskFilter.makeBlur(FilterBlurMode.NORMAL, blurPx)
         }
 
         paint.color = Color.Black
-        canvas.translate(offsetX.toPx(), offsetY.toPx())
+        canvas.translate(offsetX.toPx(),  offsetY.toPx())
         canvas.drawOutline(shadowOutline, paint)
         canvas.restore()
     }
