@@ -20,7 +20,7 @@ actual fun Modifier.innerShadow(
     blur: Dp,
     offsetY: Dp,
     offsetX: Dp,
-    spread: Dp
+    spread: Dp,
 ): Modifier = this.drawWithContent {
     drawContent()
 
@@ -45,7 +45,7 @@ actual fun Modifier.innerShadow(
         }
 
         paint.color = Color.Black
-        canvas.translate(offsetX.toPx(),  offsetY.toPx())
+        canvas.translate(offsetX.toPx(), offsetY.toPx())
         canvas.drawOutline(shadowOutline, paint)
         canvas.restore()
     }

@@ -47,7 +47,7 @@ fun ProfileCardFront(
             .innerShadow(
                 color = Color.White.copy(alpha = 0.7f),
                 shape = shape,
-                blur = 4.dp
+                blur = 4.dp,
             ),
         contentAlignment = Alignment.Center,
     ) {

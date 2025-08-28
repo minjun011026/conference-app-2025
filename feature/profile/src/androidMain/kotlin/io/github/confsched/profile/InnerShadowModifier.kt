@@ -20,9 +20,8 @@ actual fun Modifier.innerShadow(
     blur: Dp,
     offsetY: Dp,
     offsetX: Dp,
-    spread: Dp
+    spread: Dp,
 ) = this.drawWithContent {
-
     drawContent()
 
     drawIntoCanvas { canvas ->
