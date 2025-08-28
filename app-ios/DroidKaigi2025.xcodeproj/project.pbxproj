@@ -76,6 +76,7 @@
 				BF770BC72E450F9D0000E5E2 /* SwiftLint */,
 				BF779E672E0F8D5E000A0710 /* Frameworks */,
 				BF779E682E0F8D5E000A0710 /* Resources */,
+				54E49B902E5FEB1C0010E0FF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -140,6 +141,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		54E49B902E5FEB1C0010E0FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		BF770BB22E43BE880000E5E2 /* Build KMP Module */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
