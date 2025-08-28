@@ -12,7 +12,7 @@ final class TimetableDetailPresenter {
         var action: (title: String, handler: () -> Void)? = nil
     }
 
-    let timetableItem: TimetableItemWithFavorite
+    var timetableItem: TimetableItemWithFavorite
     private let timetableProvider = TimetableProvider()
     private let eventStore: EKEventStore
 
@@ -29,10 +29,13 @@ final class TimetableDetailPresenter {
 
     func toggleFavorite() {
         timetableProvider.toggleFavorite(timetableItem)
-        if !timetableItem.isFavorited {
+        timetableItem.isFavorited.toggle()
+        if timetableItem.isFavorited {
             toast = Toast(
                 message: String(localized: "Added to bookmarks", bundle: .module),
                 action: (String(localized: "View list", bundle: .module), navigateToFavorite))
+        } else {
+            toast = Toast(message: String(localized: "Removed from bookmarks", bundle: .module))
         }
     }
 
