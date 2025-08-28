@@ -30,7 +30,9 @@ final class TimetableDetailPresenter {
     func toggleFavorite() {
         timetableProvider.toggleFavorite(timetableItem)
         if !timetableItem.isFavorited {
-            toast = Toast(message: String(localized: "Added to bookmarks", bundle: .module), action: (String(localized: "View list", bundle: .module), navigateToFavorite))
+            toast = Toast(
+                message: String(localized: "Added to bookmarks", bundle: .module),
+                action: (String(localized: "View list", bundle: .module), navigateToFavorite))
         }
     }
 

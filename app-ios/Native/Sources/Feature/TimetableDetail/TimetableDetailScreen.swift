@@ -194,7 +194,8 @@ public struct TimetableDetailScreen: View {
 
                                 Text(
                                     presenter.isFavorite
-                                        ? String(localized: "Remove bookmark", bundle: .module) : String(localized: "Add to bookmark", bundle: .module)
+                                        ? String(localized: "Remove bookmark", bundle: .module)
+                                        : String(localized: "Add to bookmark", bundle: .module)
                                 )
                                 .font(Typography.titleMedium)
                             }
@@ -299,7 +300,11 @@ public struct TimetableDetailScreen: View {
                             }
                         }
                         .foregroundStyle(AssetColors.onTertiaryContainer.swiftUIColor)
-                        .accessibilityLabel(presenter.isFavorite ? String(localized: "Remove from favorites", bundle: .module) : String(localized: "Add to favorites", bundle: .module))
+                        .accessibilityLabel(
+                            presenter.isFavorite
+                                ? String(localized: "Remove from favorites", bundle: .module)
+                                : String(localized: "Add to favorites", bundle: .module)
+                        )
                         .frame(width: 56, height: 56)
                         .background {
                             Group {
