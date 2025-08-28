@@ -21,6 +21,7 @@ import io.github.droidkaigi.confsched.navigation.extension.navigateToFavoritesTa
 import io.github.droidkaigi.confsched.navigation.extension.navigateToLicenses
 import io.github.droidkaigi.confsched.navigation.extension.navigateToProfileCardTab
 import io.github.droidkaigi.confsched.navigation.extension.navigateToSearch
+import io.github.droidkaigi.confsched.navigation.extension.navigateToSettings
 import io.github.droidkaigi.confsched.navigation.extension.navigateToTimetableItemDetail
 import io.github.droidkaigi.confsched.navigation.extension.navigateToTimetableTab
 import io.github.droidkaigi.confsched.navigation.graph.aboutTabNavGraph
@@ -106,7 +107,7 @@ actual fun KaigiAppUi() {
                         AboutItem.CodeOfConduct -> TODO()
                         AboutItem.License -> navController.navigateToLicenses()
                         AboutItem.PrivacyPolicy -> TODO()
-                        AboutItem.Settings -> TODO()
+                        AboutItem.Settings -> navController.navigateToSettings()
                         AboutItem.Youtube -> TODO()
                         AboutItem.X -> TODO()
                         AboutItem.Medium -> TODO()
@@ -114,7 +115,9 @@ actual fun KaigiAppUi() {
                 },
                 onBackClick = navController::popBackStack,
             )
-            profileTabNavGraph()
+            profileTabNavGraph(
+                onShareProfileCardClick = externalNavController::onShareProfileCardClick,
+            )
         }
     }
 }

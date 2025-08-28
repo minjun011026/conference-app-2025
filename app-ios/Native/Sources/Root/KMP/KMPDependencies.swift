@@ -27,5 +27,11 @@ enum KMPDependencies {
         dependencyValues.eventMapUseCase = .init(
             load: eventMapUseCaseImpl.load
         )
+
+        let profileUseCaseImpl = ProfileUseCaseImpl()
+        dependencyValues.profileUseCase = .init(
+            load: profileUseCaseImpl.load,
+            save: profileUseCaseImpl.save
+        )
     }
 }

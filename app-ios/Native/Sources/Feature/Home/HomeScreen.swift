@@ -100,7 +100,6 @@ public struct HomeScreen: View {
                 }
             }
         }
-        .toolbarBackground(.hidden, for: .navigationBar)
         .onAppear {
             presenter.loadInitial()
         }

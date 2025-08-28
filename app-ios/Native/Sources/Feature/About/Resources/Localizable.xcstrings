@@ -1,87 +1,48 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Credits" : {
-      "extractionState" : "manual",
+    "2025.09.11(Thu) - 12(Fri)" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Credits"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クレジット"
+            "value" : "2025.09.11(木) 〜 12(金) "
           }
         }
       }
     },
-    "Contributors" : {
-      "extractionState" : "manual",
+    "About" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contributors"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "コントリビューター"
+            "value" : "DroidKaigiについて"
           }
         }
       }
     },
-    "Staffs" : {
-      "extractionState" : "manual",
+    "App Version" : {
+
+    },
+    "Bellesalle Shibuya Garden" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Staffs"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スタッフ"
+            "value" : "ベルサール渋谷ガーデン"
           }
         }
       }
     },
-    "Sponsors" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sponsors"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "スポンサー"
-          }
-        }
-      }
+    "Cancel" : {
+
     },
-    "Others" : {
-      "extractionState" : "manual",
+    "Check Map" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Others"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "その他"
+            "value" : "地図を見る"
           }
         }
       }
@@ -103,6 +64,77 @@
         }
       }
     },
+    "CodeOfConductURL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/en/about/code-of-conduct"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/about/code-of-conduct"
+          }
+        }
+      }
+    },
+    "Contributors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contributors"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コントリビューター"
+          }
+        }
+      }
+    },
+    "Credits" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credits"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クレジット"
+          }
+        }
+      }
+    },
+    "Date:" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日時"
+          }
+        }
+      }
+    },
+    "DroidKaigi is a conference for Android developers" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigiはAndroid技術情報の共有とコミュニケーションを目的に開催されるエンジニアが主役のAndroidカンファレンスです。"
+          }
+        }
+      }
+    },
     "Licenses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -116,6 +148,33 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ライセンス"
+          }
+        }
+      }
+    },
+    "Location:" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "場所"
+          }
+        }
+      }
+    },
+    "Others" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Others"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他"
           }
         }
       }
@@ -137,6 +196,23 @@
         }
       }
     },
+    "PrivacyPolicyURL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/en/about/privacy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://portal.droidkaigi.jp/about/privacy"
+          }
+        }
+      }
+    },
     "Settings" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -153,6 +229,43 @@
           }
         }
       }
+    },
+    "Sponsors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sponsors"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スポンサー"
+          }
+        }
+      }
+    },
+    "Staffs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Staffs"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スタッフ"
+          }
+        }
+      }
+    },
+    "Switch" : {
+
     },
     "Switch to Compose Multiplatform" : {
       "extractionState" : "manual",
@@ -187,6 +300,9 @@
           }
         }
       }
+    },
+    "Switch UI from SwiftUI to Compose Multiplatform. Are you sure you want to do this?" : {
+
     }
   },
   "version" : "1.0"

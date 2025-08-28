@@ -108,11 +108,12 @@
 				};
 			};
 			buildConfigurationList = BF779E652E0F8D5E000A0710 /* Build configuration list for PBXProject "DroidKaigi2025" */;
-			developmentRegion = en;
+			developmentRegion = ja;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = BF779E612E0F8D5E000A0710;
 			minimizedProjectReferenceProxies = 1;
@@ -156,7 +157,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $SOURCE_ROOT/../\n./gradlew app-shared:assembleSharedDebugXCFramework -Papp.ios.shared.arch=arm64\n";
+			shellScript = "# Skip KMP build in CI environment\nif [ -n \"$CI\" ] || [ -n \"$GITHUB_ACTIONS\" ]; then\n    echo \"Skipping KMP build in CI environment\"\n    exit 0\nfi\n\ncd $SOURCE_ROOT/../\n./gradlew app-shared:assembleSharedDebugXCFramework -Papp.ios.shared.arch=arm64\n";
 		};
 		BF770BC72E450F9D0000E5E2 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -18,8 +18,10 @@ import io.github.droidkaigi.confsched.naventry.eventMapEntry
 import io.github.droidkaigi.confsched.naventry.favoritesEntry
 import io.github.droidkaigi.confsched.naventry.profileNavEntry
 import io.github.droidkaigi.confsched.naventry.sessionEntries
+import io.github.droidkaigi.confsched.naventry.settingsEntry
 import io.github.droidkaigi.confsched.naventry.sponsorsEntry
 import io.github.droidkaigi.confsched.naventry.staffEntry
+import io.github.droidkaigi.confsched.navigation.extension.safeRemoveLastOrNull
 import io.github.droidkaigi.confsched.navigation.rememberNavBackStack
 import io.github.droidkaigi.confsched.navigation.sceneStrategy
 import io.github.droidkaigi.confsched.navkey.AboutNavKey
@@ -29,6 +31,7 @@ import io.github.droidkaigi.confsched.navkey.FavoritesNavKey
 import io.github.droidkaigi.confsched.navkey.LicensesNavKey
 import io.github.droidkaigi.confsched.navkey.ProfileNavKey
 import io.github.droidkaigi.confsched.navkey.SearchNavKey
+import io.github.droidkaigi.confsched.navkey.SettingsNavKey
 import io.github.droidkaigi.confsched.navkey.SponsorsNavKey
 import io.github.droidkaigi.confsched.navkey.StaffNavKey
 import io.github.droidkaigi.confsched.navkey.TimetableItemDetailNavKey
@@ -71,7 +74,7 @@ actual fun KaigiAppUi() {
             sceneStrategy = sceneStrategy(),
             entryProvider = entryProvider {
                 sessionEntries(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                     onAddCalendarClick = externalNavController::navigateToCalendarRegistration,
                     onShareClick = externalNavController::onShareClick,
                     onLinkClick = externalNavController::navigate,
@@ -84,16 +87,19 @@ actual fun KaigiAppUi() {
                     },
                 )
                 contributorsEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                     onContributorClick = externalNavController::navigate,
                 )
                 sponsorsEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                     onSponsorClick = externalNavController::navigate,
                 )
                 staffEntry(
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                     onStaffItemClick = externalNavController::navigate,
+                )
+                settingsEntry(
+                    onBackClick = { backStack.removeLastOrNull() },
                 )
                 favoritesEntry(
                     onTimetableItemClick = {
@@ -137,7 +143,7 @@ actual fun KaigiAppUi() {
                                 )
                             }
 
-                            AboutItem.Settings -> TODO()
+                            AboutItem.Settings -> backStack.add(SettingsNavKey)
                             AboutItem.Youtube -> {
                                 externalNavController.navigate(
                                     url = "https://www.youtube.com/c/DroidKaigi",
@@ -157,9 +163,11 @@ actual fun KaigiAppUi() {
                             }
                         }
                     },
-                    onBackClick = { backStack.removeLastOrNull() },
+                    onBackClick = { backStack.safeRemoveLastOrNull() },
                 )
-                profileNavEntry()
+                profileNavEntry(
+                    onShareProfileCardClick = externalNavController::onShareProfileCardClick,
+                )
             },
             modifier = Modifier
                 .fillMaxSize()

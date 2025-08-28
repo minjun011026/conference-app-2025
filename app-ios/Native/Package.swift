@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Native",
+    defaultLocalization: "ja",
     platforms: [
         .iOS(.v18),
         .macOS(.v15),
@@ -108,6 +109,7 @@ let package = Package(
                 .product(name: "Presentation", package: "Core"),
                 .product(name: "Model", package: "Core"),
                 .target(name: "Component"),
+                .target(name: "DependencyExtra"),
                 .target(name: "Extension"),
                 .target(name: "Theme"),
             ],
@@ -224,7 +226,7 @@ let package = Package(
                 .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
             ]
         ),
-        // Please run ./gradlew app-shared:assembleSharedXCFramework first
+        // Please run ./gradlew app-shared:assembleSharedDebugXCFramework first
         .binaryTarget(name: "KMPFramework", path: "../../app-shared/build/XCFrameworks/debug/shared.xcframework"),
     ],
     swiftLanguageModes: [.v6]
