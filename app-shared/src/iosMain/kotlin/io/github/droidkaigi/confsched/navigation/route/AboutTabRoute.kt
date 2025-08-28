@@ -12,6 +12,9 @@ data object AboutTabRoute : MainTabRoute {
 data object AboutRoute
 
 @Serializable
+data object SponsorsRoute
+
+@Serializable
 data object LicensesRoute
 
 @Serializable
