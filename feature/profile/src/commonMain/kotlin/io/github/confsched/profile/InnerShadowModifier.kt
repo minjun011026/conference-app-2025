@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 expect fun Modifier.innerShadow(
     color: Color,
     shape: Shape,
-    blur: Dp = 4.dp,
+    blur: Dp,
     offsetY: Dp = 2.dp,
     offsetX: Dp = 2.dp,
     spread: Dp = 4.dp
