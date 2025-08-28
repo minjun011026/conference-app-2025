@@ -118,28 +118,28 @@ public struct TimetableDetailScreen: View {
             VStack(spacing: 16) {
                 InformationRow(
                     icon: AssetImages.icSchedule.swiftUIImage,
-                    title: String(localized: "DateTime"),
+                    title: String(localized: "DateTime", bundle: .module),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: formattedDateTimeString,
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icLocationOn.swiftUIImage,
-                    title: String(localized: "Location"),
+                    title: String(localized: "Location", bundle: .module),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: presenter.timetableItem.timetableItem.room.displayNameWithFloor,
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icLanguage.swiftUIImage,
-                    title: String(localized: "Supported Languages"),
+                    title: String(localized: "Supported Languages", bundle: .module),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: getSupportedLangString(),
                     isStrikethrough: presenter.isCancelledSession
                 )
                 InformationRow(
                     icon: AssetImages.icCategory.swiftUIImage,
-                    title: String(localized: "Category"),
+                    title: String(localized: "Category", bundle: .module),
                     titleColor: presenter.timetableItem.timetableItem.room.roomTheme.primaryColor,
                     content: presenter.timetableItem.timetableItem.category.title.currentLangTitle,
                     isStrikethrough: presenter.isCancelledSession
@@ -163,7 +163,7 @@ public struct TimetableDetailScreen: View {
 
     var targetAudience: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Target Audience"))
+            Text(String(localized: "Target Audience", bundle: .module))
                 .font(Typography.titleLarge)
                 .foregroundStyle(presenter.timetableItem.timetableItem.room.roomTheme.primaryColor)
 
@@ -194,7 +194,7 @@ public struct TimetableDetailScreen: View {
 
                                 Text(
                                     presenter.isFavorite
-                                        ? String(localized: "Remove bookmark") : String(localized: "Add to bookmark")
+                                        ? String(localized: "Remove bookmark", bundle: .module) : String(localized: "Add to bookmark", bundle: .module)
                                 )
                                 .font(Typography.titleMedium)
                             }
@@ -212,7 +212,7 @@ public struct TimetableDetailScreen: View {
                             HStack(spacing: 8) {
                                 AssetImages.icTimetable.swiftUIImage
 
-                                Text(String(localized: "Add to calendar"))
+                                Text(String(localized: "Add to calendar", bundle: .module))
                                     .font(Typography.titleMedium)
                             }
                             .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -227,7 +227,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icShare.swiftUIImage
 
-                                    Text(String(localized: "Share link"))
+                                    Text(String(localized: "Share link", bundle: .module))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -249,7 +249,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icDescription.swiftUIImage
 
-                                    Text(String(localized: "Open presentation slides"))
+                                    Text(String(localized: "Open presentation slides", bundle: .module))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -271,7 +271,7 @@ public struct TimetableDetailScreen: View {
                                 HStack(spacing: 8) {
                                     AssetImages.icPlayCircle.swiftUIImage
 
-                                    Text(String(localized: "Watch video"))
+                                    Text(String(localized: "Watch video", bundle: .module))
                                         .font(Typography.titleMedium)
                                 }
                                 .foregroundStyle(AssetColors.tertiaryContainer.swiftUIColor)
@@ -299,7 +299,7 @@ public struct TimetableDetailScreen: View {
                             }
                         }
                         .foregroundStyle(AssetColors.onTertiaryContainer.swiftUIColor)
-                        .accessibilityLabel(presenter.isFavorite ? "Remove from favorites" : "Add to favorites")
+                        .accessibilityLabel(presenter.isFavorite ? String(localized: "Remove from favorites", bundle: .module) : String(localized: "Add to favorites", bundle: .module))
                         .frame(width: 56, height: 56)
                         .background {
                             Group {

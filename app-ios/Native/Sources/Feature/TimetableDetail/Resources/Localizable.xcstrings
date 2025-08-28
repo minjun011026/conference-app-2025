@@ -8,6 +8,12 @@
             "state" : "translated",
             "value" : "ブックマークに登録"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to bookmark"
+          }
         }
       }
     },
@@ -18,11 +24,78 @@
             "state" : "translated",
             "value" : "カレンダーに登録"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to calendar"
+          }
         }
       }
     },
     "Add to favorites" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りに追加"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to favorites"
+          }
+        }
+      }
+    },
+    "Added to bookmarks" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブックマークに追加されました"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added to bookmarks"
+          }
+        }
+      }
+    },
+    "Added to calendar" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダーに追加しました"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added to calendar"
+          }
+        }
+      }
+    },
+    "Calendar access not granted" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダーへのアクセスが許可されていません"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar access not granted"
+          }
+        }
+      }
     },
     "Category" : {
       "localizations" : {
@@ -30,6 +103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カテゴリ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
           }
         }
       }
@@ -41,6 +120,28 @@
             "state" : "translated",
             "value" : "日時"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date & Time"
+          }
+        }
+      }
+    },
+    "Failed to add to calendar" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダーの追加に失敗しました"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to add to calendar"
+          }
         }
       }
     },
@@ -50,6 +151,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "場所"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location"
           }
         }
       }
@@ -61,6 +168,28 @@
             "state" : "translated",
             "value" : "発表スライドを開く"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open presentation slides"
+          }
+        }
+      }
+    },
+    "Read more" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "続きを読む"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read more"
+          }
         }
       }
     },
@@ -71,11 +200,30 @@
             "state" : "translated",
             "value" : "ブックマークを解除"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove bookmark"
+          }
         }
       }
     },
     "Remove from favorites" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りから削除"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove from favorites"
+          }
+        }
+      }
     },
     "Share link" : {
       "localizations" : {
@@ -83,6 +231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "リンクをシェア"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share link"
           }
         }
       }
@@ -94,6 +248,12 @@
             "state" : "translated",
             "value" : "対応言語"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supported Languages"
+          }
         }
       }
     },
@@ -103,6 +263,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "対象者"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target Audience"
+          }
+        }
+      }
+    },
+    "View list" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一覧を見る"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View list"
           }
         }
       }
@@ -114,15 +296,11 @@
             "state" : "translated",
             "value" : "動画を見る"
           }
-        }
-      }
-    },
-    "Read more" : {
-      "localizations" : {
-        "ja" : {
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "続きを読む"
+            "value" : "Watch video"
           }
         }
       }
