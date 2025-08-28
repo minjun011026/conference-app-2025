@@ -42,7 +42,7 @@ public struct AboutScreen: View {
             .padding(.bottom, 80)  // Tab bar padding
         }
         .background(AssetColors.surface.swiftUIColor)
-        .navigationTitle(String(localized: "About", bundle: .module))
+        .navigationTitle(String(localized: "About DroidKaigi", bundle: .module))
         #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
         #endif
@@ -161,12 +161,16 @@ public struct AboutScreen: View {
                 .alert(
                     String(localized: "Switch UI", bundle: .module), isPresented: $showSwitchToComposeMultiplatformAlert
                 ) {
-                    Button("Cancel", role: .cancel) {}
-                    Button("Switch") {
+                    Button(String(localized: "Cancel", bundle: .module), role: .cancel) {}
+                    Button(String(localized: "Switch", bundle: .module)) {
                         onEnableComposeMultiplatform()
                     }
                 } message: {
-                    Text("Switch UI from SwiftUI to Compose Multiplatform. Are you sure you want to do this?")
+                    Text(
+                        String(
+                            localized:
+                                "Switch UI from SwiftUI to Compose Multiplatform. Are you sure you want to do this?",
+                            bundle: .module))
                 }
 
                 Divider()
@@ -204,7 +208,7 @@ public struct AboutScreen: View {
     @ViewBuilder
     private var versionSection: some View {
         VStack(spacing: 0) {
-            Text("App Version")
+            Text(String(localized: "App Version", bundle: .module))
                 .font(.caption)
 
             Text(version)
