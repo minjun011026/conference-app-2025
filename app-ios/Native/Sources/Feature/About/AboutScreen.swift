@@ -61,7 +61,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Contributors", bundle: .module),
                     image: AssetImages.icDiversity1.swiftUIImage
                 ) {
-                    presenter.contributorsTapped()
                     onNavigate(.contributors)
                 }
 
@@ -72,7 +71,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Staffs", bundle: .module),
                     image: AssetImages.icSentimentVerySatisfied.swiftUIImage
                 ) {
-                    presenter.staffsTapped()
                     onNavigate(.staff)
                 }
 
@@ -83,7 +81,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Sponsors", bundle: .module),
                     image: AssetImages.icApartment.swiftUIImage
                 ) {
-                    presenter.sponsorsTapped()
                     onNavigate(.sponsors)
                 }
 
@@ -107,7 +104,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Code of Conduct", bundle: .module),
                     image: AssetImages.icGavel.swiftUIImage
                 ) {
-                    presenter.codeOfConductTapped()
                     Task {
                         await safari(URL(string: String(localized: "CodeOfConductURL", bundle: .module))!)
                     }
@@ -120,7 +116,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Licenses", bundle: .module),
                     image: AssetImages.icFileCopy.swiftUIImage
                 ) {
-                    presenter.licensesTapped()
                     onNavigate(.licenses)
                 }
 
@@ -131,7 +126,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Privacy Policy", bundle: .module),
                     image: AssetImages.icPrivacyTip.swiftUIImage
                 ) {
-                    presenter.privacyPolicyTapped()
                     Task {
                         await safari(URL(string: String(localized: "PrivacyPolicyURL", bundle: .module))!)
                     }
@@ -144,7 +138,6 @@ public struct AboutScreen: View {
                     title: String(localized: "Settings", bundle: .module),
                     image: AssetImages.icSettings.swiftUIImage
                 ) {
-                    presenter.settingsTapped()
                     onNavigate(.settings)
                 }
 
@@ -156,7 +149,6 @@ public struct AboutScreen: View {
                     systemName: "switch.2",
                 ) {
                     showSwitchToComposeMultiplatformAlert = true
-                    presenter.switchToComposeMultiplatformTapped()
                 }
                 .alert(
                     String(localized: "Switch UI", bundle: .module), isPresented: $showSwitchToComposeMultiplatformAlert
@@ -185,22 +177,25 @@ public struct AboutScreen: View {
             SocialButton(
                 imageName: "ic_youtube_logo"
             ) {
-                presenter.youtubeTapped()
-                // TODO: Open in Safari when implemented
+                Task {
+                    await safari(URL(string: "https://www.youtube.com/c/DroidKaigi")!)
+                }
             }
 
             SocialButton(
                 imageName: "ic_xcom_logo"
             ) {
-                presenter.xcomTapped()
-                // TODO: Open in Safari when implemented
+                Task {
+                    await safari(URL(string: "https://twitter.com/DroidKaigi")!)
+                }
             }
 
             SocialButton(
                 imageName: "ic_medium_logo"
             ) {
-                presenter.mediumTapped()
-                // TODO: Open in Safari when implemented
+                Task {
+                    await safari(URL(string: "https://medium.com/droidkaigi")!)
+                }
             }
         }
     }
