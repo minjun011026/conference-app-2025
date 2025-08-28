@@ -25,29 +25,28 @@ actual fun Modifier.innerShadow(
     drawContent()
 
     drawIntoCanvas { canvas ->
-        val paint = Paint()
-        val frameworkPaint = paint.asFrameworkPaint()
 
-        val spreadPx = spread.toPx()
-        val blurPx = blur.toPx()
-
-        val shadowSize = Size(size.width + spreadPx, size.height + spreadPx)
+        val shadowSize = Size(size.width, size.height + spread.toPx())
         val shadowOutline = shape.createOutline(shadowSize, layoutDirection, this)
+
+        val paint = Paint()
+        paint.color = Color.White.copy(alpha = 0.6f)
 
         canvas.saveLayer(size.toRect(), paint)
 
-        canvas.translate(-spreadPx, -spreadPx)
-        paint.color = color
         canvas.drawOutline(shadowOutline, paint)
+
+        val frameworkPaint = paint.asFrameworkPaint()
+        val blurPx = blur.toPx() - 5
 
         frameworkPaint.blendMode = BlendMode.DST_OUT
         if (blurPx > 0) {
             frameworkPaint.maskFilter = MaskFilter.makeBlur(FilterBlurMode.NORMAL, blurPx)
         }
 
-        canvas.translate(spreadPx + offsetX.toPx(), spreadPx + offsetY.toPx())
+        paint.color = Color.Black
+        canvas.translate(offsetX.toPx(),  offsetY.toPx())
         canvas.drawOutline(shadowOutline, paint)
-
         canvas.restore()
     }
 }
