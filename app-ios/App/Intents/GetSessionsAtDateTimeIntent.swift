@@ -1,8 +1,8 @@
 import AppIntents
 import Foundation
 
-struct GetSessionsAtDateIntent: AppIntent {
-    static var title: LocalizedStringResource = "Get sessions at specific date"
+struct GetSessionsAtDateTimeIntent: AppIntent {
+    static var title: LocalizedStringResource = "Get sessions at specific date and time"
 
     @Parameter(title: "date")
     var date: Date

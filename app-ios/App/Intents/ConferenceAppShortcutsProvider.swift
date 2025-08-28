@@ -3,12 +3,12 @@ import AppIntents
 struct ConferenceAppShortcutsProvider: AppShortcutsProvider {
     @AppShortcutsBuilder static var appShortcuts: [AppShortcut] {
         AppShortcut(
-            intent: GetSessionsAtDateIntent(),
+            intent: GetSessionsAtDateTimeIntent(),
             phrases: [
-                "\(.applicationName)で指定日のセッションを取得"
+                "\(.applicationName)で指定日時のセッションを取得"
             ],
             shortTitle: "Get sessions",
-            systemImageName: "swift",
+            systemImageName: "calendar",
         )
         AppShortcut(
             intent: GetOngoingSessionsIntent(),
@@ -16,7 +16,7 @@ struct ConferenceAppShortcutsProvider: AppShortcutsProvider {
                 "\(.applicationName)で現在のセッションを取得"
             ],
             shortTitle: "Get ongoing sessions",
-            systemImageName: "swift",
+            systemImageName: "calendar",
         )
     }
 

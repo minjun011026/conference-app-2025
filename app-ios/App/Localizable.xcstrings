@@ -67,18 +67,18 @@
         }
       }
     },
-    "Get sessions at specific date" : {
+    "Get sessions at specific date and time" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Get sessions at specific date"
+            "value" : "Get sessions at specific date and time"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "指定日のセッションの取得"
+            "value" : "指定日時のセッションの取得"
           }
         }
       }

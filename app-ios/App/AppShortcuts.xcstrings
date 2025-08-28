@@ -1,14 +1,14 @@
 {
   "sourceLanguage" : "ja",
   "strings" : {
-    "${applicationName}で指定日のセッションを取得" : {
+    "${applicationName}で指定日時のセッションを取得" : {
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "Get sessions at a specific date for ${applicationName}"
+              "Get sessions at a specific date and time for ${applicationName}"
             ]
           }
         },
@@ -16,7 +16,7 @@
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "${applicationName}で指定日のセッションを取得"
+              "${applicationName}で指定日時のセッションを取得"
             ]
           }
         }
