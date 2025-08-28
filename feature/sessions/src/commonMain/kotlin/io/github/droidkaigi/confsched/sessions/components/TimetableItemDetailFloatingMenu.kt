@@ -26,9 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalHapticFeedback
 import io.github.droidkaigi.confsched.designsystem.theme.LocalRoomTheme
 import io.github.droidkaigi.confsched.designsystem.theme.ProvideRoomTheme
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
@@ -60,19 +58,13 @@ fun TimetableItemDetailFloatingActionButtonMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    val haptic = LocalHapticFeedback.current
     TimetableItemDetailFloatingActionButtonMenu(
         expanded = expanded,
         isBookmarked = isBookmarked,
         slideUrl = slideUrl,
         videoUrl = videoUrl,
         onExpandedChange = { expanded = it },
-        onBookmarkClick = { isBookmarked ->
-            if (isBookmarked.not()) {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-            }
-            onBookmarkClick(isBookmarked)
-        },
+        onBookmarkClick = onBookmarkClick,
         onAddCalendarClick = onAddCalendarClick,
         onShareClick = onShareClick,
         onViewSlideClick = onViewSlideClick,
