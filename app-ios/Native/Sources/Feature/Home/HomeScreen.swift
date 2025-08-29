@@ -77,7 +77,6 @@ public struct HomeScreen: View {
                             .resizable()
                             .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                             .frame(width: 24, height: 24)
-                            .padding(8)
                             .accessibilityLabel(String(localized: "Search sessions", bundle: .module))
                     })
                 Button(
@@ -90,7 +89,6 @@ public struct HomeScreen: View {
                             .resizable()
                             .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                             .frame(width: 24, height: 24)
-                            .padding(8)
                             .accessibilityLabel(
                                 timetableMode == .list
                                 ? String(localized: "Switch to grid view", bundle: .module)
