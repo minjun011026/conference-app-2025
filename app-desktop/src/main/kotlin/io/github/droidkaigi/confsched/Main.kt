@@ -10,8 +10,10 @@ import androidx.navigationevent.NavigationEventDispatcherOwner
 import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
 import dev.zacsweers.metro.createGraphFactory
 import io.github.droidkaigi.confsched.app_desktop.AppDesktopRes
+import io.github.droidkaigi.confsched.app_desktop.app_name
 import io.github.droidkaigi.confsched.app_desktop.ic_app
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 fun main() = application {
     val graphFactory = createGraphFactory<JvmAppGraph.Factory>()
@@ -24,6 +26,8 @@ fun main() = application {
     applyRuntimeDockIconIfDev()
 
     Window(
+        // Title for window title
+        title = stringResource(AppDesktopRes.string.app_name),
         // Icon for the title bar/task switching UI of that window
         icon = painterResource(AppDesktopRes.drawable.ic_app),
         onCloseRequest = ::exitApplication,
