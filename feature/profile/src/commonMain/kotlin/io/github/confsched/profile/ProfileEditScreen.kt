@@ -402,7 +402,7 @@ private fun FormField<String>.InputField(
             value = value,
             onValueChange = { onValueChange(it) },
             isError = hasError,
-            maxLines = 1,
+            singleLine = true,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             trailingIcon = {
