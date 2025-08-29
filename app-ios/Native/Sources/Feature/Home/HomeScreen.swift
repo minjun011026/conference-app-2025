@@ -91,8 +91,8 @@ public struct HomeScreen: View {
                             .frame(width: 24, height: 24)
                             .accessibilityLabel(
                                 timetableMode == .list
-                                ? String(localized: "Switch to grid view", bundle: .module)
-                                : String(localized: "Switch to list view", bundle: .module))
+                                    ? String(localized: "Switch to grid view", bundle: .module)
+                                    : String(localized: "Switch to list view", bundle: .module))
                     })
             }
         }
