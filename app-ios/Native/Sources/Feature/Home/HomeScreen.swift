@@ -67,37 +67,35 @@ public struct HomeScreen: View {
         .navigationTitle(String(localized: "Timetable", bundle: .module))
         .navigationBarTitleDisplayMode(.automatic)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                HStack(spacing: 0) {
-                    Button(
-                        action: {
-                            onNavigate(.search)
-                        },
-                        label: {
-                            AssetImages.icSearch.swiftUIImage
-                                .resizable()
-                                .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                                .accessibilityLabel(String(localized: "Search sessions", bundle: .module))
-                        })
-                    Button(
-                        action: {
-                            timetableMode = timetableMode == .list ? .grid : .list
-                        },
-                        label: {
-                            (timetableMode == .list ? AssetImages.icGridView : AssetImages.icViewTimeline)
-                                .swiftUIImage
-                                .resizable()
-                                .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                                .accessibilityLabel(
-                                    timetableMode == .list
-                                        ? String(localized: "Switch to grid view", bundle: .module)
-                                        : String(localized: "Switch to list view", bundle: .module))
-                        })
-                }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button(
+                    action: {
+                        onNavigate(.search)
+                    },
+                    label: {
+                        AssetImages.icSearch.swiftUIImage
+                            .resizable()
+                            .foregroundStyle(AssetColors.onSurface.swiftUIColor)
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                            .accessibilityLabel(String(localized: "Search sessions", bundle: .module))
+                    })
+                Button(
+                    action: {
+                        timetableMode = timetableMode == .list ? .grid : .list
+                    },
+                    label: {
+                        (timetableMode == .list ? AssetImages.icGridView : AssetImages.icViewTimeline)
+                            .swiftUIImage
+                            .resizable()
+                            .foregroundStyle(AssetColors.onSurface.swiftUIColor)
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                            .accessibilityLabel(
+                                timetableMode == .list
+                                ? String(localized: "Switch to grid view", bundle: .module)
+                                : String(localized: "Switch to list view", bundle: .module))
+                    })
             }
         }
         .onAppear {
