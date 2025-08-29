@@ -18,9 +18,6 @@ compose {
 val aboutLibrariesTargetDir = "${layout.buildDirectory.get().asFile.path}/generated/aboutlibraries"
 
 kotlin {
-    // JDK Version 21 is required to create the distribution materials.
-    jvmToolchain(21)
-
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
     }
