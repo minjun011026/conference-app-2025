@@ -18,9 +18,6 @@ compose {
 val aboutLibrariesTargetDir = "${layout.buildDirectory.get().asFile.path}/generated/aboutlibraries"
 
 kotlin {
-    // JDK Version 21 is required to create the distribution materials.
-    jvmToolchain(21)
-
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
     }
@@ -130,7 +127,10 @@ listOf(
  * ensuring that runtime-only features are limited to development runs.
  */
 tasks.withType(JavaExec::class).matching {
-    it.name == "run" || it.name == "runDistributable"
+    it.name in listOf(
+        "run", "runDistributable",
+        "hotDev", "hotDevAsync", "hotRun", "hotRunAsync", "runHot"
+    )
 }.configureEach {
     jvmArgs("-Dapp.devRun=true")
     // Just to be safe, we will add the jdk.unsupported module during development execution. (To prevent recurrence due to vendor JDK differences)
