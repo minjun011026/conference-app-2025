@@ -24,7 +24,7 @@ internal fun TimetableItemLangTag(
 ) {
     TimetableItemTag(
         tagText = text,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        contentTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
         borderColor = MaterialTheme.colorScheme.outline,
         contentPadding = PaddingValues(vertical = 2.dp, horizontal = 6.dp),
         modifier = modifier,
@@ -41,7 +41,8 @@ internal fun TimetableItemRoomTag(
     TimetableItemTag(
         icon = icon,
         tagText = text,
-        contentColor = color,
+        contentTextColor = MaterialTheme.colorScheme.surface,
+        contentBackgroundColor = color,
         borderColor = color,
         contentPadding = PaddingValues(vertical = 2.dp, horizontal = 8.dp),
         modifier = modifier,
@@ -55,7 +56,7 @@ fun TimetableItemDateTag(
 ) {
     TimetableItemTag(
         tagText = dateText,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        contentTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
         borderColor = MaterialTheme.colorScheme.outline,
         contentPadding = PaddingValues(vertical = 2.dp, horizontal = 6.dp),
         modifier = modifier,

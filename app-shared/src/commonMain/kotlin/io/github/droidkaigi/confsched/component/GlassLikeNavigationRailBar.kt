@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
@@ -49,8 +50,7 @@ fun GlassLikeNavigationRailBar(
 
     Box(
         modifier = modifier
-            .fillMaxHeight()
-            .width(64.dp)
+            .size(width = 64.dp, height = 420.dp)
             .border(
                 width = Dp.Hairline,
                 brush = Brush.horizontalGradient(
