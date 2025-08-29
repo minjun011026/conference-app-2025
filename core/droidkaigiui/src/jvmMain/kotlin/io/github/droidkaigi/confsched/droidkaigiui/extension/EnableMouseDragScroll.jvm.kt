@@ -5,6 +5,7 @@ import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.foundation.gestures.ScrollScope
+import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -29,7 +30,7 @@ private data class NestedScrollConsumption(
 
 @Composable
 actual fun Modifier.enableMouseDragScroll(
-    lazyListState: LazyListState,
+    scrollableState: ScrollableState,
 ): Modifier {
     val scope = rememberCoroutineScope()
     val decaySpec: DecayAnimationSpec<Float> = remember { exponentialDecay() }
@@ -73,7 +74,7 @@ actual fun Modifier.enableMouseDragScroll(
         val hasDragMovement = dragDeltaY != 0f
         if (!hasDragMovement) return
 
-        lazyListState.scroll {
+        scrollableState.scroll {
             performNestedScrollStep(
                 deltaY = dragDeltaY,
                 source = NestedScrollSource.UserInput,
@@ -82,7 +83,7 @@ actual fun Modifier.enableMouseDragScroll(
     }
 
     suspend fun runFlingAnimation(initialVelocityY: Float) {
-        lazyListState.scroll {
+        scrollableState.scroll {
             var lastValue = 0f
             val anim = AnimationState(
                 initialValue = 0f,
@@ -108,7 +109,7 @@ actual fun Modifier.enableMouseDragScroll(
 
     return this
         .nestedScroll(object : NestedScrollConnection {}, nestedDispatcher)
-        .pointerInput(lazyListState) {
+        .pointerInput(scrollableState) {
             var velocityTracker: VelocityTracker? = null
 
             detectDragGestures(
