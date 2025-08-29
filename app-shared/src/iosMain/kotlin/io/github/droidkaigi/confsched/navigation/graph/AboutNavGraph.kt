@@ -13,18 +13,23 @@ import io.github.droidkaigi.confsched.navigation.route.AboutRoute
 import io.github.droidkaigi.confsched.navigation.route.AboutTabRoute
 import io.github.droidkaigi.confsched.navigation.route.LicensesRoute
 import io.github.droidkaigi.confsched.navigation.route.SettingsRoute
+import io.github.droidkaigi.confsched.navigation.route.SponsorsRoute
 import io.github.droidkaigi.confsched.settings.SettingsScreenRoot
 import io.github.droidkaigi.confsched.settings.rememberSettingsScreenContextRetained
+import io.github.droidkaigi.confsched.sponsors.SponsorScreenRoot
+import io.github.droidkaigi.confsched.sponsors.rememberSponsorsScreenContextRetained
 
 context(appGraph: AppGraph)
 fun NavGraphBuilder.aboutTabNavGraph(
     onAboutItemClick: (AboutItem) -> Unit,
     onBackClick: () -> Unit,
+    onLinkClick: (String) -> Unit = {},
 ) {
     navigation<AboutTabRoute>(
         startDestination = AboutRoute,
     ) {
         aboutNavGraph(onAboutItemClick = onAboutItemClick)
+        sponsorsNavGraph(onBackClick = onBackClick, onLinkClick = onLinkClick)
         licensesNavGraph(onBackClick = onBackClick)
         settingsNavGraph(onBackClick = onBackClick)
     }
@@ -38,6 +43,21 @@ fun NavGraphBuilder.aboutNavGraph(
         with(rememberAboutScreenContextRetained()) {
             AboutScreenRoot(
                 onAboutItemClick = onAboutItemClick,
+            )
+        }
+    }
+}
+
+context(appGraph: AppGraph)
+fun NavGraphBuilder.sponsorsNavGraph(
+    onBackClick: () -> Unit,
+    onLinkClick: (String) -> Unit,
+) {
+    composable<SponsorsRoute> {
+        with(rememberSponsorsScreenContextRetained()) {
+            SponsorScreenRoot(
+                onBackClick = onBackClick,
+                onSponsorClick = onLinkClick,
             )
         }
     }

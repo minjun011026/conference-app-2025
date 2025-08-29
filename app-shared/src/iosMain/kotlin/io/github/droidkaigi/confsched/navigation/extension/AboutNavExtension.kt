@@ -4,12 +4,17 @@ import androidx.navigation.NavController
 import io.github.droidkaigi.confsched.navigation.route.AboutTabRoute
 import io.github.droidkaigi.confsched.navigation.route.LicensesRoute
 import io.github.droidkaigi.confsched.navigation.route.SettingsRoute
+import io.github.droidkaigi.confsched.navigation.route.SponsorsRoute
 
 fun NavController.navigateToAboutTab() {
     navigate(AboutTabRoute) {
         launchSingleTop = true
         popUpTo<AboutTabRoute>()
     }
+}
+
+fun NavController.navigateToSponsors() {
+    navigate(SponsorsRoute)
 }
 
 fun NavController.navigateToLicenses() {
