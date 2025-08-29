@@ -115,7 +115,10 @@ listOf(
  * ensuring that runtime-only features are limited to development runs.
  */
 tasks.withType(JavaExec::class).matching {
-    it.name == "run" || it.name == "runDistributable"
+    it.name in listOf(
+        "run", "runDistributable",
+        "hotDev", "hotDevAsync", "hotRun", "hotRunAsync", "runHot"
+    )
 }.configureEach {
     jvmArgs("-Dapp.devRun=true")
 }
