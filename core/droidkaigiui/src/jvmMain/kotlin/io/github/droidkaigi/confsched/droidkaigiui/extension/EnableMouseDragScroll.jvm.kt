@@ -108,6 +108,7 @@ actual fun Modifier.enableMouseDragScroll(
     }
 
     return this
+        // Relay for passing events to higher-level NestedScrollConnection components such as TopAppBar
         .nestedScroll(object : NestedScrollConnection {}, nestedDispatcher)
         .pointerInput(scrollableState) {
             var velocityTracker: VelocityTracker? = null
