@@ -89,6 +89,23 @@
           }
         }
       }
+    },
+    "Share Message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check out my DroidKaigi Profile Card! Let's connect at the event. #DroidKaigi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigiのプロフィールカードを作成しました！イベントでつながりましょう。 #DroidKaigi"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

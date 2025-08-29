@@ -17,7 +17,10 @@ import org.jetbrains.compose.resources.stringResource
 
 fun main() = application {
     val graphFactory = createGraphFactory<JvmAppGraph.Factory>()
-    val graph: JvmAppGraph = graphFactory.createJvmAppGraph(JvmLicensesJsonReader())
+    val graph: JvmAppGraph = graphFactory.createJvmAppGraph(
+        licensesJsonReader = JvmLicensesJsonReader(),
+        useProductionApi = false,
+    )
 
     // Replace the taskbar icon from Duke when launched via the Gradle command.
     applyRuntimeDockIconIfDev()
