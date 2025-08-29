@@ -1,6 +1,6 @@
+import Model
 import SwiftUI
 import Theme
-import Model
 
 struct ContributorListItem: View {
     let contributor: Model.Contributor
