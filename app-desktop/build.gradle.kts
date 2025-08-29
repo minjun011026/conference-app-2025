@@ -55,6 +55,12 @@ compose.desktop {
             // If necessary, modify the code to obtain and load packageVersion from a single source on all platforms.
             packageVersion = "1.0.0"
 
+            // Prevent a runtime error from occurring with java.lang.ClassNotFoundException: sun.misc.Unsafe.
+            // For distribution files such as dmg, exe, and msi, the “minimal JRE” is used, which does not include sun.misc.Unsafe for compatibility reasons.
+            // When running with the “run” command, it is executed using the “Full JDK (development version),” which includes sun.misc.Unsafe, so the ClassNotFoundException does not occur.
+            // https://github.com/DroidKaigi/conference-app-2025/issues/322
+            modules("jdk.unsupported")
+
             targetFormats(
                 // for MacOS
                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
@@ -127,4 +133,6 @@ tasks.withType(JavaExec::class).matching {
     )
 }.configureEach {
     jvmArgs("-Dapp.devRun=true")
+    // Just to be safe, we will add the jdk.unsupported module during development execution. (To prevent recurrence due to vendor JDK differences)
+    jvmArgs("--add-modules=jdk.unsupported")
 }
