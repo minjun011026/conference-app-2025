@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -158,7 +159,10 @@ fun SponsorItem(
     modifier: Modifier = Modifier,
     onSponsorsItemClick: (url: String) -> Unit,
 ) {
-    val painter = rememberAsyncImagePainter(sponsor.logo)
+    val painter = rememberAsyncImagePainter(
+        model = sponsor.logo,
+        placeholder = ColorPainter(Color.White),
+    )
     Card(
         modifier = modifier.clickable { onSponsorsItemClick(sponsor.link) },
         colors = CardDefaults.cardColors(
