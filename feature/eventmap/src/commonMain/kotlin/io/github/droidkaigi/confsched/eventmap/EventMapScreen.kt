@@ -61,7 +61,7 @@ fun EventMapScreen(
     }
 }
 
-@Preview
+@Preview(heightDp = 1920)
 @Composable
 private fun EventMapScreenPreview() {
     KaigiPreviewContainer {
