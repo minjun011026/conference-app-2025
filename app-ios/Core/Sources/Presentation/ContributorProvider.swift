@@ -18,7 +18,7 @@ public final class ContributorProvider {
     public func loadContributors() async {
         isLoading = true
         defer { isLoading = false }
-        
+
         for await contributorsList in contributorsUseCase.load() {
             contributors = contributorsList
         }
