@@ -34,11 +34,25 @@ actual fun rememberExternalNavController(): ExternalNavController {
 internal class IosExternalNavController : ExternalNavController {
     override fun navigate(url: String) {
         val nsUrl = NSURL.URLWithString(url)
-        if (nsUrl != null) {
-            UIApplication.sharedApplication.openURL(nsUrl)
-        } else {
-            println("Failed to navigate to URL: $url")
+        if (nsUrl == null) {
+            println("Failed to navigate to URL (invalid URL): $url")
+            return
         }
+
+        if (!UIApplication.sharedApplication.canOpenURL(nsUrl)) {
+            println("Cannot open URL (scheme not allowed or no handler): $url")
+            return
+        }
+
+        UIApplication.sharedApplication.openURL(
+            url = nsUrl,
+            options = emptyMap<Any?, Any?>(),
+            completionHandler = { success ->
+                if (!success) {
+                    println("Failed to open URL via UIApplication.open(_:options:completionHandler:): $url")
+                }
+            },
+        )
     }
 
     @OptIn(ExperimentalForeignApi::class)
