@@ -7,10 +7,17 @@ import Presentation
 @Observable
 final class HomePresenter {
     let timetable = TimetableProvider()
+    let notificationProvider = NotificationProvider()
 
-    init() {}
+    init() {
+        // Connect notification provider to timetable provider for automatic scheduling
+        timetable.setNotificationProvider(notificationProvider)
+    }
 
     func loadInitial() {
+        // Initialize notification provider first
+        notificationProvider.initialize()
+        // Then load timetable data
         timetable.subscribeTimetableIfNeeded()
     }
 

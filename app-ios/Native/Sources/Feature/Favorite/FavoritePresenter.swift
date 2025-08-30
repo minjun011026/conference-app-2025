@@ -7,6 +7,7 @@ import Presentation
 @Observable
 final class FavoritePresenter: @preconcurrency FavoritePresenterProtocol {
     let timetable = TimetableProvider()
+    let notificationProvider = NotificationProvider()
 
     var favoriteTimetableItems: [TimetableTimeGroupItems] {
         let favoriteItems = timetable.dayTimetable.values
@@ -19,9 +20,14 @@ final class FavoritePresenter: @preconcurrency FavoritePresenterProtocol {
 
     var dateFilter: FavoriteDateFilter = .all
 
-    init() {}
+    init() {
+        // Connect notification provider to timetable provider
+        timetable.setNotificationProvider(notificationProvider)
+    }
 
     func loadInitial() {
+        // Initialize notifications first
+        notificationProvider.initialize()
         timetable.subscribeTimetableIfNeeded()
     }
 
