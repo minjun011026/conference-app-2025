@@ -1,0 +1,28 @@
+/* Settings Screen */
+"Settings" = "設定";
+
+/* Notification Section */
+"Notifications" = "通知";
+"Session Notifications" = "セッション通知";
+"Get reminded before sessions start" = "セッション開始前にリマインダーを受け取る";
+"Enable in Settings" = "設定で有効にする";
+
+/* Notification Details */
+"Reminder Time" = "リマインダー時間";
+"Favorites Only" = "お気に入りのみ";
+"Only notify for favorited sessions" = "お気に入りのセッションのみ通知";
+"Custom Sound" = "カスタム音";
+"Use DroidKaigi notification sound" = "DroidKaigiの通知音を使用";
+
+/* Notification Reminder Times */
+"5 minutes before" = "5分前";
+"10 minutes before" = "10分前";
+"15 minutes before" = "15分前";
+"30 minutes before" = "30分前";
+"1 hour before" = "1時間前";
+
+/* Footer Messages */
+"You'll be asked for permission when enabling notifications." = "通知を有効にする際に許可を求められます。";
+"Notification permission denied. Enable in Settings to receive session reminders." = "通知の許可が拒否されました。セッションリマインダーを受け取るには設定で有効にしてください。";
+"You'll receive notifications based on your favorite sessions and the selected reminder time." = "お気に入りのセッションと選択したリマインダー時間に基づいて通知を受け取ります。";
+"Enable notifications to get reminded about upcoming sessions." = "通知を有効にして、今後のセッションについてリマインダーを受け取りましょう。";
