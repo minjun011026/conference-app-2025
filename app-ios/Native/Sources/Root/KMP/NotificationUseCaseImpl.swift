@@ -1,7 +1,7 @@
 import Foundation
+import Handler
 import Model
 import UseCase
-import Handler
 import UserNotifications
 import os.log
 

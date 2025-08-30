@@ -239,7 +239,6 @@ public struct RootScreen: View {
 
             // Navigate to the timetable detail
             navigationPath.append(NavigationDestination.timetableDetail(timetableItem))
-
         } catch {
             print("Failed to navigate to session \(itemId): \(error)")
             // At least we switched to the timetable tab

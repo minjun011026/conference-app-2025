@@ -1,6 +1,6 @@
 import Foundation
-import Model
 import Handler
+import Model
 import SwiftUI
 import UseCase
 import os.log

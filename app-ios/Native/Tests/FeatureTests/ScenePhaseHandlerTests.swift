@@ -8,7 +8,6 @@ import UserNotifications
 import Testing
 
 struct ScenePhaseHandlerTests {
-
     @MainActor
     @Test("Test scene phase active handling")
     func testScenePhaseActive() async {

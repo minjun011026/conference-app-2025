@@ -64,11 +64,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ]
-        ),
-        .testTarget(
-            name: "HandlerTests",
-            dependencies: ["Handler"]
-        ),
+        )
     ],
     swiftLanguageModes: [.v6]
 )

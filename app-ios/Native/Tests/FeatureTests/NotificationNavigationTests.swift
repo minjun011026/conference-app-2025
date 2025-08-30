@@ -7,7 +7,6 @@ import Testing
 import SwiftUI
 
 struct NotificationNavigationTests {
-
     @MainActor
     @Test("Test handleNotificationNavigation with valid item ID")
     func testHandleNotificationNavigationSuccess() async throws {
