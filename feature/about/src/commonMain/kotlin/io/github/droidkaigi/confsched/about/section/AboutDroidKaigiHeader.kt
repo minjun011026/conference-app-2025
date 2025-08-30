@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.droidkaigi.confsched.about.AboutRes
 import io.github.droidkaigi.confsched.about.components.AboutDroidKaigiSummaryCard
-import io.github.droidkaigi.confsched.about.components.AboutHeaderAnimatedBanner
+import io.github.droidkaigi.confsched.about.components.AboutAnimatedHeaderImage
 import io.github.droidkaigi.confsched.about.description
 import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import org.jetbrains.compose.resources.stringResource
@@ -28,7 +28,7 @@ fun AboutDroidKaigiHeader(
     Column(
         modifier = modifier.testTag(AboutHeaderTestTag),
     ) {
-        AboutHeaderAnimatedBanner()
+        AboutAnimatedHeaderImage()
         Text(
             text = stringResource(AboutRes.string.description),
             style = MaterialTheme.typography.titleMedium,

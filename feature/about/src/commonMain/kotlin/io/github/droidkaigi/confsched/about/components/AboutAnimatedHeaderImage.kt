@@ -31,7 +31,7 @@ import kotlinx.coroutines.yield
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun AboutHeaderAnimatedBanner(
+fun AboutAnimatedHeaderImage(
     modifier: Modifier = Modifier,
 ) {
     val titleAlpha = remember { Animatable(0f) }
