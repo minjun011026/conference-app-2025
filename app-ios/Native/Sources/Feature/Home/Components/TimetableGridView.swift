@@ -10,6 +10,8 @@ struct TimetableGridView: View {
     let rooms: [Room]
     let onItemTap: (TimetableItemWithFavorite) -> Void
 
+    @State private var now: Date = Date()
+    
     // MARK: - Layout Const
     private let heightOfMinute: CGFloat = 5
     private let roomWidth: CGFloat = 192
@@ -28,6 +30,13 @@ struct TimetableGridView: View {
                 Color.clear.padding(.bottom, 60)
             }
         }
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                Task { @MainActor in
+                    self.now = Date()
+                }
+            }
+        }
     }
 
     private var timetableGridView: some View {
@@ -43,6 +52,7 @@ struct TimetableGridView: View {
                     ZStack(alignment: .topLeading) {
                         hourLines
                         sessionCards
+                        currentTimeLine
                     }
                     .frame(width: timetableWidth, height: timetableHeight, alignment: .topLeading)
                 }
@@ -98,6 +108,21 @@ struct TimetableGridView: View {
                         .frame(height: 1)
                         .frame(maxWidth: .infinity)
                         .offset(y: CGFloat(hourIndex * 60) * heightOfMinute)
+                }
+            }
+        }
+    }
+
+    private var currentTimeLine: some View {
+        ZStack(alignment: .topLeading) {
+            if let dayStart = dayStart,
+               let dayEnd = dayEnd {
+                if now >= dayStart && now <= dayEnd {
+                    Rectangle()
+                        .fill(Color.red)
+                        .frame(height: 2)
+                        .frame(maxWidth: .infinity)
+                        .offset(y: offsetY(for: now, base: dayStart))
                 }
             }
         }
