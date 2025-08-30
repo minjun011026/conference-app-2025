@@ -129,4 +129,19 @@ struct TimetableGridView: View {
     private var timelineItems: [TimetableItemWithFavorite] {
         timetableItems.flatMap(\.items)
     }
+
+    private var dayStart: Date? {
+        guard let earliest = timelineItems.map({ $0.timetableItem.startsAt }).min() else { return nil }
+        // Round to hour unit
+        return Calendar.current.date(
+            bySettingHour: Calendar.current.component(.hour, from: earliest),
+            minute: 0,
+            second: 0,
+            of: earliest
+        )
+    }
+
+    private var dayEnd: Date? {
+        timelineItems.map({ $0.timetableItem.endsAt }).max()
+    }
 }
