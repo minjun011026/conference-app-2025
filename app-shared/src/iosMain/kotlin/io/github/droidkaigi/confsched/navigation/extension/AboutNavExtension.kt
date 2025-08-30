@@ -5,6 +5,7 @@ import io.github.droidkaigi.confsched.navigation.route.AboutTabRoute
 import io.github.droidkaigi.confsched.navigation.route.LicensesRoute
 import io.github.droidkaigi.confsched.navigation.route.SettingsRoute
 import io.github.droidkaigi.confsched.navigation.route.SponsorsRoute
+import io.github.droidkaigi.confsched.navigation.route.StaffsRoute
 
 fun NavController.navigateToAboutTab() {
     navigate(AboutTabRoute) {
@@ -23,4 +24,8 @@ fun NavController.navigateToLicenses() {
 
 fun NavController.navigateToSettings() {
     navigate(SettingsRoute)
+}
+
+fun NavController.navigateToStaffs() {
+    navigate(StaffsRoute)
 }

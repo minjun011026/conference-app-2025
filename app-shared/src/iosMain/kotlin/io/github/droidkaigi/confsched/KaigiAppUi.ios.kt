@@ -23,6 +23,7 @@ import io.github.droidkaigi.confsched.navigation.extension.navigateToProfileCard
 import io.github.droidkaigi.confsched.navigation.extension.navigateToSearch
 import io.github.droidkaigi.confsched.navigation.extension.navigateToSettings
 import io.github.droidkaigi.confsched.navigation.extension.navigateToSponsors
+import io.github.droidkaigi.confsched.navigation.extension.navigateToStaffs
 import io.github.droidkaigi.confsched.navigation.extension.navigateToTimetableItemDetail
 import io.github.droidkaigi.confsched.navigation.extension.navigateToTimetableTab
 import io.github.droidkaigi.confsched.navigation.graph.aboutTabNavGraph
@@ -103,7 +104,7 @@ actual fun KaigiAppUi() {
                     when (it) {
                         AboutItem.Map -> TODO()
                         AboutItem.Contributors -> TODO()
-                        AboutItem.Staff -> TODO()
+                        AboutItem.Staff -> navController.navigateToStaffs()
                         AboutItem.Sponsors -> navController.navigateToSponsors()
                         AboutItem.CodeOfConduct -> TODO()
                         AboutItem.License -> navController.navigateToLicenses()
