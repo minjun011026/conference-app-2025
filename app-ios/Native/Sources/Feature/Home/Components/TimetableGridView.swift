@@ -58,16 +58,13 @@ struct TimetableGridView: View {
                 .gridCellUnsizedAxes([.horizontal, .vertical])
 
             ForEach(rooms, id: \.id) { room in
-                roomHeaderCell(room: room)
+                Text(room.displayName)
+                    .font(Typography.titleMedium)
+                    .foregroundStyle(room.roomTheme.primaryColor)
+                    .frame(width: roomWidth)
+                    .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
         }
-    }
-
-    private func roomHeaderCell(room: Room) -> some View {
-        Text(room.displayName)
-            .font(Typography.titleMedium)
-            .foregroundStyle(room.type.color)
-            .frame(width: 192)
     }
 
     private var timeAxis: some View {
