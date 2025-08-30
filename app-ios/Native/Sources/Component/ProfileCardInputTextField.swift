@@ -7,7 +7,8 @@ public struct ProfileCardInputTextField: View {
     var keyboardType: UIKeyboardType = .default
     @Binding var text: String
 
-    public init(title: String, placeholder: String = "", keyboardType: UIKeyboardType = .default, text: Binding<String>) {
+    public init(title: String, placeholder: String = "", keyboardType: UIKeyboardType = .default, text: Binding<String>)
+    {
         self.title = title
         self.placeholder = placeholder
         self.keyboardType = keyboardType
