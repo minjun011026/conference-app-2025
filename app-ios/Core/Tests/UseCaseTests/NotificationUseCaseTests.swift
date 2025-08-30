@@ -345,30 +345,21 @@ struct NotificationReminderTimeTests {
     func testReminderTimeCases() {
         let allCases = NotificationReminderTime.allCases
 
-        #expect(allCases.count == 5)
+        #expect(allCases.count == 2)
         #expect(allCases.contains(.fiveMinutes))
         #expect(allCases.contains(.tenMinutes))
-        #expect(allCases.contains(.fifteenMinutes))
-        #expect(allCases.contains(.thirtyMinutes))
-        #expect(allCases.contains(.oneHour))
     }
 
-    @Test("Test reminder time values")
+    @Test("Test reminder time values (updated)")
     func testReminderTimeValues() {
         #expect(NotificationReminderTime.fiveMinutes.rawValue == 5)
         #expect(NotificationReminderTime.tenMinutes.rawValue == 10)
-        #expect(NotificationReminderTime.fifteenMinutes.rawValue == 15)
-        #expect(NotificationReminderTime.thirtyMinutes.rawValue == 30)
-        #expect(NotificationReminderTime.oneHour.rawValue == 60)
     }
 
-    @Test("Test reminder time display text")
+    @Test("Test reminder time display text (updated)")
     func testReminderTimeDisplayText() {
         #expect(NotificationReminderTime.fiveMinutes.displayText == "5 minutes before")
         #expect(NotificationReminderTime.tenMinutes.displayText == "10 minutes before")
-        #expect(NotificationReminderTime.fifteenMinutes.displayText == "15 minutes before")
-        #expect(NotificationReminderTime.thirtyMinutes.displayText == "30 minutes before")
-        #expect(NotificationReminderTime.oneHour.displayText == "1 hour before")
     }
 
     @Test("Test reminder time identifiable")
@@ -376,5 +367,9 @@ struct NotificationReminderTimeTests {
         let fiveMinutes = NotificationReminderTime.fiveMinutes
         #expect(fiveMinutes.id == fiveMinutes.rawValue)
         #expect(fiveMinutes.id == 5)
+
+        let tenMinutes = NotificationReminderTime.tenMinutes
+        #expect(tenMinutes.id == tenMinutes.rawValue)
+        #expect(tenMinutes.id == 10)
     }
 }

@@ -82,7 +82,7 @@ struct NotificationProviderTests {
     func testHandleFavoriteChange() async throws {
         let item = NotificationProviderTestData.createTimetableItemWithFavorite(
             id: "test-session",
-            isFavorite: true
+            isFavorited: true
         )
 
         let scheduleCalled = LockIsolated<Bool>(false)

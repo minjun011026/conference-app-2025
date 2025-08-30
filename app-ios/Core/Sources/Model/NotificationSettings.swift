@@ -31,9 +31,6 @@ public struct NotificationSettings: Equatable, Sendable {
 public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
     case fiveMinutes = 5
     case tenMinutes = 10
-    case fifteenMinutes = 15
-    case thirtyMinutes = 30
-    case oneHour = 60
 
     public var id: Int { rawValue }
 
@@ -43,12 +40,6 @@ public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
             return "5 minutes before"
         case .tenMinutes:
             return "10 minutes before"
-        case .fifteenMinutes:
-            return "15 minutes before"
-        case .thirtyMinutes:
-            return "30 minutes before"
-        case .oneHour:
-            return "1 hour before"
         }
     }
 }
