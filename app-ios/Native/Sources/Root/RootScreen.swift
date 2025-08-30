@@ -7,6 +7,7 @@ import HomeFeature
 import Model
 import ProfileCardFeature
 import SearchFeature
+import SettingsFeature
 import SponsorFeature
 import StaffFeature
 import SwiftUI
@@ -45,6 +46,8 @@ public struct RootScreen: View {
     @State private var composeMultiplatformEnabled = false
     @State private var favoriteScreenUiMode: FavoriteScreenUiModePicker.UiMode = .swiftui
     private let presenter = RootPresenter()
+    private let notificationUseCase = NotificationUseCaseImpl()
+    @State private var notificationCoordinator: NotificationNavigationCoordinator?
 
     public init() {
         UITabBar.appearance().unselectedItemTintColor = UIColor(named: "tab_inactive")
@@ -67,6 +70,25 @@ public struct RootScreen: View {
             // Register custom fonts from Theme bundle so Font.custom can resolve them.
             ThemeFonts.registerAll()
             presenter.prepareWindow()
+
+            // Initialize notification coordinator if not already done
+            if notificationCoordinator == nil {
+                notificationCoordinator = NotificationNavigationCoordinator(
+                    navigateToTimetableDetail: { itemId in
+                        // Note: Using a closure without weak reference since RootScreen is a struct
+                        // For proper navigation handling, consider refactoring to use a class-based coordinator
+                        print("Navigation to item ID: \(itemId)")
+                    }
+                )
+            }
+
+            // Set up notification navigation handler
+            if let coordinator = notificationCoordinator {
+                notificationUseCase.setNavigationHandler(coordinator)
+            }
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            ScenePhaseHandler.handle(newPhase)
         }
     }
 
@@ -159,8 +181,7 @@ public struct RootScreen: View {
             Text("Licenses")
                 .navigationTitle("Licenses")
         case .settings:
-            Text("Settings")
-                .navigationTitle("Settings")
+            SettingsScreen()
         }
     }
 
@@ -196,6 +217,22 @@ public struct RootScreen: View {
 
     private func handleEnableComposeMultiplatform() {
         composeMultiplatformEnabled = true
+    }
+
+    /// Handle navigation from notifications
+    private func handleNotificationNavigation(itemId: String) {
+        // Switch to timetable tab
+        selectedTab = .timetable
+
+        // TODO: Navigate to specific session
+        // This would require finding the TimetableItemWithFavorite by itemId
+        // and adding it to the navigation path
+        // For now, just switch to timetable tab
+
+        // In a complete implementation, you would:
+        // 1. Query your data source to find the TimetableItemWithFavorite by itemId
+        // 2. Add it to the navigationPath to show the detail view
+        // navigationPath.append(NavigationDestination.timetableDetail(timetableItem))
     }
 
     @ViewBuilder
