@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.zIndex
 import io.github.droidkaigi.confsched.about.AboutRes
-import io.github.droidkaigi.confsched.about.about_header
 import io.github.droidkaigi.confsched.about.about_header_bg_only
 import io.github.droidkaigi.confsched.about.about_header_mascot1
 import io.github.droidkaigi.confsched.about.about_header_mascot2
@@ -29,6 +28,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import org.jetbrains.compose.resources.painterResource
+import kotlin.random.Random
 
 @Composable
 fun AboutAnimatedHeaderImage(
@@ -37,10 +37,8 @@ fun AboutAnimatedHeaderImage(
     val titleAlpha = remember { Animatable(0f) }
     val mascot1Alpha = remember { Animatable(0f) }
     val mascot2Alpha = remember { Animatable(0f) }
-    val finalAlpha = remember { Animatable(0f) }
 
     val density = LocalDensity.current
-
     val backgroundPainter = painterResource(AboutRes.drawable.about_header_bg_only)
 
     val dynamicAspect = remember(backgroundPainter) {
@@ -55,16 +53,24 @@ fun AboutAnimatedHeaderImage(
             .aspectRatio(dynamicAspect)
             .clipToBounds(),
     ) {
+        val maxWidthPx = with(density) { maxWidth.toPx() }
         val maxHeightPx = with(density) { maxHeight.toPx() }
-        val mascot3OffsetY = remember(maxHeightPx) { Animatable(maxHeightPx) }
 
-        LaunchedEffect(maxHeight) {
+        val mascot3OffsetY = remember(maxHeightPx) { Animatable(maxHeightPx) }
+        val mascot3OffsetX = remember { Animatable(0f) }
+
+        LaunchedEffect(maxWidth, maxHeight) {
             playHeaderIntro(
                 titleAlpha = titleAlpha,
                 mascot1Alpha = mascot1Alpha,
                 mascot2Alpha = mascot2Alpha,
                 mascot3OffsetY = mascot3OffsetY,
-                finalAlpha = finalAlpha,
+            )
+            loopMascot3Peek(
+                offsetY = mascot3OffsetY,
+                offsetX = mascot3OffsetX,
+                containerWidth = maxWidthPx,
+                containerHeight = maxHeightPx,
             )
         }
 
@@ -72,9 +78,7 @@ fun AboutAnimatedHeaderImage(
             painter = backgroundPainter,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .matchParentSize()
-                .zIndex(0f),
+            modifier = Modifier.matchParentSize().zIndex(0f),
         )
         Image(
             painter = painterResource(AboutRes.drawable.about_header_mascot3),
@@ -82,7 +86,10 @@ fun AboutAnimatedHeaderImage(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .matchParentSize()
-                .graphicsLayer { translationY = mascot3OffsetY.value }
+                .graphicsLayer {
+                    translationX = mascot3OffsetX.value
+                    translationY = mascot3OffsetY.value
+                }
                 .zIndex(1.5f),
         )
         Image(
@@ -112,15 +119,6 @@ fun AboutAnimatedHeaderImage(
                 .graphicsLayer { alpha = mascot2Alpha.value }
                 .zIndex(2.1f),
         )
-        Image(
-            painter = painterResource(AboutRes.drawable.about_header),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .matchParentSize()
-                .graphicsLayer { alpha = finalAlpha.value }
-                .zIndex(2.2f),
-        )
     }
 }
 
@@ -129,7 +127,6 @@ private suspend fun playHeaderIntro(
     mascot1Alpha: Animatable<Float, *>,
     mascot2Alpha: Animatable<Float, *>,
     mascot3OffsetY: Animatable<Float, *>,
-    finalAlpha: Animatable<Float, *>,
 ) {
     delay(180)
 
@@ -156,7 +153,42 @@ private suspend fun playHeaderIntro(
         targetValue = 0f,
         animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing),
     )
-    delay(80)
+    delay(1500)
+}
 
-    finalAlpha.animateTo(1f, tween(durationMillis = 500))
+private suspend fun loopMascot3Peek(
+    offsetY: Animatable<Float, *>,
+    offsetX: Animatable<Float, *>,
+    containerWidth: Float,
+    containerHeight: Float,
+) {
+    val maxRightShift = containerWidth * 0.20f
+
+    while (true) {
+        offsetY.animateTo(
+            targetValue = containerHeight,
+            animationSpec = tween(
+                durationMillis = Random.nextInt(700, 1100),
+                easing = FastOutSlowInEasing,
+            ),
+        )
+
+        val nextX = Random.nextFloat() * maxRightShift
+        offsetX.snapTo(nextX)
+
+        delay(Random.nextLong(250, 600))
+
+        val revealRatio = Random.nextFloat() * 0.1f + 0.9f
+        val targetYForReveal = (1f - revealRatio) * containerHeight
+
+        offsetY.animateTo(
+            targetValue = targetYForReveal,
+            animationSpec = tween(
+                durationMillis = Random.nextInt(900, 1400),
+                easing = FastOutSlowInEasing,
+            ),
+        )
+
+        delay(Random.nextLong(2000, 3000))
+    }
 }
