@@ -11,7 +11,7 @@ struct TimetableGridView: View {
     let onItemTap: (TimetableItemWithFavorite) -> Void
 
     @State private var now: Date = Date()
-    
+
     // MARK: - Layout Const
     private let heightOfMinute: CGFloat = 5
     private let roomWidth: CGFloat = 192
@@ -48,7 +48,7 @@ struct TimetableGridView: View {
             ScrollView(.horizontal) {
                 VStack(spacing: 0) {
                     roomHeaderRow
-                    
+
                     ZStack(alignment: .topLeading) {
                         hourLines
                         sessionCards
@@ -87,7 +87,7 @@ struct TimetableGridView: View {
 
             if let dayStart = dayStart, let dayEnd = dayEnd {
                 let totalMinutes = Int(dayEnd.timeIntervalSince(dayStart) / 60)
-                ForEach(0...totalMinutes/60, id: \.self) { hourIndex in
+                ForEach(0...totalMinutes / 60, id: \.self) { hourIndex in
                     let labelDate = Calendar.current.date(byAdding: .minute, value: hourIndex * 60, to: dayStart)!
                     Text(labelDate.formatted(date: .omitted, time: .shortened))
                         .font(.caption2)
@@ -116,7 +116,8 @@ struct TimetableGridView: View {
     private var currentTimeLine: some View {
         ZStack(alignment: .topLeading) {
             if let dayStart = dayStart,
-               let dayEnd = dayEnd {
+                let dayEnd = dayEnd
+            {
                 if now >= dayStart && now <= dayEnd {
                     Rectangle()
                         .fill(Color.red)
@@ -134,7 +135,6 @@ struct TimetableGridView: View {
                 ForEach(timelineItems, id: \.id) { item in
                     let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
                     let height = sessionHeight(for: item.timetableItem)
-
 
                     TimetableGridCard(
                         timetableItem: item.timetableItem,
