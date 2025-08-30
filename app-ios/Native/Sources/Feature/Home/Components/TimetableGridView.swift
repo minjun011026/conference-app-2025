@@ -69,6 +69,7 @@ struct TimetableGridView: View {
 
     private var timeAxis: some View {
         VStack(spacing: 0) {
+            // Place transparent text to take the room header space.
             Text("Room Name")
                 .font(Typography.titleMedium)
                 .foregroundStyle(Color.clear)
