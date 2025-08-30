@@ -35,8 +35,10 @@ enum ScenePhaseHandler {
             await refreshNotificationStatusIfNeeded()
 
             // Clear badge count when app becomes active
-            await MainActor.run {
-                UNUserNotificationCenter.current().setBadgeCount(0)
+            do {
+                try await UNUserNotificationCenter.current().setBadgeCount(0)
+            } catch {
+                logger.error("Failed to set badge count: \(error.localizedDescription)")
             }
         }
     }
@@ -55,7 +57,6 @@ enum ScenePhaseHandler {
         }
     }
 
-    @MainActor
     private static func refreshNotificationStatusIfNeeded() async {
         // This could be called when the app returns from Settings where user might have changed notification permissions
         logger.debug("Refreshing notification authorization status")
@@ -76,11 +77,13 @@ enum ScenePhaseHandler {
             logger.warning("Notifications enabled in app but denied by system - user may need to re-enable in Settings")
 
             // Here you could post a notification to update UI or show an alert
-            NotificationCenter.default.post(
-                name: Notification.Name("NotificationPermissionStatusChanged"),
-                object: nil,
-                userInfo: ["status": "denied", "appEnabled": currentSettings.isEnabled]
-            )
+            await MainActor.run {
+                NotificationCenter.default.post(
+                    name: Notification.Name("NotificationPermissionStatusChanged"),
+                    object: nil,
+                    userInfo: ["status": "denied", "appEnabled": currentSettings.isEnabled]
+                )
+            }
         }
 
         // If authorization status changed to authorized and we have pending settings
@@ -88,10 +91,12 @@ enum ScenePhaseHandler {
             logger.info("Notifications are authorized and enabled - scheduling pending notifications")
 
             // Trigger a refresh of scheduled notifications
-            NotificationCenter.default.post(
-                name: Notification.Name("RefreshNotificationSchedules"),
-                object: nil
-            )
+            await MainActor.run {
+                NotificationCenter.default.post(
+                    name: Notification.Name("RefreshNotificationSchedules"),
+                    object: nil
+                )
+            }
         }
     }
 
@@ -146,28 +151,23 @@ enum ScenePhaseHandler {
         @Dependency(\.timetableUseCase) var timetableUseCase
         let notificationUseCase = NotificationUseCaseImpl()
 
-        do {
-            // Get current timetable to check for changes with improved error handling
-            let timetableSequence = timetableUseCase.load()
+        // Get current timetable to check for changes with improved error handling
+        let timetableSequence = timetableUseCase.load()
 
-            // Use first(where:) to get only the first result efficiently
-            guard let timetable = await timetableSequence.first(where: { @Sendable _ in true }) else {
-                logger.warning("No timetable data available for notification rescheduling")
-                return
-            }
-
-            // Convert timetable items to TimetableItemWithFavorite
-            let allItems = timetable.timetableItems.map { item in
-                let isFavorited = timetable.bookmarks.contains(item.id)
-                return TimetableItemWithFavorite(timetableItem: item, isFavorited: isFavorited)
-            }
-
-            // Reschedule notifications based on current data
-            await notificationUseCase.rescheduleAllNotifications(for: allItems, with: settings)
-            logger.info("Rescheduled notifications for \(allItems.count) timetable items in background")
-
-        } catch {
-            logger.error("Failed to reschedule notifications in background: \(error.localizedDescription)")
+        // Use first(where:) to get only the first result efficiently
+        guard let timetable = await timetableSequence.first(where: { @Sendable _ in true }) else {
+            logger.warning("No timetable data available for notification rescheduling")
+            return
         }
+
+        // Convert timetable items to TimetableItemWithFavorite
+        let allItems = timetable.timetableItems.map { item in
+            let isFavorited = timetable.bookmarks.contains(item.id)
+            return TimetableItemWithFavorite(timetableItem: item, isFavorited: isFavorited)
+        }
+
+        // Reschedule notifications based on current data
+        await notificationUseCase.rescheduleAllNotifications(for: allItems, with: settings)
+        logger.info("Rescheduled notifications for \(allItems.count) timetable items in background")
     }
 }
