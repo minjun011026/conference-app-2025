@@ -17,10 +17,9 @@ class CoilRule : TestWatcher() {
         val engine = FakeImageLoaderEngine.Builder()
             .default(ColorImage(Color.BLUE))
             .build()
-        val imageLoader =
-            ImageLoader.Builder(ApplicationProvider.getApplicationContext())
-                .components { add(engine) }
-                .build()
+        val imageLoader = ImageLoader.Builder(ApplicationProvider.getApplicationContext())
+            .components { add(engine) }
+            .build()
         SingletonImageLoader.setUnsafe(imageLoader)
     }
 }
