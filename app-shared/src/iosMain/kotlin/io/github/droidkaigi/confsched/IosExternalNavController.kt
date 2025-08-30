@@ -117,9 +117,7 @@ internal class IosExternalNavController : ExternalNavController {
             activityItems = items,
             applicationActivities = null,
         )
-        MainScope().launch {
-            presentAsPopoverSafely(activityViewController)
-        }
+        presentAsPopoverSafely(activityViewController)
     }
 
     /**
