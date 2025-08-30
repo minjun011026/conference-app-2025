@@ -58,7 +58,8 @@ class DroidKaigiKmpPreviewTester : ComposePreviewTester<ComposePreviewTester.Tes
                             registerRoborazziActivityToRobolectricIfNeeded()
                         }
                     },
-                ).around(composeTestRule)
+                )
+                    .around(composeTestRule)
                     .around(CoilRule())
             },
         ),
