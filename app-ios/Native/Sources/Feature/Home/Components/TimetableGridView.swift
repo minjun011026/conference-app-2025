@@ -110,6 +110,7 @@ struct TimetableGridView: View {
             if let dayStart = dayStart {
                 ForEach(timelineItems, id: \.id) { item in
                     let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
+                    let height = sessionHeight(for: item.timetableItem)
 
 
                     TimetableGridCard(
@@ -117,7 +118,7 @@ struct TimetableGridView: View {
                         cellCount: 1,
                         onTap: { _ in onItemTap(item) }
                     )
-                    .frame(width: roomWidth)
+                    .frame(width: roomWidth, height: height)
                     .offset(x: offsetX(for: item.timetableItem.room), y: top)
 
                 }
@@ -166,6 +167,11 @@ struct TimetableGridView: View {
 
     private func offsetY(for date: Date, base: Date) -> CGFloat {
         let seconds = date.timeIntervalSince(base)
+        return CGFloat(max(seconds, 0) / 60.0) * heightOfMinute
+    }
+
+    private func sessionHeight(for item: any TimetableItem) -> CGFloat {
+        let seconds = item.endsAt.timeIntervalSince(item.startsAt)
         return CGFloat(max(seconds, 0) / 60.0) * heightOfMinute
     }
 }
