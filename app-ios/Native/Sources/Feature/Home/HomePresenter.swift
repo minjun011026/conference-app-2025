@@ -10,14 +10,11 @@ final class HomePresenter {
     let notificationProvider = NotificationProvider()
 
     init() {
-        // Connect notification provider to timetable provider for automatic scheduling
         timetable.setNotificationProvider(notificationProvider)
     }
 
     func loadInitial() {
-        // Initialize notification provider first
         notificationProvider.initialize()
-        // Then load timetable data
         timetable.subscribeTimetableIfNeeded()
     }
 

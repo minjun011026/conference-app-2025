@@ -21,12 +21,10 @@ final class FavoritePresenter: @preconcurrency FavoritePresenterProtocol {
     var dateFilter: FavoriteDateFilter = .all
 
     init() {
-        // Connect notification provider to timetable provider
         timetable.setNotificationProvider(notificationProvider)
     }
 
     func loadInitial() {
-        // Initialize notifications first
         notificationProvider.initialize()
         timetable.subscribeTimetableIfNeeded()
     }

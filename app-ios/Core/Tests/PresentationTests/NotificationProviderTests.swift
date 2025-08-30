@@ -5,7 +5,6 @@ import Model
 import Testing
 import UseCase
 
-// Simple test utilities for NotificationProvider tests
 enum NotificationProviderTestData {
     static func createTimetableItemWithFavorite(
         id: String = "test-item",

@@ -1,17 +1,12 @@
 import Foundation
 
-/// Settings model for managing notification preferences
 public struct NotificationSettings: Equatable, Sendable {
-    /// Whether notifications are enabled globally
     public let isEnabled: Bool
 
-    /// How many minutes before the session to send notification
     public let reminderMinutes: Int
 
-    /// Whether to use custom notification sound
     public let useCustomSound: Bool
 
-    /// Whether notifications should only be sent for favorite sessions
     public let favoritesOnly: Bool
 
     public init(
@@ -27,7 +22,6 @@ public struct NotificationSettings: Equatable, Sendable {
     }
 }
 
-/// Available reminder time options
 public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
     case fiveMinutes = 5
     case tenMinutes = 10

@@ -16,7 +16,8 @@ let package = Package(
             targets: ["Presentation"]
         ),
         .library(name: "Model", targets: ["Model"]),
-        .library(name: "UseCase", targets: ["UseCase"])
+        .library(name: "UseCase", targets: ["UseCase"]),
+        .library(name: "Handler", targets: ["Handler"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.9.2"),
@@ -54,6 +55,19 @@ let package = Package(
         .testTarget(
             name: "UseCaseTests",
             dependencies: ["UseCase"]
+        ),
+        
+        .target(
+            name: "Handler",
+            dependencies: [
+                .target(name: "Model"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+            ]
+        ),
+        .testTarget(
+            name: "HandlerTests",
+            dependencies: ["Handler"]
         ),
     ],
     swiftLanguageModes: [.v6]

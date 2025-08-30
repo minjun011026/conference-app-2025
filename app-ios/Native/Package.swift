@@ -68,6 +68,7 @@ let package = Package(
                 .target(name: "ProfileCardFeature"),
                 .target(name: "SettingsFeature"),
                 .target(name: "KMPFramework"),
+                .product(name: "Handler", package: "Core"),
                 .product(name: "UseCase", package: "Core"),
                 .product(name: "Model", package: "Core"),
                 .product(name: "Presentation", package: "Core"),

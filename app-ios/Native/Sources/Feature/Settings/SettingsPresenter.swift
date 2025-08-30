@@ -86,8 +86,6 @@ final class SettingsPresenter {
     }
 }
 
-// MARK: - NotificationSettings Extension
-
 extension NotificationSettings {
     fileprivate func copy(
         isEnabled: Bool? = nil,

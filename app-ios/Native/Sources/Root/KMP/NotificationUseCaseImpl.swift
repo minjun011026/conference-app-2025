@@ -1,22 +1,19 @@
 import Foundation
 import Model
 import UseCase
+import Handler
 import UserNotifications
 import os.log
 
-/// Implementation of NotificationUseCase using iOS UserNotifications framework
 final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
     private let notificationCenter = UNUserNotificationCenter.current()
     private let userDefaults = UserDefaults.standard
     private let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
 
-    /// Maximum number of local notifications iOS allows
     private static let maxNotificationLimit = 64
 
-    /// Weak reference to navigation handler to avoid retain cycles
     private weak var navigationHandler: NotificationNavigationHandler?
 
-    /// Storage keys for UserDefaults
     private enum StorageKeys {
         static let enabled = "notification_enabled"
         static let reminderMinutes = "notification_reminder_minutes"
@@ -31,7 +28,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         setupNotificationCategories()
     }
 
-    /// Set up notification delegate properly with lifecycle management
     private func setupNotificationDelegate() {
         // Only set delegate if not already set or if it's not us
         if notificationCenter.delegate == nil || notificationCenter.delegate !== self {
@@ -40,7 +36,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         }
     }
 
-    /// Set up notification categories for actionable notifications
     private func setupNotificationCategories() {
         let viewAction = UNNotificationAction(
             identifier: "VIEW_SESSION",
@@ -65,13 +60,11 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         logger.debug("Set up notification categories")
     }
 
-    /// Set navigation handler for handling notification taps
     func setNavigationHandler(_ handler: NotificationNavigationHandler?) {
         self.navigationHandler = handler
         logger.debug("Navigation handler \(handler != nil ? "set" : "cleared")")
     }
 
-    /// Clean up resources
     deinit {
         // Clear delegate if it's still us to avoid dangling reference
         if notificationCenter.delegate === self {
@@ -79,8 +72,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             logger.debug("Cleared notification center delegate on deinit")
         }
     }
-
-    // MARK: - Settings Management
 
     func load() async -> NotificationSettings {
         logger.info("Loading notification settings")
@@ -117,8 +108,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
         logger.debug("Settings saved successfully")
     }
-
-    // MARK: - Permission Management
 
     func requestPermission() async -> Bool {
         logger.info("Requesting notification permission")
@@ -157,8 +146,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         logger.debug("Authorization status: \(String(describing: status))")
         return status
     }
-
-    // MARK: - Notification Scheduling
 
     func scheduleNotification(for item: TimetableItemWithFavorite, with settings: NotificationSettings) async -> Bool {
         guard settings.isEnabled else {
@@ -300,10 +287,6 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         notificationCenter.removeAllPendingNotificationRequests()
     }
 
-    // MARK: - Private Helper Methods
-
-    /// Prioritizes notifications to fit within iOS 64-notification limit
-    /// Prioritizes by: 1) Earlier start time 2) Favorited sessions
     private func prioritizeNotifications(
         _ items: [TimetableItemWithFavorite], limit: Int
     ) -> [TimetableItemWithFavorite] {
@@ -330,10 +313,7 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
     }
 }
 
-// MARK: - UNUserNotificationCenterDelegate
-
 extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
-    /// Handle notification response when user taps on notification
     nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
@@ -373,7 +353,6 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 
-    /// Handle notification presentation when app is in foreground
     nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter, willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
@@ -384,7 +363,6 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
         completionHandler([.banner, .sound, .badge])
     }
 
-    /// Handle notification tap by navigating to session detail
     private func handleNotificationTap(itemId: String, sessionTitle: String, room: String) async {
         guard let navigationHandler = self.navigationHandler else {
             logger.warning("No navigation handler available for notification tap")
@@ -398,12 +376,6 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
     }
 }
 
-// MARK: - Navigation Handler Protocol
-// NotificationNavigationHandler protocol is now defined in UseCase module
-
-// MARK: - Error Handling
-
-/// Errors that can occur during notification operations
 enum NotificationError: Error, LocalizedError {
     case permissionDenied
     case soundFileNotFound(String)
@@ -426,6 +398,3 @@ enum NotificationError: Error, LocalizedError {
         }
     }
 }
-
-// MARK: - Helper Extensions
-// currentLangTitle extension is already defined in KMPConverters.swift

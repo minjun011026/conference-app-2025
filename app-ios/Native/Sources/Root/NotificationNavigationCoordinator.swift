@@ -1,15 +1,14 @@
 import Foundation
 import Model
+import Handler
 import SwiftUI
 import UseCase
 import os.log
 
-/// Concrete implementation of NotificationNavigationHandler that coordinates navigation from notifications
 @MainActor
 final class NotificationNavigationCoordinator: NotificationNavigationHandler {
     private let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "NotificationNavigation")
 
-    /// Closure to handle navigation from root level
     private let navigateToTimetableDetail: (String) -> Void
 
     init(navigateToTimetableDetail: @escaping (String) -> Void) {
@@ -39,7 +38,6 @@ final class NotificationNavigationCoordinator: NotificationNavigationHandler {
         }
     }
 
-    /// Find a timetable item by its ID
     private func findTimetableItem(by itemId: String) async throws -> any TimetableItem {
         // This method is currently not used as RootScreen handles the actual navigation
         // and item finding logic. Keeping this as a placeholder for potential future use.
@@ -48,6 +46,3 @@ final class NotificationNavigationCoordinator: NotificationNavigationHandler {
         throw NotificationError.invalidItemId(itemId)
     }
 }
-
-// MARK: - Helper Extension
-// currentLangTitle extension is already defined in KMPConverters.swift

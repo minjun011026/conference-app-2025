@@ -144,7 +144,6 @@ enum ScenePhaseHandler {
         await checkAndRescheduleNotificationsIfNeeded(settings: settings)
     }
 
-    /// Check if notifications need to be rescheduled due to data changes
     private static func checkAndRescheduleNotificationsIfNeeded(settings: NotificationSettings) async {
         @Dependency(\.timetableUseCase) var timetableUseCase
         let notificationUseCase = NotificationUseCaseImpl()

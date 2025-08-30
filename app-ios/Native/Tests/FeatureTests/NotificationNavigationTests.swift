@@ -6,17 +6,14 @@ import Model
 import Testing
 import SwiftUI
 
-/// Test cases for notification navigation functionality
 struct NotificationNavigationTests {
-    
-    // MARK: - RootScreen Navigation Tests
-    
+
     @MainActor
     @Test("Test handleNotificationNavigation with valid item ID")
     func testHandleNotificationNavigationSuccess() async throws {
         let testItemId = "test-session-123"
         let testItem = createTestTimetableItem(id: testItemId)
-        
+
         // Mock dependencies
         let rootScreen = withDependencies {
             $0.timetableUseCase.load = {
@@ -29,59 +26,55 @@ struct NotificationNavigationTests {
         } operation: {
             RootScreen()
         }
-        
+
         // This is a conceptual test - in practice, we'd need to access internal state
         // For now, we just verify the method exists and can be called
         // A more complete implementation would require refactoring RootScreen to use a presenter pattern
-        
+
         // Test passes if no exceptions are thrown
         #expect(true)
     }
-    
+
     @MainActor
     @Test("Test NotificationNavigationError cases")
     func testNotificationNavigationError() {
         let itemNotFoundError = NotificationNavigationError.itemNotFound("missing-id")
         let navigationFailedError = NotificationNavigationError.navigationFailed("test reason")
-        
+
         #expect(itemNotFoundError.errorDescription == "Session with ID 'missing-id' not found")
         #expect(navigationFailedError.errorDescription == "Navigation failed: test reason")
     }
-    
-    // MARK: - NotificationNavigationCoordinator Tests
-    
+
     @MainActor
     @Test("Test NotificationNavigationCoordinator navigation")
     func testNotificationCoordinatorNavigation() async {
         let navigatedItemId = LockIsolated<String?>(nil)
-        
+
         let coordinator = NotificationNavigationCoordinator { itemId in
             navigatedItemId.setValue(itemId)
         }
-        
+
         await coordinator.navigateToSession(itemId: "test-session")
-        
+
         // Since findTimetableItem throws an error by default, we expect navigation to fail
         // but the itemId should still be processed
         #expect(navigatedItemId.value == nil) // Navigation fails due to missing implementation
     }
-    
+
     @MainActor
     @Test("Test NotificationNavigationCoordinator with empty item ID")
     func testNotificationCoordinatorEmptyItemId() async {
         let navigatedItemId = LockIsolated<String?>(nil)
-        
+
         let coordinator = NotificationNavigationCoordinator { itemId in
             navigatedItemId.setValue(itemId)
         }
-        
+
         await coordinator.navigateToSession(itemId: "")
-        
+
         #expect(navigatedItemId.value == nil) // Should not navigate with empty ID
     }
-    
-    // MARK: - Test Utilities
-    
+
     private func createTestTimetableItem(id: String) -> TimetableItemWithFavorite {
         let session = TimetableItemSession(
             id: TimetableItemId(value: id),
@@ -108,22 +101,22 @@ struct NotificationNavigationTests {
             message: nil,
             day: .conferenceDay1
         )
-        
+
         return TimetableItemWithFavorite(timetableItem: session, isFavorited: false)
     }
-    
+
     private func createTestTimetable(with items: [TimetableItemWithFavorite]) -> Model.Timetable {
         let timeGroup = TimetableTimeGroupItems(
             startsTimeString: "10:00",
             endsTimeString: "11:00",
             items: items
         )
-        
+
         let dayTimetable = DayTimetable(
             day: .conferenceDay1,
             timetableTimeGroupItems: [timeGroup]
         )
-        
+
         return Model.Timetable(
             dayToTimetable: [.conferenceDay1: dayTimetable]
         )

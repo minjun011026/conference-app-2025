@@ -222,7 +222,6 @@ public struct RootScreen: View {
         composeMultiplatformEnabled = true
     }
 
-    /// Navigate to a specific session from notification
     @MainActor
     private func navigateToSessionFromNotification(itemId: String) async {
         // Switch to timetable tab first
@@ -247,7 +246,6 @@ public struct RootScreen: View {
         }
     }
 
-    /// Find a timetable item by its ID from the current timetable data
     private func findTimetableItemById(_ itemId: String) async throws -> TimetableItemWithFavorite {
         @Dependency(\.timetableUseCase) var timetableUseCase
 
@@ -309,9 +307,6 @@ public struct RootScreen: View {
     RootScreen()
 }
 
-// MARK: - Error Types
-
-/// Errors that can occur during notification navigation
 enum NotificationNavigationError: Error, LocalizedError {
     case itemNotFound(String)
     case navigationFailed(String)
