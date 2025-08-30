@@ -56,6 +56,12 @@ fun AboutAnimatedHeaderImage(
         val maxWidthPx = with(density) { maxWidth.toPx() }
         val maxHeightPx = with(density) { maxHeight.toPx() }
 
+        val mascot1OffsetX = remember { Animatable(0f) }
+        val mascot1OffsetY = remember { Animatable(0f) }
+
+        val mascot2OffsetX = remember { Animatable(0f) }
+        val mascot2OffsetY = remember { Animatable(0f) }
+
         val mascot3OffsetY = remember(maxHeightPx) { Animatable(maxHeightPx) }
         val mascot3OffsetX = remember { Animatable(0f) }
 
@@ -66,12 +72,48 @@ fun AboutAnimatedHeaderImage(
                 mascot2Alpha = mascot2Alpha,
                 mascot3OffsetY = mascot3OffsetY,
             )
-            loopMascot3Peek(
-                offsetY = mascot3OffsetY,
-                offsetX = mascot3OffsetX,
-                containerWidth = maxWidthPx,
-                containerHeight = maxHeightPx,
-            )
+            coroutineScope {
+                launch {
+                    loopMascotFloat(
+                        offsetX = mascot1OffsetX,
+                        offsetY = mascot1OffsetY,
+                        containerWidth = maxWidthPx,
+                        containerHeight = maxHeightPx,
+                        anchorXRatio = 370f / 1648f,
+                        visibleLeftRatio = 0.04f,
+                        visibleRightRatio = 0.44f - 0.04f,
+                        baselineRangeRatio = 0.04f..0.08f,
+                        topCapRatio = 0.10f,
+                        amplitudeRangeRatio = 0.015f..0.035f,
+                        horizontalDurationMs = 10_000..16_000,
+                        verticalDurationMs = 1_400..2_200,
+                    )
+                }
+                launch {
+                    loopMascotFloat(
+                        offsetX = mascot2OffsetX,
+                        offsetY = mascot2OffsetY,
+                        containerWidth = maxWidthPx,
+                        containerHeight = maxHeightPx,
+                        anchorXRatio = 1478f / 1648f,
+                        visibleLeftRatio = 0.58f + 0.04f,
+                        visibleRightRatio = 1.0f - 0.02f,
+                        baselineRangeRatio = 0.03f..0.06f,
+                        topCapRatio = 0.085f,
+                        amplitudeRangeRatio = 0.01f..0.02f,
+                        horizontalDurationMs = 10_000..16_000,
+                        verticalDurationMs = 1_400..2_200,
+                    )
+                }
+                launch {
+                    loopMascot3Peek(
+                        offsetY = mascot3OffsetY,
+                        offsetX = mascot3OffsetX,
+                        containerWidth = maxWidthPx,
+                        containerHeight = maxHeightPx,
+                    )
+                }
+            }
         }
 
         Image(
@@ -107,7 +149,11 @@ fun AboutAnimatedHeaderImage(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .matchParentSize()
-                .graphicsLayer { alpha = mascot1Alpha.value }
+                .graphicsLayer {
+                    alpha = mascot1Alpha.value
+                    translationX = mascot1OffsetX.value
+                    translationY = mascot1OffsetY.value
+                }
                 .zIndex(2.0f),
         )
         Image(
@@ -116,7 +162,11 @@ fun AboutAnimatedHeaderImage(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .matchParentSize()
-                .graphicsLayer { alpha = mascot2Alpha.value }
+                .graphicsLayer {
+                    alpha = mascot2Alpha.value
+                    translationX = mascot2OffsetX.value
+                    translationY = mascot2OffsetY.value
+                }
                 .zIndex(2.1f),
         )
     }
@@ -190,5 +240,105 @@ private suspend fun loopMascot3Peek(
         )
 
         delay(Random.nextLong(2000, 3000))
+    }
+}
+
+/**
+ * Shared for mascot1 / mascot2: horizontal back-and-forth within the upper half + vertical sway.
+ *
+ * @param anchorXRatio        Horizontal anchor position within the image (ratio from the left: 0.0..1.0)
+ * @param visibleLeftRatio    Left screen boundary where the anchor should stay (ratio)
+ * @param visibleRightRatio   Right screen boundary where the anchor should stay (ratio)
+ * @param baselineRangeRatio  Vertical baseline range as ratios (e.g., 0.04..0.08)
+ * @param topCapRatio         Upper vertical cap (e.g., 0.10 = within the top 10%)
+ * @param amplitudeRangeRatio Vertical sway amplitude range (e.g., 0.015..0.035)
+ * @param horizontalDurationMs Duration range for one horizontal leg of motion
+ * @param verticalDurationMs   Duration range for one vertical leg of motion
+ */
+private suspend fun loopMascotFloat(
+    offsetX: Animatable<Float, *>,
+    offsetY: Animatable<Float, *>,
+    containerWidth: Float,
+    containerHeight: Float,
+    anchorXRatio: Float,
+    visibleLeftRatio: Float,
+    visibleRightRatio: Float,
+    baselineRangeRatio: ClosedRange<Float>,
+    topCapRatio: Float,
+    amplitudeRangeRatio: ClosedRange<Float>,
+    horizontalDurationMs: IntRange,
+    verticalDurationMs: IntRange,
+) {
+    val anchorX = containerWidth * anchorXRatio
+
+    val visibleLeft = containerWidth * visibleLeftRatio
+    val visibleRight = containerWidth * visibleRightRatio
+
+    var xMin = visibleLeft - anchorX
+    var xMax = visibleRight - anchorX
+    if (xMin > xMax) {
+        val t = xMin
+        xMin = xMax
+        xMax = t
+    }
+
+    fun randIn(range: ClosedRange<Float>) = range.start + Random.nextFloat() * (range.endInclusive - range.start)
+
+    val topCapY = containerHeight * topCapRatio
+    val baselineY = (containerHeight * randIn(baselineRangeRatio)).coerceAtMost(topCapY * 0.9f)
+    val amplitude = containerHeight * randIn(amplitudeRangeRatio)
+
+    val downY = (baselineY + amplitude).coerceAtMost(topCapY)
+    val upY = (baselineY - amplitude).coerceAtLeast(0f)
+
+    if (offsetX.value < xMin || offsetX.value > xMax) {
+        offsetX.animateTo(xMin, tween(durationMillis = 700, easing = FastOutSlowInEasing))
+    }
+    if (offsetY.value != baselineY) {
+        offsetY.animateTo(baselineY, tween(durationMillis = 700, easing = FastOutSlowInEasing))
+    }
+
+    coroutineScope {
+        launch {
+            var toRight = Random.nextBoolean()
+            while (true) {
+                val targetX = if (toRight) xMax else xMin
+                offsetX.animateTo(
+                    targetX,
+                    tween(
+                        durationMillis = Random.nextInt(
+                            horizontalDurationMs.first,
+                            horizontalDurationMs.last + 1,
+                        ),
+                        easing = FastOutSlowInEasing,
+                    ),
+                )
+                toRight = !toRight
+            }
+        }
+        launch {
+            while (true) {
+                offsetY.animateTo(
+                    downY,
+                    tween(
+                        durationMillis = Random.nextInt(
+                            verticalDurationMs.first,
+                            verticalDurationMs.last + 1,
+                        ),
+                        easing = FastOutSlowInEasing,
+                    ),
+                )
+                offsetY.animateTo(
+                    upY,
+                    tween(
+                        durationMillis = Random.nextInt(
+                            verticalDurationMs.first,
+                            verticalDurationMs.last + 1,
+                        ),
+                        easing = FastOutSlowInEasing,
+                    ),
+                )
+            }
+        }
     }
 }
