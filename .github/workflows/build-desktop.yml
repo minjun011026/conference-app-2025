@@ -37,5 +37,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: desktop-app-build-${{ matrix.os }}
-          path: app-desktop/build/compose/binaries/main/app
+          path: app-desktop/build/compose/binaries/main/**/*
           retention-days: 14
