@@ -59,13 +59,12 @@ struct NotificationUseCaseTests {
             favoritesOnly: false
         )
 
-        let useCase = withDependencies {
+        let settings = await withDependencies {
             $0.notificationUseCase.load = { expectedSettings }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let settings = await useCase.load()
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.load()
 
         #expect(settings.isEnabled == true)
         #expect(settings.reminderMinutes == 15)
@@ -85,15 +84,14 @@ struct NotificationUseCaseTests {
 
         let savedSettings = LockIsolated<NotificationSettings?>(nil)
 
-        let useCase = withDependencies {
+        await withDependencies {
             $0.notificationUseCase.save = { settings in
                 savedSettings.setValue(settings)
             }
         } operation: {
-            NotificationUseCase()
-        }
-
-        await useCase.save(settingsToSave)
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.save(settingsToSave)
 
         #expect(savedSettings.value != nil)
         #expect(savedSettings.value?.isEnabled == true)
@@ -105,13 +103,12 @@ struct NotificationUseCaseTests {
     @MainActor
     @Test("Test request permission success")
     func testRequestPermissionSuccess() async throws {
-        let useCase = withDependencies {
+        let granted = await withDependencies {
             $0.notificationUseCase.requestPermission = { true }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let granted = await useCase.requestPermission()
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.requestPermission()
 
         #expect(granted == true)
     }
@@ -119,13 +116,12 @@ struct NotificationUseCaseTests {
     @MainActor
     @Test("Test request permission denied")
     func testRequestPermissionDenied() async throws {
-        let useCase = withDependencies {
+        let granted = await withDependencies {
             $0.notificationUseCase.requestPermission = { false }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let granted = await useCase.requestPermission()
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.requestPermission()
 
         #expect(granted == false)
     }
@@ -135,13 +131,12 @@ struct NotificationUseCaseTests {
     func testCheckAuthorizationStatus() async throws {
         let expectedStatus = NotificationAuthorizationStatus.authorized
 
-        let useCase = withDependencies {
+        let status = await withDependencies {
             $0.notificationUseCase.checkAuthorizationStatus = { expectedStatus }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let status = await useCase.checkAuthorizationStatus()
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.checkAuthorizationStatus()
 
         #expect(status == .authorized)
     }
@@ -164,17 +159,16 @@ struct NotificationUseCaseTests {
         let scheduledItem = LockIsolated<TimetableItemWithFavorite?>(nil)
         let scheduledSettings = LockIsolated<NotificationSettings?>(nil)
 
-        let useCase = withDependencies {
+        let success = await withDependencies {
             $0.notificationUseCase.scheduleNotification = { item, settings in
                 scheduledItem.setValue(item)
                 scheduledSettings.setValue(settings)
                 return true
             }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let success = await useCase.scheduleNotification(favoritedItem, settings)
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.scheduleNotification(favoritedItem, settings)
 
         #expect(success == true)
         #expect(scheduledItem.value?.id == favoritedItem.id)
@@ -198,13 +192,12 @@ struct NotificationUseCaseTests {
             favoritesOnly: true
         )
 
-        let useCase = withDependencies {
+        let success = await withDependencies {
             $0.notificationUseCase.scheduleNotification = { _, _ in false }
         } operation: {
-            NotificationUseCase()
-        }
-
-        let success = await useCase.scheduleNotification(favoritedItem, settings)
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.scheduleNotification(favoritedItem, settings)
 
         #expect(success == false)
     }
@@ -215,15 +208,14 @@ struct NotificationUseCaseTests {
         let itemId = TimetableItemId(value: "test-session")
         let cancelledId = LockIsolated<TimetableItemId?>(nil)
 
-        let useCase = withDependencies {
+        await withDependencies {
             $0.notificationUseCase.cancelNotification = { id in
                 cancelledId.setValue(id)
             }
         } operation: {
-            NotificationUseCase()
-        }
-
-        await useCase.cancelNotification(itemId)
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.cancelNotification(itemId)
 
         #expect(cancelledId.value == itemId)
     }
@@ -247,16 +239,15 @@ struct NotificationUseCaseTests {
         let rescheduledItems = LockIsolated<[TimetableItemWithFavorite]?>(nil)
         let rescheduledSettings = LockIsolated<NotificationSettings?>(nil)
 
-        let useCase = withDependencies {
+        await withDependencies {
             $0.notificationUseCase.rescheduleAllNotifications = { items, settings in
                 rescheduledItems.setValue(items)
                 rescheduledSettings.setValue(settings)
             }
         } operation: {
-            NotificationUseCase()
-        }
-
-        await useCase.rescheduleAllNotifications(items, settings)
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.rescheduleAllNotifications(items, settings)
 
         #expect(rescheduledItems.value?.count == 3)
         #expect(rescheduledSettings.value?.isEnabled == true)
@@ -268,15 +259,14 @@ struct NotificationUseCaseTests {
     func testCancelAllNotifications() async throws {
         let cancelAllCalled = LockIsolated<Bool>(false)
 
-        let useCase = withDependencies {
+        await withDependencies {
             $0.notificationUseCase.cancelAllNotifications = {
                 cancelAllCalled.setValue(true)
             }
         } operation: {
-            NotificationUseCase()
-        }
-
-        await useCase.cancelAllNotifications()
+            @Dependency(\.notificationUseCase) var notificationUseCase
+            return notificationUseCase
+        }.cancelAllNotifications()
 
         #expect(cancelAllCalled.value == true)
     }

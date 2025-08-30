@@ -1,12 +1,10 @@
-import SwiftUI
 import BackgroundTasks
-import os.log
-@preconcurrency import UserNotifications
-
 import Dependencies
-
 import Model
+import SwiftUI
 import UseCase
+@preconcurrency import UserNotifications
+import os.log
 
 enum ScenePhaseHandler {
     private static let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "AppLifecycle")
@@ -129,7 +127,7 @@ enum ScenePhaseHandler {
         // Use BGAppRefreshTask for iOS 13+
         if #available(iOS 13.0, *) {
             let request = BGAppRefreshTaskRequest(identifier: backgroundTaskName)
-            request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes from now
+            request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)  // 15 minutes from now
 
             do {
                 try BGTaskScheduler.shared.submit(request)

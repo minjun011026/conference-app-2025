@@ -1,7 +1,7 @@
 import Foundation
-import UserNotifications
 import Model
 import UseCase
+import UserNotifications
 import os.log
 
 /// Implementation of NotificationUseCase using iOS UserNotifications framework
@@ -97,7 +97,9 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             favoritesOnly: favoritesOnly
         )
 
-        logger.debug("Loaded settings: enabled=\(settings.isEnabled), reminderMinutes=\(settings.reminderMinutes), favoritesOnly=\(settings.favoritesOnly)")
+        logger.debug(
+            "Loaded settings: enabled=\(settings.isEnabled), reminderMinutes=\(settings.reminderMinutes), favoritesOnly=\(settings.favoritesOnly)"
+        )
         return settings
     }
 
@@ -198,11 +200,13 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         if settings.useCustomSound {
             // Check if custom sound file exists in bundle
             if let soundPath = Bundle.main.path(forResource: "droidkaigi_notification", ofType: "wav"),
-               FileManager.default.fileExists(atPath: soundPath) {
+                FileManager.default.fileExists(atPath: soundPath)
+            {
                 content.sound = UNNotificationSound(named: UNNotificationSoundName("droidkaigi_notification.wav"))
                 logger.debug("Using custom notification sound")
             } else {
-                logger.warning("Custom sound file 'droidkaigi_notification.wav' not found in bundle, using default sound")
+                logger.warning(
+                    "Custom sound file 'droidkaigi_notification.wav' not found in bundle, using default sound")
                 content.sound = .default
             }
         } else {
@@ -215,7 +219,7 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             "sessionTitle": item.timetableItem.title.currentLangTitle,
             "room": item.timetableItem.room.name.currentLangTitle,
             "startTime": sessionStartTime.timeIntervalSince1970,
-            "reminderMinutes": settings.reminderMinutes
+            "reminderMinutes": settings.reminderMinutes,
         ]
 
         // Add category for actionable notifications
@@ -236,7 +240,9 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
         do {
             try await notificationCenter.add(request)
-            logger.info("Scheduled notification for session '\(item.timetableItem.title.currentLangTitle)' at \(notificationTime)")
+            logger.info(
+                "Scheduled notification for session '\(item.timetableItem.title.currentLangTitle)' at \(notificationTime)"
+            )
             return true
         } catch {
             logger.error("Error scheduling notification for \(item.id.value): \(error.localizedDescription)")
@@ -298,7 +304,9 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
     /// Prioritizes notifications to fit within iOS 64-notification limit
     /// Prioritizes by: 1) Earlier start time 2) Favorited sessions
-    private func prioritizeNotifications(_ items: [TimetableItemWithFavorite], limit: Int) -> [TimetableItemWithFavorite] {
+    private func prioritizeNotifications(
+        _ items: [TimetableItemWithFavorite], limit: Int
+    ) -> [TimetableItemWithFavorite] {
         let sortedItems = items.sorted { item1, item2 in
             // First priority: favorited status
             if item1.isFavorited != item2.isFavorited {
@@ -326,7 +334,10 @@ final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
 extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
     /// Handle notification response when user taps on notification
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         let userInfo = response.notification.request.content.userInfo
 
         Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
@@ -343,7 +354,7 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
                 // Extract needed values to avoid capturing the entire dictionary
                 let sessionTitle = userInfo["sessionTitle"] as? String ?? "Unknown Session"
                 let room = userInfo["room"] as? String ?? "Unknown Room"
-                let itemId = itemIdString // Create local copy to avoid sending parameter race
+                let itemId = itemIdString  // Create local copy to avoid sending parameter race
                 Task { @MainActor in
                     await handleNotificationTap(itemId: itemId, sessionTitle: sessionTitle, room: room)
                 }
@@ -363,7 +374,10 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
     }
 
     /// Handle notification presentation when app is in foreground
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
         Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
             .debug("Presenting notification in foreground")
         // Show notification even when app is in foreground

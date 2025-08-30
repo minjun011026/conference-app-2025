@@ -17,13 +17,16 @@ public struct NotificationUseCase: Sendable {
     public var checkAuthorizationStatus: @Sendable () async -> NotificationAuthorizationStatus = { .notDetermined }
 
     /// Schedule notification for a specific timetable item
-    public var scheduleNotification: @Sendable (TimetableItemWithFavorite, NotificationSettings) async -> Bool = { _, _ in false }
+    public var scheduleNotification: @Sendable (TimetableItemWithFavorite, NotificationSettings) async -> Bool = {
+        _, _ in false
+    }
 
     /// Cancel notification for a specific timetable item
     public var cancelNotification: @Sendable (TimetableItemId) async -> Void = { _ in }
 
     /// Reschedule all notifications based on current favorites and settings
-    public var rescheduleAllNotifications: @Sendable ([TimetableItemWithFavorite], NotificationSettings) async -> Void = { _, _ in }
+    public var rescheduleAllNotifications: @Sendable ([TimetableItemWithFavorite], NotificationSettings) async -> Void =
+        { _, _ in }
 
     /// Cancel all pending notifications
     public var cancelAllNotifications: @Sendable () async -> Void = {}

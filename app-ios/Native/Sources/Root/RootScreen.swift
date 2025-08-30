@@ -1,9 +1,6 @@
-import SwiftUI
-
-import Dependencies
-
 import AboutFeature
 import ContributorFeature
+import Dependencies
 import EventMapFeature
 import FavoriteFeature
 import HomeFeature
@@ -13,6 +10,7 @@ import SearchFeature
 import SettingsFeature
 import SponsorFeature
 import StaffFeature
+import SwiftUI
 import Theme
 import TimetableDetailFeature
 import UseCase
@@ -224,49 +222,48 @@ public struct RootScreen: View {
         composeMultiplatformEnabled = true
     }
 
-    
     /// Navigate to a specific session from notification
     @MainActor
     private func navigateToSessionFromNotification(itemId: String) async {
         // Switch to timetable tab first
         selectedTab = .timetable
-        
+
         // Find the timetable item with the matching ID
         do {
             let timetableItem = try await findTimetableItemById(itemId)
-            
+
             // Clear existing navigation path and navigate to detail
             navigationPath = NavigationPath()
-            
+
             // Add a small delay to ensure tab switch is complete
-            try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-            
+            try await Task.sleep(nanoseconds: 100_000_000)  // 0.1 seconds
+
             // Navigate to the timetable detail
             navigationPath.append(NavigationDestination.timetableDetail(timetableItem))
-            
+
         } catch {
             print("Failed to navigate to session \(itemId): \(error)")
             // At least we switched to the timetable tab
         }
     }
-    
+
     /// Find a timetable item by its ID from the current timetable data
     private func findTimetableItemById(_ itemId: String) async throws -> TimetableItemWithFavorite {
         @Dependency(\.timetableUseCase) var timetableUseCase
-        
+
         // Get the latest timetable data with timeout to avoid infinite waiting
         let timetableSequence = timetableUseCase.load()
-        
+
         // Use AsyncSequence.first to get only the first result and avoid infinite loop
         guard let timetable = await timetableSequence.first(where: { @Sendable _ in true }) else {
             throw NotificationNavigationError.navigationFailed("No timetable data available")
         }
-        
+
         // Use first(where:) for more efficient search instead of manual loop
         guard let item = timetable.timetableItems.first(where: { $0.id.value == itemId }) else {
             throw NotificationNavigationError.itemNotFound(itemId)
         }
-        
+
         let isFavorited = timetable.bookmarks.contains(item.id)
         return TimetableItemWithFavorite(timetableItem: item, isFavorited: isFavorited)
     }
@@ -318,7 +315,7 @@ public struct RootScreen: View {
 enum NotificationNavigationError: Error, LocalizedError {
     case itemNotFound(String)
     case navigationFailed(String)
-    
+
     var errorDescription: String? {
         switch self {
         case .itemNotFound(let itemId):

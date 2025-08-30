@@ -71,7 +71,8 @@ public final class TimetableProvider {
                 }
 
                 // Update notifications when timetable changes
-                let allItemsWithFavoriteStatus = timetable.timetableItems.compactMap { item -> TimetableItemWithFavorite? in
+                let allItemsWithFavoriteStatus = timetable.timetableItems.compactMap {
+                    item -> TimetableItemWithFavorite? in
                     TimetableItemWithFavorite(timetableItem: item, isFavorited: timetable.bookmarks.contains(item.id))
                 }
                 notificationProvider?.updateNotifications(for: allItemsWithFavoriteStatus)

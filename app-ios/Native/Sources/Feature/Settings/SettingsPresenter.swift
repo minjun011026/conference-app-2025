@@ -88,8 +88,8 @@ final class SettingsPresenter {
 
 // MARK: - NotificationSettings Extension
 
-private extension NotificationSettings {
-    func copy(
+extension NotificationSettings {
+    fileprivate func copy(
         isEnabled: Bool? = nil,
         reminderMinutes: Int? = nil,
         useCustomSound: Bool? = nil,

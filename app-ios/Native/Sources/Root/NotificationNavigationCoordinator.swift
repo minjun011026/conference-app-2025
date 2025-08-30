@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import Model
+import SwiftUI
 import UseCase
 import os.log
 

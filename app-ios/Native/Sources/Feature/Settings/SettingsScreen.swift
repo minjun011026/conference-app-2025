@@ -57,14 +57,16 @@ public struct SettingsScreen: View {
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
                 } else {
-                    Toggle("", isOn: Binding(
-                        get: { presenter.notificationSettings.isEnabled },
-                        set: { _ in
-                            Task {
-                                await presenter.toggleNotifications()
+                    Toggle(
+                        "",
+                        isOn: Binding(
+                            get: { presenter.notificationSettings.isEnabled },
+                            set: { _ in
+                                Task {
+                                    await presenter.toggleNotifications()
+                                }
                             }
-                        }
-                    ))
+                        ))
                 }
             }
             .padding(.vertical, 4)
@@ -103,7 +105,9 @@ public struct SettingsScreen: View {
                 }
             } label: {
                 HStack {
-                    let currentTime = NotificationReminderTime(rawValue: presenter.notificationSettings.reminderMinutes) ?? .tenMinutes
+                    let currentTime =
+                        NotificationReminderTime(rawValue: presenter.notificationSettings.reminderMinutes)
+                        ?? .tenMinutes
                     Text(currentTime.displayText)
                         .foregroundColor(AssetColors.primary.swiftUIColor)
                     Image(systemName: "chevron.down")
@@ -131,14 +135,16 @@ public struct SettingsScreen: View {
 
             Spacer()
 
-            Toggle("", isOn: Binding(
-                get: { presenter.notificationSettings.favoritesOnly },
-                set: { _ in
-                    Task {
-                        await presenter.toggleFavoritesOnly()
+            Toggle(
+                "",
+                isOn: Binding(
+                    get: { presenter.notificationSettings.favoritesOnly },
+                    set: { _ in
+                        Task {
+                            await presenter.toggleFavoritesOnly()
+                        }
                     }
-                }
-            ))
+                ))
         }
         .padding(.vertical, 4)
 
@@ -159,14 +165,16 @@ public struct SettingsScreen: View {
 
             Spacer()
 
-            Toggle("", isOn: Binding(
-                get: { presenter.notificationSettings.useCustomSound },
-                set: { _ in
-                    Task {
-                        await presenter.toggleCustomSound()
+            Toggle(
+                "",
+                isOn: Binding(
+                    get: { presenter.notificationSettings.useCustomSound },
+                    set: { _ in
+                        Task {
+                            await presenter.toggleCustomSound()
+                        }
                     }
-                }
-            ))
+                ))
         }
         .padding(.vertical, 4)
     }
@@ -182,8 +190,11 @@ public struct SettingsScreen: View {
                 .foregroundColor(AssetColors.error.swiftUIColor)
         case .authorized, .provisional:
             if presenter.notificationSettings.isEnabled {
-                Text("You'll receive notifications based on your favorite sessions and the selected reminder time.", bundle: .module)
-                    .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
+                Text(
+                    "You'll receive notifications based on your favorite sessions and the selected reminder time.",
+                    bundle: .module
+                )
+                .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
             } else {
                 Text("Enable notifications to get reminded about upcoming sessions.", bundle: .module)
                     .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
