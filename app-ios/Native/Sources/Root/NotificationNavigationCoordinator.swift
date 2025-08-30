@@ -41,12 +41,10 @@ final class NotificationNavigationCoordinator: NotificationNavigationHandler {
 
     /// Find a timetable item by its ID
     private func findTimetableItem(by itemId: String) async throws -> any TimetableItem {
-        // TODO: In a real implementation, you would query your data source
-        // This is a placeholder that should be replaced with actual data fetching
+        // This method is currently not used as RootScreen handles the actual navigation
+        // and item finding logic. Keeping this as a placeholder for potential future use.
         logger.debug("Finding timetable item with ID: \(itemId)")
 
-        // For now, create a minimal implementation
-        // In practice, you'd inject a repository or use case to fetch the actual item
         throw NotificationError.invalidItemId(itemId)
     }
 }

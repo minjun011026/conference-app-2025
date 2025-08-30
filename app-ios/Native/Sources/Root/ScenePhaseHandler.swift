@@ -1,8 +1,12 @@
 import SwiftUI
-import UserNotifications
-import Dependencies
-import UseCase
+import BackgroundTasks
 import os.log
+@preconcurrency import UserNotifications
+
+import Dependencies
+
+import Model
+import UseCase
 
 enum ScenePhaseHandler {
     private static let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "AppLifecycle")
@@ -56,15 +60,114 @@ enum ScenePhaseHandler {
         // This could be called when the app returns from Settings where user might have changed notification permissions
         logger.debug("Refreshing notification authorization status")
 
-        // If you have a global notification provider, refresh its status here
-        // For now, we'll let individual screens handle this when they become visible
+        // Check current authorization status
+        let notificationCenter = UNUserNotificationCenter.current()
+        let settings = await notificationCenter.notificationSettings()
+
+        logger.info("Current notification authorization: \(settings.authorizationStatus.rawValue)")
+
+        // Get current app settings
+        let notificationUseCase = NotificationUseCaseImpl()
+        let currentSettings = await notificationUseCase.load()
+
+        // If notifications are enabled in app but not authorized by system,
+        // consider updating the app settings or showing a prompt
+        if currentSettings.isEnabled && settings.authorizationStatus == .denied {
+            logger.warning("Notifications enabled in app but denied by system - user may need to re-enable in Settings")
+
+            // Here you could post a notification to update UI or show an alert
+            NotificationCenter.default.post(
+                name: Notification.Name("NotificationPermissionStatusChanged"),
+                object: nil,
+                userInfo: ["status": "denied", "appEnabled": currentSettings.isEnabled]
+            )
+        }
+
+        // If authorization status changed to authorized and we have pending settings
+        if settings.authorizationStatus == .authorized && currentSettings.isEnabled {
+            logger.info("Notifications are authorized and enabled - scheduling pending notifications")
+
+            // Trigger a refresh of scheduled notifications
+            NotificationCenter.default.post(
+                name: Notification.Name("RefreshNotificationSchedules"),
+                object: nil
+            )
+        }
     }
 
     private static func scheduleBackgroundRefreshIfNeeded() async {
         logger.debug("Scheduling background refresh if needed")
 
-        // Here you could schedule background app refresh to update notification schedules
-        // when timetable data changes while app is in background
-        // This is particularly useful for conference apps where schedules might change
+        // Check if we have notification permissions and notifications are enabled
+        let notificationUseCase = NotificationUseCaseImpl()
+        let settings = await notificationUseCase.load()
+
+        guard settings.isEnabled else {
+            logger.debug("Notifications disabled, skipping background refresh scheduling")
+            return
+        }
+
+        let authStatus = await notificationUseCase.checkAuthorizationStatus()
+        guard authStatus == .authorized else {
+            logger.debug("Notifications not authorized, skipping background refresh scheduling")
+            return
+        }
+
+        // Check if we need to refresh notification schedules based on timetable changes
+        // This helps handle cases where conference schedules change while app is in background
+
+        @Dependency(\.timetableUseCase) var timetableUseCase
+
+        // Schedule a background task to refresh notifications if data changes
+        let backgroundTaskName = "io.github.droidkaigi.dk2025.notification-refresh"
+
+        // Use BGAppRefreshTask for iOS 13+
+        if #available(iOS 13.0, *) {
+            let request = BGAppRefreshTaskRequest(identifier: backgroundTaskName)
+            request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes from now
+
+            do {
+                try BGTaskScheduler.shared.submit(request)
+                logger.info("Successfully scheduled background refresh task")
+            } catch {
+                logger.error("Failed to schedule background refresh: \(error.localizedDescription)")
+            }
+        } else {
+            // Fallback for older iOS versions using background app refresh
+            logger.debug("Using legacy background app refresh (iOS < 13)")
+        }
+
+        // Also check if we should reschedule notifications due to potential data changes
+        await checkAndRescheduleNotificationsIfNeeded(settings: settings)
+    }
+
+    /// Check if notifications need to be rescheduled due to data changes
+    private static func checkAndRescheduleNotificationsIfNeeded(settings: NotificationSettings) async {
+        @Dependency(\.timetableUseCase) var timetableUseCase
+        let notificationUseCase = NotificationUseCaseImpl()
+
+        do {
+            // Get current timetable to check for changes with improved error handling
+            let timetableSequence = timetableUseCase.load()
+
+            // Use first(where:) to get only the first result efficiently
+            guard let timetable = await timetableSequence.first(where: { @Sendable _ in true }) else {
+                logger.warning("No timetable data available for notification rescheduling")
+                return
+            }
+
+            // Convert timetable items to TimetableItemWithFavorite
+            let allItems = timetable.timetableItems.map { item in
+                let isFavorited = timetable.bookmarks.contains(item.id)
+                return TimetableItemWithFavorite(timetableItem: item, isFavorited: isFavorited)
+            }
+
+            // Reschedule notifications based on current data
+            await notificationUseCase.rescheduleAllNotifications(for: allItems, with: settings)
+            logger.info("Rescheduled notifications for \(allItems.count) timetable items in background")
+
+        } catch {
+            logger.error("Failed to reschedule notifications in background: \(error.localizedDescription)")
+        }
     }
 }
