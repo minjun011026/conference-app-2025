@@ -50,6 +50,7 @@ struct TimetableGridView: View {
                     roomHeaderRow
 
                     ZStack(alignment: .topLeading) {
+                        roomLines
                         hourLines
                         sessionCards
                         currentTimeLine
@@ -93,6 +94,18 @@ struct TimetableGridView: View {
                         .font(.caption2)
                         .frame(height: heightOfMinute * 60, alignment: .top)
                 }
+            }
+        }
+    }
+
+    private var roomLines: some View {
+        ZStack(alignment: .topLeading) {
+            ForEach(0...rooms.count, id: \.self) { index in
+                let x = CGFloat(index) * (roomWidth + roomSpacing) - roomSpacing / 2
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 1, height: timetableHeight)
+                    .offset(x: x)
             }
         }
     }
