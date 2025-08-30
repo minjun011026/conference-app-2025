@@ -124,4 +124,9 @@ struct TimetableGridView: View {
                 .frame(width: 192, height: 153)
         }
     }
+
+    // MARK: - Helpers
+    private var timelineItems: [TimetableItemWithFavorite] {
+        timetableItems.flatMap(\.items)
+    }
 }
