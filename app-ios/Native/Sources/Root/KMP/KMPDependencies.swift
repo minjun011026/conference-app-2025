@@ -33,5 +33,17 @@ enum KMPDependencies {
             load: profileUseCaseImpl.load,
             save: profileUseCaseImpl.save
         )
+
+        let notificationUseCaseImpl = NotificationUseCaseImpl()
+        dependencyValues.notificationUseCase = .init(
+            load: notificationUseCaseImpl.load,
+            save: notificationUseCaseImpl.save,
+            requestPermission: notificationUseCaseImpl.requestPermission,
+            checkAuthorizationStatus: notificationUseCaseImpl.checkAuthorizationStatus,
+            scheduleNotification: notificationUseCaseImpl.scheduleNotification,
+            cancelNotification: notificationUseCaseImpl.cancelNotification,
+            rescheduleAllNotifications: notificationUseCaseImpl.rescheduleAllNotifications,
+            cancelAllNotifications: notificationUseCaseImpl.cancelAllNotifications
+        )
     }
 }
