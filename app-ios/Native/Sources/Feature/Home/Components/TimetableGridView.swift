@@ -10,6 +10,11 @@ struct TimetableGridView: View {
     let rooms: [Room]
     let onItemTap: (TimetableItemWithFavorite) -> Void
 
+    // MARK: - Layout Const
+    private let heightOfMinute: CGFloat = 5
+    private let roomWidth: CGFloat = 192
+    private let roomSpacing: CGFloat = 4
+
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
@@ -143,5 +148,18 @@ struct TimetableGridView: View {
 
     private var dayEnd: Date? {
         timelineItems.map({ $0.timetableItem.endsAt }).max()
+    }
+
+    private var timetableWidth: CGFloat {
+        guard !rooms.isEmpty else { return 0 }
+        let columns = CGFloat(rooms.count)
+        return columns * roomWidth + max(0, columns - 1) * roomSpacing
+    }
+
+    private var timetableHeight: CGFloat {
+        if let dayStart = dayStart, let dayEnd = dayEnd {
+            return CGFloat(dayEnd.timeIntervalSince(dayStart) / 60) * heightOfMinute
+        }
+        return 0
     }
 }
