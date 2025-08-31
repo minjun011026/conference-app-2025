@@ -23,8 +23,6 @@ final class SettingsPresenter {
         }
     }
 
-    // MARK: - Public Methods
-
     func toggleNotifications() async {
         guard !isLoading else { return }
 
@@ -63,8 +61,6 @@ final class SettingsPresenter {
             UIApplication.shared.open(settingsURL)
         }
     }
-
-    // MARK: - Private Methods
 
     private func load() async {
         isLoading = true

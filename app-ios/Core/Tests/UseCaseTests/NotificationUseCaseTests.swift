@@ -264,8 +264,6 @@ struct NotificationUseCaseTests {
     }
 }
 
-// MARK: - NotificationSettings Tests
-
 struct NotificationSettingsTests {
     @Test("Test default notification settings")
     func testDefaultSettings() {
@@ -313,8 +311,6 @@ struct NotificationSettingsTests {
         #expect(settings1 != settings3)
     }
 }
-
-// MARK: - NotificationReminderTime Tests
 
 struct NotificationReminderTimeTests {
     @Test("Test reminder time cases")

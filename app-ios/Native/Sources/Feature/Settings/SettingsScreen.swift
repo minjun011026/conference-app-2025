@@ -19,8 +19,6 @@ public struct SettingsScreen: View {
         #endif
     }
 
-    // MARK: - Notification Section
-
     @ViewBuilder
     private var notificationSection: some View {
         Section {
