@@ -25,7 +25,7 @@ actual class PlatformDefaultSensorRobot : SensorRobot {
     actual override fun tiltAllAxes(
         pitch: Float,
         roll: Float,
-        azimuth: Float
+        azimuth: Float,
     ) {
         // NOOP
     }
