@@ -16,6 +16,7 @@ import io.github.droidkaigi.confsched.component.MainScreenTab
 import io.github.droidkaigi.confsched.model.about.AboutItem
 import io.github.droidkaigi.confsched.navigation.component.NavHostWithSharedAxisX
 import io.github.droidkaigi.confsched.navigation.extension.navigateToAboutTab
+import io.github.droidkaigi.confsched.navigation.extension.navigateToContributors
 import io.github.droidkaigi.confsched.navigation.extension.navigateToEventMapTab
 import io.github.droidkaigi.confsched.navigation.extension.navigateToFavoritesTab
 import io.github.droidkaigi.confsched.navigation.extension.navigateToLicenses
@@ -103,7 +104,7 @@ actual fun KaigiAppUi() {
                 onAboutItemClick = {
                     when (it) {
                         AboutItem.Map -> TODO()
-                        AboutItem.Contributors -> TODO()
+                        AboutItem.Contributors -> navController.navigateToContributors()
                         AboutItem.Staff -> navController.navigateToStaffs()
                         AboutItem.Sponsors -> navController.navigateToSponsors()
                         AboutItem.CodeOfConduct -> TODO()

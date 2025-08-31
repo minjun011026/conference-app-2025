@@ -8,9 +8,12 @@ import io.github.droidkaigi.confsched.about.AboutScreenRoot
 import io.github.droidkaigi.confsched.about.LicensesScreenRoot
 import io.github.droidkaigi.confsched.about.rememberAboutScreenContextRetained
 import io.github.droidkaigi.confsched.about.rememberLicensesScreenContextRetained
+import io.github.droidkaigi.confsched.contributors.ContributorsScreenRoot
+import io.github.droidkaigi.confsched.contributors.rememberContributorsScreenContextRetained
 import io.github.droidkaigi.confsched.model.about.AboutItem
 import io.github.droidkaigi.confsched.navigation.route.AboutRoute
 import io.github.droidkaigi.confsched.navigation.route.AboutTabRoute
+import io.github.droidkaigi.confsched.navigation.route.ContributorsRoute
 import io.github.droidkaigi.confsched.navigation.route.LicensesRoute
 import io.github.droidkaigi.confsched.navigation.route.SettingsRoute
 import io.github.droidkaigi.confsched.navigation.route.SponsorsRoute
@@ -36,6 +39,7 @@ fun NavGraphBuilder.aboutTabNavGraph(
         licensesNavGraph(onBackClick = onBackClick)
         settingsNavGraph(onBackClick = onBackClick)
         staffsNavGraph(onBackClick = onBackClick, onLinkClick = onLinkClick)
+        contributorsNavGraph(onBackClick = onBackClick, onLinkClick = onLinkClick)
     }
 }
 
@@ -103,6 +107,21 @@ fun NavGraphBuilder.staffsNavGraph(
             StaffScreenRoot(
                 onStaffItemClick = onLinkClick,
                 onBackClick = onBackClick,
+            )
+        }
+    }
+}
+
+context(appGraph: AppGraph)
+fun NavGraphBuilder.contributorsNavGraph(
+    onBackClick: () -> Unit,
+    onLinkClick: (String) -> Unit,
+) {
+    composable<ContributorsRoute> {
+        with(rememberContributorsScreenContextRetained()) {
+            ContributorsScreenRoot(
+                onBackClick = onBackClick,
+                onContributorClick = onLinkClick
             )
         }
     }
