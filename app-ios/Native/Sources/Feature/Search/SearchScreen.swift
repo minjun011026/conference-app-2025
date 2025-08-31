@@ -29,13 +29,13 @@ public struct SearchScreen: View {
     }
 
     private var searchBar: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
                 .accessibilityLabel(String(localized: "Search icon", bundle: .module))
 
             TextField(String(localized: "Search sessions", bundle: .module), text: $presenter.searchWord)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .font(.body)
                 .focused($isSearchFieldFocused)
                 .submitLabel(.search)
                 .onSubmit {
@@ -47,8 +47,14 @@ public struct SearchScreen: View {
             }
         }
         .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(AssetColors.surfaceVariant.swiftUIColor)
+                .stroke(AssetColors.outline.swiftUIColor.opacity(0.2), lineWidth: 1)
+        )
+        .padding(.horizontal, 16)
         .padding(.vertical, 8)
-        .background(AssetColors.surfaceVariant.swiftUIColor)
     }
 
     private var clearButton: some View {
@@ -65,27 +71,40 @@ public struct SearchScreen: View {
 
     private var filterAndResultsScrollView: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 20) {
                 categorySection
                 languageSection
                 daySection
                 roomSection
                 searchResultsSection
             }
+            .padding(.top, 8)
         }
     }
 
     @ViewBuilder
     private var searchResultsSection: some View {
         if shouldShowResults {
-            Divider()
-                .padding(.vertical, 8)
+            VStack(alignment: .leading, spacing: 16) {
+                Divider()
+                    .padding(.vertical, 4)
 
-            Text("Results")
-                .font(.headline)
+                HStack {
+                    Text("Results")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(AssetColors.onSurface.swiftUIColor)
+                    
+                    Spacer()
+                    
+                    Text("\(presenter.filteredTimetableItems.count)")
+                        .font(.subheadline)
+                        .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
+                }
                 .padding(.horizontal, 16)
 
-            searchResultsList
+                searchResultsList
+            }
         }
     }
 
@@ -95,7 +114,7 @@ public struct SearchScreen: View {
     }
 
     private var searchResultsList: some View {
-        LazyVStack(spacing: 12) {
+        LazyVStack(spacing: 16) {
             ForEach(presenter.filteredTimetableItems) { item in
                 TimetableCard(
                     timetableItem: item.timetableItem,
@@ -107,10 +126,14 @@ public struct SearchScreen: View {
                         presenter.toggleFavorite(item.timetableItem.id)
                     }
                 )
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(AssetColors.surface.swiftUIColor)
+                        .shadow(color: AssetColors.onSurface.swiftUIColor.opacity(0.05), radius: 2, x: 0, y: 1)
+                )
             }
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 16)
         .padding(.bottom, 80)  // Tab bar padding
     }
 
@@ -120,14 +143,15 @@ public struct SearchScreen: View {
             let uniqueCategories = Set(timetable.timetableItems.map { $0.category })
             let categories = Array(uniqueCategories).sorted { $0.id < $1.id }
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("Category")
-                    .font(.caption)
-                    .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                     .padding(.horizontal, 16)
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
                         SearchFilterChip<TimetableCategory>(
                             title: "All",
                             isSelected: presenter.selectedCategory == nil,
@@ -154,10 +178,11 @@ public struct SearchScreen: View {
 
     @ViewBuilder
     private var languageSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             Text("Language")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                 .padding(.horizontal, 16)
 
             languageFilterChips
@@ -166,7 +191,7 @@ public struct SearchScreen: View {
 
     private var languageFilterChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: 12) {
                 allLanguagesChip
                 japaneseChip
                 englishChip
@@ -228,14 +253,15 @@ public struct SearchScreen: View {
     @ViewBuilder
     private var daySection: some View {
         if presenter.timetable.timetable != nil {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("Day")
-                    .font(.caption)
-                    .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(AssetColors.onSurface.swiftUIColor)
                     .padding(.horizontal, 16)
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
                         SearchFilterChip<DroidKaigi2025Day>(
                             title: "All",
                             isSelected: presenter.selectedDay == nil,
