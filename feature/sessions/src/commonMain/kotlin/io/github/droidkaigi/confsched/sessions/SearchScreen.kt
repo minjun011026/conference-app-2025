@@ -1,13 +1,19 @@
 package io.github.droidkaigi.confsched.sessions
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import io.github.droidkaigi.confsched.droidkaigiui.KaigiPreviewContainer
 import io.github.droidkaigi.confsched.droidkaigiui.session.TimetableList
 import io.github.droidkaigi.confsched.model.core.DroidKaigi2025Day
 import io.github.droidkaigi.confsched.model.sessions.TimetableItem
@@ -40,7 +46,7 @@ fun SearchScreen(
                 onBackClick = onBackClick,
             )
         },
-        contentWindowInsets = WindowInsets(),
+        contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal),
         modifier = modifier,
     ) { paddingValues ->
         Column(
@@ -73,6 +79,7 @@ fun SearchScreen(
                         isBookmarked = { timetableItemId ->
                             uiState.bookmarks.contains(timetableItemId)
                         },
+                        contentPadding = PaddingValues(16.dp),
                         highlightWord = uiState.searchQuery,
                     )
                 }
