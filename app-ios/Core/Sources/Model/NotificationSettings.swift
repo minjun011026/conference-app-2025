@@ -7,18 +7,14 @@ public struct NotificationSettings: Equatable, Sendable {
 
     public let useCustomSound: Bool
 
-    public let favoritesOnly: Bool
-
     public init(
         isEnabled: Bool = false,
         reminderMinutes: Int = 10,
-        useCustomSound: Bool = false,
-        favoritesOnly: Bool = true
+        useCustomSound: Bool = false
     ) {
         self.isEnabled = isEnabled
         self.reminderMinutes = reminderMinutes
         self.useCustomSound = useCustomSound
-        self.favoritesOnly = favoritesOnly
     }
 }
 
@@ -28,7 +24,7 @@ public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
 
     public var id: Int { rawValue }
 
-    public var displayText: String {
+    public var displayTextKey: String {
         switch self {
         case .fiveMinutes:
             return "5 minutes before"

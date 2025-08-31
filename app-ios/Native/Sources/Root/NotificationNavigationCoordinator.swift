@@ -24,25 +24,10 @@ final class NotificationNavigationCoordinator: NotificationNavigationHandler {
             return
         }
 
-        // Find the session by ID and navigate
-        do {
-            let timetableItem = try await findTimetableItem(by: itemId)
-
-            // Switch to timetable tab and navigate to detail
-            await MainActor.run {
-                navigateToTimetableDetail(itemId)
-                logger.info("Successfully navigated to session: \(timetableItem.title.currentLangTitle)")
-            }
-        } catch {
-            logger.error("Failed to navigate to session \(itemId): \(error.localizedDescription)")
+        // Delegate navigation to RootScreen which handles the actual item finding and navigation
+        await MainActor.run {
+            navigateToTimetableDetail(itemId)
+            logger.info("Initiated navigation to session with ID: \(itemId)")
         }
-    }
-
-    private func findTimetableItem(by itemId: String) async throws -> any TimetableItem {
-        // This method is currently not used as RootScreen handles the actual navigation
-        // and item finding logic. Keeping this as a placeholder for potential future use.
-        logger.debug("Finding timetable item with ID: \(itemId)")
-
-        throw NotificationError.invalidItemId(itemId)
     }
 }

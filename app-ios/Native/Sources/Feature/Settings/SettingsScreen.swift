@@ -97,7 +97,9 @@ public struct SettingsScreen: View {
 
             Menu {
                 ForEach(NotificationReminderTime.allCases) { reminderTime in
-                    Button(reminderTime.displayText) {
+                    Button(
+                        NSLocalizedString(reminderTime.displayTextKey, bundle: .module, comment: "Reminder time option")
+                    ) {
                         Task {
                             await presenter.updateReminderTime(reminderTime.rawValue)
                         }
@@ -108,43 +110,15 @@ public struct SettingsScreen: View {
                     let currentTime =
                         NotificationReminderTime(rawValue: presenter.notificationSettings.reminderMinutes)
                         ?? .tenMinutes
-                    Text(currentTime.displayText)
-                        .foregroundColor(AssetColors.primary.swiftUIColor)
+                    Text(
+                        NSLocalizedString(currentTime.displayTextKey, bundle: .module, comment: "Current reminder time")
+                    )
+                    .foregroundColor(AssetColors.primary.swiftUIColor)
                     Image(systemName: "chevron.down")
                         .foregroundColor(AssetColors.primary.swiftUIColor)
                         .font(.caption)
                 }
             }
-        }
-        .padding(.vertical, 4)
-
-        // Favorites only toggle
-        HStack {
-            Image(systemName: "heart")
-                .foregroundColor(AssetColors.primary.swiftUIColor)
-                .frame(width: 24, height: 24)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Favorites Only", bundle: .module)
-                    .foregroundColor(AssetColors.onSurface.swiftUIColor)
-
-                Text("Only notify for favorited sessions", bundle: .module)
-                    .font(.caption)
-                    .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
-            }
-
-            Spacer()
-
-            Toggle(
-                "",
-                isOn: Binding(
-                    get: { presenter.notificationSettings.favoritesOnly },
-                    set: { _ in
-                        Task {
-                            await presenter.toggleFavoritesOnly()
-                        }
-                    }
-                ))
         }
         .padding(.vertical, 4)
 
@@ -191,12 +165,12 @@ public struct SettingsScreen: View {
         case .authorized, .provisional:
             if presenter.notificationSettings.isEnabled {
                 Text(
-                    "You'll receive notifications based on your favorite sessions and the selected reminder time.",
+                    "You'll receive notifications for your favorited sessions at the selected reminder time.",
                     bundle: .module
                 )
                 .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
             } else {
-                Text("Enable notifications to get reminded about upcoming sessions.", bundle: .module)
+                Text("Enable notifications to get reminded about your favorited sessions.", bundle: .module)
                     .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
             }
         }

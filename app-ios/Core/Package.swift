@@ -48,6 +48,7 @@ let package = Package(
             name: "UseCase",
             dependencies: [
                 .target(name: "Model"),
+                .target(name: "Handler"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ]

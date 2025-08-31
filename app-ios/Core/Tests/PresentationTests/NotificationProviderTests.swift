@@ -122,7 +122,7 @@ struct NotificationProviderTests {
 
         let provider = withDependencies {
             $0.notificationUseCase.load = {
-                NotificationSettings(isEnabled: true, reminderMinutes: 15, favoritesOnly: true)
+                NotificationSettings(isEnabled: true, reminderMinutes: 10)
             }
             $0.notificationUseCase.checkAuthorizationStatus = {
                 .authorized

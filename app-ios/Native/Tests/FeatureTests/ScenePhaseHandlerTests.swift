@@ -46,8 +46,7 @@ struct ScenePhaseHandlerTests {
         let settings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         // Test that the settings structure is correct
@@ -60,8 +59,7 @@ struct ScenePhaseHandlerTests {
         let settings = NotificationSettings(
             isEnabled: false,
             reminderMinutes: 5,
-            useCustomSound: false,
-            favoritesOnly: false
+            useCustomSound: false
         )
 
         #expect(settings.isEnabled == false)
@@ -76,8 +74,7 @@ struct ScenePhaseHandlerTests {
         let enabledSettings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         #expect(enabledSettings.isEnabled == true)
@@ -86,8 +83,7 @@ struct ScenePhaseHandlerTests {
         let disabledSettings = NotificationSettings(
             isEnabled: false,
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         #expect(disabledSettings.isEnabled == false)
@@ -148,8 +144,7 @@ struct ScenePhaseHandlerTests {
         let settings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         // Verify settings are valid

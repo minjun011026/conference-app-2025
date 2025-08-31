@@ -54,10 +54,6 @@ final class SettingsPresenter {
         await updateSettings(notificationSettings.copy(useCustomSound: !notificationSettings.useCustomSound))
     }
 
-    func toggleFavoritesOnly() async {
-        await updateSettings(notificationSettings.copy(favoritesOnly: !notificationSettings.favoritesOnly))
-    }
-
     func openSystemSettings() {
         guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
             return
@@ -90,14 +86,12 @@ extension NotificationSettings {
     fileprivate func copy(
         isEnabled: Bool? = nil,
         reminderMinutes: Int? = nil,
-        useCustomSound: Bool? = nil,
-        favoritesOnly: Bool? = nil
+        useCustomSound: Bool? = nil
     ) -> NotificationSettings {
         NotificationSettings(
             isEnabled: isEnabled ?? self.isEnabled,
             reminderMinutes: reminderMinutes ?? self.reminderMinutes,
-            useCustomSound: useCustomSound ?? self.useCustomSound,
-            favoritesOnly: favoritesOnly ?? self.favoritesOnly
+            useCustomSound: useCustomSound ?? self.useCustomSound
         )
     }
 }

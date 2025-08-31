@@ -1,5 +1,6 @@
 import Dependencies
 import DependenciesMacros
+import Handler
 import Model
 
 @DependencyClient
@@ -22,6 +23,8 @@ public struct NotificationUseCase: Sendable {
         { _, _ in }
 
     public var cancelAllNotifications: @Sendable () async -> Void = {}
+
+    public var setNavigationHandler: @MainActor @Sendable (NotificationNavigationHandler?) -> Void = { _ in }
 }
 
 public enum NotificationUseCaseKey: TestDependencyKey {

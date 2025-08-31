@@ -47,7 +47,6 @@ public struct RootScreen: View {
     @State private var composeMultiplatformEnabled = false
     @State private var favoriteScreenUiMode: FavoriteScreenUiModePicker.UiMode = .swiftui
     private let presenter = RootPresenter()
-    private let notificationUseCase = NotificationUseCaseImpl()
     @State private var notificationCoordinator: NotificationNavigationCoordinator?
 
     public init() {
@@ -71,28 +70,44 @@ public struct RootScreen: View {
             // Register custom fonts from Theme bundle so Font.custom can resolve them.
             ThemeFonts.registerAll()
             presenter.prepareWindow()
+            setupNotificationHandling()
 
-            // Initialize notification coordinator if not already done
-            if notificationCoordinator == nil {
-                notificationCoordinator = NotificationNavigationCoordinator(
-                    navigateToTimetableDetail: { itemId in
-                        // Handle notification navigation
-                        // Note: Since this is a struct, we don't need weak references
-                        Task { @MainActor in
-                            await navigateToSessionFromNotification(itemId: itemId)
-                        }
-                    }
-                )
-            }
-
-            // Set up notification navigation handler
-            if let coordinator = notificationCoordinator {
-                notificationUseCase.setNavigationHandler(coordinator)
-            }
+            // Handle notification if app was launched from terminated state
+            handleLaunchNotificationIfNeeded()
         }
         .onChange(of: scenePhase) { _, newPhase in
             ScenePhaseHandler.handle(newPhase)
         }
+    }
+
+    private func setupNotificationHandling() {
+        @Dependency(\.notificationUseCase) var notificationUseCase
+
+        // Initialize notification coordinator if not already done
+        if notificationCoordinator == nil {
+            notificationCoordinator = NotificationNavigationCoordinator(
+                navigateToTimetableDetail: { itemId in
+                    // Handle notification navigation
+                    // Note: Since this is a struct, we don't need weak references
+                    Task { @MainActor in
+                        await navigateToSessionFromNotification(itemId: itemId)
+                    }
+                }
+            )
+        }
+
+        // Set up notification navigation handler using the dependency-injected instance
+        if let coordinator = notificationCoordinator {
+            setNavigationHandler(coordinator)
+        }
+    }
+
+    @MainActor
+    private func setNavigationHandler(_ coordinator: NotificationNavigationCoordinator) {
+        // Use the shared NotificationUseCaseManager to set the navigation handler
+        // This ensures the notification delegate is properly configured on the actual
+        // NotificationUseCaseImpl instance that handles all notification operations
+        NotificationUseCaseManager.shared.setNavigationHandler(coordinator)
     }
 
     @ViewBuilder
@@ -239,9 +254,13 @@ public struct RootScreen: View {
 
             // Navigate to the timetable detail
             navigationPath.append(NavigationDestination.timetableDetail(timetableItem))
+
+            print("Successfully navigated to session: \(timetableItem.timetableItem.title.currentLangTitle)")
         } catch {
-            print("Failed to navigate to session \(itemId): \(error)")
-            // At least we switched to the timetable tab
+            // At least we switched to the timetable tab so user can manually find the session
+            print(
+                "Failed to find session with ID \(itemId): \(error.localizedDescription). User switched to Timetable tab."
+            )
         }
     }
 
@@ -263,6 +282,46 @@ public struct RootScreen: View {
 
         let isFavorited = timetable.bookmarks.contains(item.id)
         return TimetableItemWithFavorite(timetableItem: item, isFavorited: isFavorited)
+    }
+
+    private func handleLaunchNotificationIfNeeded() {
+        // When app is launched from terminated state by tapping a notification,
+        // the notification delegate might not be called immediately.
+        // We need to check for launch notification stored by AppDelegate.
+        Task { @MainActor in
+            // Wait for UI to be ready
+            try? await Task.sleep(nanoseconds: 500_000_000)  // 0.5 seconds
+
+            // Check for launch notification and handle it
+            await checkForLaunchNotification()
+        }
+    }
+
+    @MainActor
+    private func checkForLaunchNotification() async {
+        // Check if there's a launch notification stored by AppDelegate
+        guard let notificationUserInfo = NotificationLaunchHandler.shared.consumeLaunchNotification() else {
+            // Also check UserDefaults as a secondary fallback mechanism
+            let userDefaults = UserDefaults.standard
+            if let pendingItemId = userDefaults.string(forKey: "pending_notification_item_id") {
+                print("Found pending notification navigation for item: \(pendingItemId)")
+                userDefaults.removeObject(forKey: "pending_notification_item_id")
+                await navigateToSessionFromNotification(itemId: pendingItemId)
+            }
+            return
+        }
+
+        print("Processing launch notification: \(notificationUserInfo)")
+
+        // Extract itemId from notification userInfo
+        if let itemId = notificationUserInfo["itemId"] as? String {
+            print("Found itemId in launch notification: \(itemId)")
+
+            // Navigate to the session
+            await navigateToSessionFromNotification(itemId: itemId)
+        } else {
+            print("No itemId found in launch notification userInfo")
+        }
     }
 
     @ViewBuilder

@@ -55,8 +55,7 @@ struct NotificationUseCaseTests {
         let expectedSettings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 15,
-            useCustomSound: true,
-            favoritesOnly: false
+            useCustomSound: true
         )
 
         let settings = await withDependencies {
@@ -69,7 +68,6 @@ struct NotificationUseCaseTests {
         #expect(settings.isEnabled == true)
         #expect(settings.reminderMinutes == 15)
         #expect(settings.useCustomSound == true)
-        #expect(settings.favoritesOnly == false)
     }
 
     @MainActor
@@ -78,8 +76,7 @@ struct NotificationUseCaseTests {
         let settingsToSave = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 30,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let savedSettings = LockIsolated<NotificationSettings?>(nil)
@@ -97,7 +94,6 @@ struct NotificationUseCaseTests {
         #expect(savedSettings.value?.isEnabled == true)
         #expect(savedSettings.value?.reminderMinutes == 30)
         #expect(savedSettings.value?.useCustomSound == false)
-        #expect(savedSettings.value?.favoritesOnly == true)
     }
 
     @MainActor
@@ -152,8 +148,7 @@ struct NotificationUseCaseTests {
         let settings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let scheduledItem = LockIsolated<TimetableItemWithFavorite?>(nil)
@@ -188,8 +183,7 @@ struct NotificationUseCaseTests {
         let settings = NotificationSettings(
             isEnabled: false, // Disabled
             reminderMinutes: 10,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let success = await withDependencies {
@@ -232,8 +226,7 @@ struct NotificationUseCaseTests {
         let settings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 15,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let rescheduledItems = LockIsolated<[TimetableItemWithFavorite]?>(nil)
@@ -251,7 +244,6 @@ struct NotificationUseCaseTests {
 
         #expect(rescheduledItems.value?.count == 3)
         #expect(rescheduledSettings.value?.isEnabled == true)
-        #expect(rescheduledSettings.value?.favoritesOnly == true)
     }
 
     @MainActor
@@ -282,7 +274,6 @@ struct NotificationSettingsTests {
         #expect(settings.isEnabled == false)
         #expect(settings.reminderMinutes == 10)
         #expect(settings.useCustomSound == false)
-        #expect(settings.favoritesOnly == true)
     }
 
     @Test("Test custom notification settings")
@@ -290,14 +281,12 @@ struct NotificationSettingsTests {
         let settings = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 30,
-            useCustomSound: true,
-            favoritesOnly: false
+            useCustomSound: true
         )
 
         #expect(settings.isEnabled == true)
         #expect(settings.reminderMinutes == 30)
         #expect(settings.useCustomSound == true)
-        #expect(settings.favoritesOnly == false)
     }
 
     @Test("Test notification settings equality")
@@ -305,22 +294,19 @@ struct NotificationSettingsTests {
         let settings1 = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 15,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let settings2 = NotificationSettings(
             isEnabled: true,
             reminderMinutes: 15,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         let settings3 = NotificationSettings(
             isEnabled: false, // Different
             reminderMinutes: 15,
-            useCustomSound: false,
-            favoritesOnly: true
+            useCustomSound: false
         )
 
         #expect(settings1 == settings2)
@@ -348,8 +334,8 @@ struct NotificationReminderTimeTests {
 
     @Test("Test reminder time display text (updated)")
     func testReminderTimeDisplayText() {
-        #expect(NotificationReminderTime.fiveMinutes.displayText == "5 minutes before")
-        #expect(NotificationReminderTime.tenMinutes.displayText == "10 minutes before")
+        #expect(NotificationReminderTime.fiveMinutes.displayTextKey == "5 minutes before")
+        #expect(NotificationReminderTime.tenMinutes.displayTextKey == "10 minutes before")
     }
 
     @Test("Test reminder time identifiable")
