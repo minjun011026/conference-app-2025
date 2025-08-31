@@ -105,9 +105,9 @@ public struct SearchScreen: View {
                         .font(.headline)
                         .fontWeight(.semibold)
                         .foregroundColor(AssetColors.onSurface.swiftUIColor)
-                    
+
                     Spacer()
-                    
+
                     Text("\(presenter.filteredTimetableItems.count)")
                         .font(.subheadline)
                         .foregroundColor(AssetColors.onSurfaceVariant.swiftUIColor)
@@ -153,7 +153,6 @@ public struct SearchScreen: View {
             Button("All") {
                 presenter.selectedCategory = nil
             }
-            
             if let timetable = presenter.timetable.timetable {
                 let uniqueCategories = Set(timetable.timetableItems.map { $0.category })
                 let categories = Array(uniqueCategories).sorted { $0.id < $1.id }
@@ -169,11 +168,11 @@ public struct SearchScreen: View {
                 Text("カテゴリ")
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                
+
                 Text(categoryFilterDisplayText)
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.primary.swiftUIColor)
-                
+
                 Image(systemName: "chevron.down")
                     .font(.caption)
                     .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
@@ -197,15 +196,12 @@ public struct SearchScreen: View {
             Button("All") {
                 presenter.selectedLanguage = nil
             }
-            
             Button("Japanese") {
                 toggleLanguage("JA")
             }
-            
             Button("English") {
                 toggleLanguage("EN")
             }
-            
             Button("Mixed") {
                 toggleLanguage("MIXED")
             }
@@ -214,11 +210,11 @@ public struct SearchScreen: View {
                 Text("言語")
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                
+
                 Text(languageFilterDisplayText)
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.primary.swiftUIColor)
-                
+
                 Image(systemName: "chevron.down")
                     .font(.caption)
                     .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
@@ -232,10 +228,9 @@ public struct SearchScreen: View {
             )
         }
     }
-    
+
     private var languageFilterDisplayText: String {
         guard let language = presenter.selectedLanguage else { return "全て" }
-        
         switch language.langOfSpeaker {
         case "JA":
             return "Japanese"
@@ -262,11 +257,9 @@ public struct SearchScreen: View {
             Button("All") {
                 presenter.selectedDay = nil
             }
-            
             Button("9/11") {
                 presenter.selectedDay = .conferenceDay1
             }
-            
             Button("9/12") {
                 presenter.selectedDay = .conferenceDay2
             }
