@@ -22,5 +22,9 @@
 			<integer>2</integer>
 		</dict>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>io.github.droidkaigi.dk2025.notification-refresh</string>
+	</array>
 </dict>
 </plist>
