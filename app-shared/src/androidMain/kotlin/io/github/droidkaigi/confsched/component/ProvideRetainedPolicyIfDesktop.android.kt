@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 actual fun ProvideRetainedPolicyIfDesktop(
-    content: @Composable (() -> Unit)
+    content: @Composable (() -> Unit),
 ) {
     // NOOP
     content()

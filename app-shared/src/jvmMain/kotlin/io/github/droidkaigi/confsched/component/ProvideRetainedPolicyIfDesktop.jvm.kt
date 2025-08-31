@@ -7,7 +7,7 @@ import io.github.takahirom.rin.LocalShouldRemoveRetainedWhenRemovingComposition
 
 @Composable
 actual fun ProvideRetainedPolicyIfDesktop(
-    content: @Composable (() -> Unit)
+    content: @Composable (() -> Unit),
 ) {
     /**
      * Why this workaround is needed (Desktop/JVM only):
@@ -35,7 +35,7 @@ actual fun ProvideRetainedPolicyIfDesktop(
     CompositionLocalProvider(
         LocalShouldRemoveRetainedWhenRemovingComposition provides { owner ->
             owner.lifecycle.currentState == Lifecycle.State.DESTROYED
-        }
+        },
     ) {
         content()
     }

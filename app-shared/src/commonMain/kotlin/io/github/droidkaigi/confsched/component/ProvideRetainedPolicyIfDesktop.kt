@@ -4,5 +4,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 expect fun ProvideRetainedPolicyIfDesktop(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 )
