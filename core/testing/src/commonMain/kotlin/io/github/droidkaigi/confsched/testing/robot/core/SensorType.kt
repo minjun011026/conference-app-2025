@@ -15,15 +15,17 @@ enum class SensorType(
     /** Integer ID corresponding to Java's TYPE_XXX. */
     val id: Int,
     /** Corresponding STRING_TYPE_XXX from Java (null if not defined). */
-    val stringType: String?
+    val stringType: String?,
 ) {
     ACCELEROMETER(1, "android.sensor.accelerometer"),
     MAGNETIC_FIELD(2, "android.sensor.magnetic_field"),
+
     @Deprecated("Use SensorManager.getOrientation instead")
     ORIENTATION(3, "android.sensor.orientation"),
     GYROSCOPE(4, "android.sensor.gyroscope"),
     LIGHT(5, "android.sensor.light"),
     PRESSURE(6, "android.sensor.pressure"),
+
     @Deprecated("Use TYPE_AMBIENT_TEMPERATURE instead")
     TEMPERATURE(7, "android.sensor.temperature"),
     PROXIMITY(8, "android.sensor.proximity"),
@@ -40,6 +42,7 @@ enum class SensorType(
     STEP_COUNTER(19, "android.sensor.step_counter"),
     GEOMAGNETIC_ROTATION_VECTOR(20, "android.sensor.geomagnetic_rotation_vector"),
     HEART_RATE(21, "android.sensor.heart_rate"),
+
     // @hide in AOSP, included here for convenience
     TILT_DETECTOR(22, "android.sensor.tilt_detector"),
     WAKE_GESTURE(23, "android.sensor.wake_gesture"),
@@ -52,6 +55,7 @@ enum class SensorType(
     MOTION_DETECT(30, "android.sensor.motion_detect"),
     HEART_BEAT(31, "android.sensor.heart_beat"),
     DYNAMIC_SENSOR_META(32, "android.sensor.dynamic_sensor_meta"),
+
     // 33 is skipped (framework-internal additional info type)
     LOW_LATENCY_OFFBODY_DETECT(34, "android.sensor.low_latency_offbody_detect"),
     ACCELEROMETER_UNCALIBRATED(35, "android.sensor.accelerometer_uncalibrated"),
@@ -67,14 +71,14 @@ enum class SensorType(
     ALL(-1, null),
 
     /** Base value for vendor-defined sensors (special value). */
-    DEVICE_PRIVATE_BASE(0x10000, null);
+    DEVICE_PRIVATE_BASE(0x10000, null),
+    ;
 
     companion object {
         /** Returns enum from TYPE_XXX integer ID (null if not found). */
         fun fromId(id: Int): SensorType? = entries.firstOrNull { it.id == id }
 
         /** Returns enum from STRING_TYPE_XXX (case-sensitive; null if not found). */
-        fun fromStringType(stringType: String): SensorType? =
-            entries.firstOrNull { it.stringType == stringType }
+        fun fromStringType(stringType: String): SensorType? = entries.firstOrNull { it.stringType == stringType }
     }
 }

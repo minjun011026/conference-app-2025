@@ -21,4 +21,3 @@ expect class PlatformDefaultSensorRobot : SensorRobot {
     override fun tiltAzimuth(azimuth: Float)
     override fun tiltAllAxes(pitch: Float, roll: Float, azimuth: Float)
 }
-
