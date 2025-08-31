@@ -156,7 +156,6 @@ public struct SearchScreen: View {
             if let timetable = presenter.timetable.timetable {
                 let uniqueCategories = Set(timetable.timetableItems.map { $0.category })
                 let categories = Array(uniqueCategories).sorted { $0.id < $1.id }
-                
                 ForEach(categories) { category in
                     Button(category.title.jaTitle) {
                         presenter.selectedCategory = category
@@ -268,11 +267,11 @@ public struct SearchScreen: View {
                 Text("開催日")
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.onSurface.swiftUIColor)
-                
+
                 Text(dayFilterDisplayText)
                     .font(.subheadline)
                     .foregroundStyle(AssetColors.primary.swiftUIColor)
-                
+
                 Image(systemName: "chevron.down")
                     .font(.caption)
                     .foregroundStyle(AssetColors.onSurfaceVariant.swiftUIColor)
