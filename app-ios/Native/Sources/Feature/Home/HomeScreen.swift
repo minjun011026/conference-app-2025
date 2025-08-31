@@ -20,30 +20,28 @@ public struct HomeScreen: View {
     public var body: some View {
         let timetableItems = presenter.timetable.dayTimetable[selectedDay.model] ?? []
 
-        ZStack {
-            Group {
-                switch timetableMode {
-                case .list:
-                    TimetableListView(
-                        selectedDay: $selectedDay,
-                        timetableItems: timetableItems,
-                        onItemTap: { item in
-                            onNavigate(.timetableDetail(item))
-                        },
-                        onFavoriteTap: { item, _ in
-                            presenter.timetable.toggleFavorite(item)
-                        },
-                    )
-                case .grid:
-                    TimetableGridView(
-                        selectedDay: $selectedDay,
-                        timetableItems: timetableItems,
-                        rooms: presenter.timetable.rooms,
-                        onItemTap: { item in
-                            onNavigate(.timetableDetail(item))
-                        }
-                    )
-                }
+        Group {
+            switch timetableMode {
+            case .list:
+                TimetableListView(
+                    selectedDay: $selectedDay,
+                    timetableItems: timetableItems,
+                    onItemTap: { item in
+                        onNavigate(.timetableDetail(item))
+                    },
+                    onFavoriteTap: { item, _ in
+                        presenter.timetable.toggleFavorite(item)
+                    },
+                )
+            case .grid:
+                TimetableGridView(
+                    selectedDay: $selectedDay,
+                    timetableItems: timetableItems,
+                    rooms: presenter.timetable.rooms,
+                    onItemTap: { item in
+                        onNavigate(.timetableDetail(item))
+                    }
+                )
             }
         }
         .background(
