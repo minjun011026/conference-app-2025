@@ -89,7 +89,11 @@ fun EntryProviderBuilder<NavKey>.searchEntry(
 ) {
     entry<SearchNavKey>(metadata = listDetailSceneStrategyListPaneMetaData()) {
         ProvideRetainedPolicyIfDesktop {
-            with(rememberSearchScreenContextRetained()) {
+            with(
+                rememberSearchScreenContextRetained(
+                    openedAtEpochMillis = it.openedAtEpochMillis,
+                ),
+            ) {
                 SearchScreenRoot(
                     onBackClick = onBackClick,
                     onTimetableItemClick = onTimetableItemClick,
