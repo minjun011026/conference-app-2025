@@ -8,7 +8,6 @@ import os.log
 public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
     private let notificationCenter = UNUserNotificationCenter.current()
     private let userDefaults = UserDefaults.standard
-    private let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
 
     private static let maxNotificationLimit = 64
 
@@ -23,14 +22,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
     override init() {
         super.init()
-        setupNotificationDelegate()
         setupNotificationCategories()
-    }
-
-    private func setupNotificationDelegate() {
-        // Don't set delegate here - AppDelegate handles it as primary delegate
-        // This prevents conflicts when app launches from terminated state
-        logger.debug("Skipping notification delegate setup - AppDelegate handles this")
     }
 
     private func setupNotificationCategories() {
@@ -54,26 +46,21 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         )
 
         notificationCenter.setNotificationCategories([sessionCategory])
-        logger.debug("Set up notification categories")
     }
 
     @MainActor
     public func setNavigationHandler(_ handler: NotificationNavigationHandler?) {
         self.navigationHandler = handler
-        logger.debug("Navigation handler \(handler != nil ? "set" : "cleared")")
     }
 
     deinit {
         // Clear delegate if it's still us to avoid dangling reference
         if notificationCenter.delegate === self {
             notificationCenter.delegate = nil
-            logger.debug("Cleared notification center delegate on deinit")
         }
     }
 
     public func load() async -> NotificationSettings {
-        logger.info("Loading notification settings")
-
         let isEnabled = userDefaults.bool(forKey: StorageKeys.enabled)
         let reminderMinutes = userDefaults.object(forKey: StorageKeys.reminderMinutes) as? Int ?? 10
         let useCustomSound = userDefaults.bool(forKey: StorageKeys.customSound)
@@ -84,15 +71,10 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             useCustomSound: useCustomSound
         )
 
-        logger.debug(
-            "Loaded settings: enabled=\(settings.isEnabled), reminderMinutes=\(settings.reminderMinutes)"
-        )
         return settings
     }
 
     public func save(_ settings: NotificationSettings) async {
-        logger.info("Saving notification settings")
-
         userDefaults.set(settings.isEnabled, forKey: StorageKeys.enabled)
         userDefaults.set(settings.reminderMinutes, forKey: StorageKeys.reminderMinutes)
         userDefaults.set(settings.useCustomSound, forKey: StorageKeys.customSound)
@@ -100,21 +82,16 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         // Increment version to trigger re-scheduling
         let currentVersion = userDefaults.integer(forKey: StorageKeys.lastScheduledVersion)
         userDefaults.set(currentVersion + 1, forKey: StorageKeys.lastScheduledVersion)
-
-        logger.debug("Settings saved successfully")
     }
 
     public func requestPermission() async -> Bool {
-        logger.info("Requesting notification permission")
-
         do {
             let granted = try await notificationCenter.requestAuthorization(
                 options: [.alert, .sound, .badge]
             )
-            logger.info("Permission request result: \(granted ? "granted" : "denied")")
             return granted
         } catch {
-            logger.error("Error requesting notification permission: \(error.localizedDescription)")
+            print("Error requesting notification permission: \(error.localizedDescription)")
             return false
         }
     }
@@ -138,7 +115,6 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             status = .notDetermined
         }
 
-        logger.debug("Authorization status: \(String(describing: status))")
         return status
     }
 
@@ -146,12 +122,10 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         for item: TimetableItemWithFavorite, with settings: NotificationSettings
     ) async -> Bool {
         guard settings.isEnabled else {
-            logger.debug("Notifications disabled, skipping schedule for \(item.id.value)")
             return false
         }
 
         guard item.isFavorited else {
-            logger.debug("Not favorited, skipping \(item.id.value)")
             return false
         }
 
@@ -169,7 +143,6 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         let currentTimeInJST = Date()
 
         guard notificationTime > currentTimeInJST else {
-            logger.debug("Notification time is in the past for session \(item.id.value), skipping (JST comparison)")
             return false
         }
 
@@ -192,10 +165,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
                 FileManager.default.fileExists(atPath: soundPath)
             {
                 content.sound = UNNotificationSound(named: UNNotificationSoundName("droidkaigi_notification.wav"))
-                logger.debug("Using custom notification sound")
             } else {
-                logger.warning(
-                    "Custom sound file 'droidkaigi_notification.wav' not found in bundle, using default sound")
                 content.sound = .default
             }
         } else {
@@ -229,12 +199,9 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
         do {
             try await notificationCenter.add(request)
-            logger.info(
-                "Scheduled notification for session '\(item.timetableItem.title.currentLangTitle)' at \(notificationTime)"
-            )
             return true
         } catch {
-            logger.error("Error scheduling notification for \(item.id.value): \(error.localizedDescription)")
+            print("Error scheduling notification for \(item.id.value): \(error.localizedDescription)")
             return false
         }
     }
@@ -242,26 +209,21 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
     public func cancelNotification(for itemId: TimetableItemId) async {
         let identifier = "session-\(itemId.value)"
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-        logger.info("Cancelled notification for session ID: \(itemId.value)")
     }
 
     public func rescheduleAllNotifications(
         for items: [TimetableItemWithFavorite], with settings: NotificationSettings
     ) async {
-        logger.info("Rescheduling all notifications for \(items.count) items")
-
         // Cancel all existing notifications
         await cancelAllNotifications()
 
         // Schedule new notifications if enabled
         guard settings.isEnabled else {
-            logger.info("Notifications disabled, not scheduling any notifications")
             return
         }
 
         let authStatus = await checkAuthorizationStatus()
         guard authStatus == .authorized || authStatus == .provisional else {
-            logger.warning("Notifications not authorized, status: \(String(describing: authStatus))")
             return
         }
 
@@ -271,10 +233,6 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         // Apply 64-notification limit with priority system
         let prioritizedItems = prioritizeNotifications(eligibleItems, limit: Self.maxNotificationLimit)
 
-        logger.info(
-            "After prioritization: \(prioritizedItems.count) notifications to schedule (limit: \(Self.maxNotificationLimit))"
-        )
-
         // Schedule notifications for prioritized items
         var successCount = 0
         for item in prioritizedItems {
@@ -283,21 +241,16 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             }
         }
 
-        logger.info("Successfully scheduled \(successCount) out of \(prioritizedItems.count) notifications")
-
-        // Debug: Check final pending notifications
         await debugPendingNotifications()
     }
 
     public func cancelAllNotifications() async {
-        logger.info("Cancelling all notifications")
         notificationCenter.removeAllPendingNotificationRequests()
     }
 
     // Debug function to check pending notifications
     func debugPendingNotifications() async {
         let pendingRequests = await notificationCenter.pendingNotificationRequests()
-        logger.info("Current pending notifications count: \(pendingRequests.count)")
 
         for request in pendingRequests {
             let trigger = request.trigger
@@ -309,15 +262,13 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
                 triggerDescription = "Time interval trigger: \(timeIntervalTrigger.timeInterval) seconds"
             }
 
-            logger.debug("Notification \(request.identifier): '\(request.content.title)' - \(triggerDescription)")
+            print("Notification \(request.identifier): '\(request.content.title)' - \(triggerDescription)")
         }
     }
 
     private func prioritizeNotifications(
         _ items: [TimetableItemWithFavorite], limit: Int
     ) -> [TimetableItemWithFavorite] {
-        logger.debug("Prioritizing \(items.count) items with limit \(limit)")
-
         let sortedItems = items.sorted { item1, item2 in
             // First priority: favorited status
             if item1.isFavorited != item2.isFavorited {
@@ -332,25 +283,17 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
         let jstTimeZone = TimeZone(identifier: "Asia/Tokyo") ?? TimeZone.current
         let currentTime = Date()
 
-        logger.debug("Current time: \(currentTime), timezone: \(jstTimeZone.identifier)")
-
         var pastItemsCount = 0
         let futureItems = sortedItems.filter { item in
             let isPast = item.timetableItem.startsAt <= currentTime
             if isPast {
                 pastItemsCount += 1
-                logger.debug(
-                    "Filtering out past session: \(item.timetableItem.title.currentLangTitle) at \(item.timetableItem.startsAt)"
-                )
             }
             return !isPast
         }
 
-        logger.debug("Filtered out \(pastItemsCount) past items, remaining: \(futureItems.count) future items")
-
         // Apply limit
         let finalItems = Array(futureItems.prefix(limit))
-        logger.debug("Final prioritized items count: \(finalItems.count) (applied limit: \(limit))")
 
         return finalItems
     }
@@ -364,13 +307,7 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
     ) {
         let userInfo = response.notification.request.content.userInfo
 
-        Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-            .info("Notification response received with action: \(response.actionIdentifier)")
-
         if let itemIdString = userInfo["itemId"] as? String {
-            Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-                .info("User tapped notification for session: \(itemIdString)")
-
             // Handle different action types
             switch response.actionIdentifier {
             case "VIEW_SESSION", UNNotificationDefaultActionIdentifier:
@@ -382,16 +319,8 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
                 Task { @MainActor in
                     await handleNotificationTap(itemId: itemId, sessionTitle: sessionTitle, room: room)
                 }
-            case "DISMISS", UNNotificationDismissActionIdentifier:
-                Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-                    .debug("User dismissed notification for session: \(itemIdString)")
-            default:
-                Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-                    .warning("Unknown notification action: \(response.actionIdentifier)")
+            default: break
             }
-        } else {
-            Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-                .warning("Notification response missing itemId")
         }
 
         completionHandler()
@@ -402,27 +331,19 @@ extension NotificationUseCaseImpl: UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        Logger(subsystem: "io.github.droidkaigi.dk2025", category: "Notifications")
-            .debug("Presenting notification in foreground")
         // Show notification even when app is in foreground
         completionHandler([.banner, .sound, .badge])
     }
 
     private func handleNotificationTap(itemId: String, sessionTitle: String, room: String) async {
-        logger.info("Handling notification tap for session: \(sessionTitle) in \(room)")
-
         // Store the itemId in UserDefaults as a fallback for when app is launched from terminated state
         // This ensures that if the navigation handler is not available (e.g., app just launched),
         // the navigation info is preserved for the next app launch cycle.
         UserDefaults.standard.set(itemId, forKey: "pending_notification_item_id")
 
         guard let navigationHandler = self.navigationHandler else {
-            logger.warning(
-                "No navigation handler available for notification tap - stored in UserDefaults for later processing")
             return
         }
-
-        logger.info("Navigating to session: \(sessionTitle) in \(room)")
 
         // Navigate to session detail
         await navigationHandler.navigateToSession(itemId: itemId)

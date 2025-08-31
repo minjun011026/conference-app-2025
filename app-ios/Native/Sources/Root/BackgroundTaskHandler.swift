@@ -7,7 +7,6 @@ import UseCase
 import os.log
 
 public enum BackgroundTaskHandler {
-    private static let logger = Logger(subsystem: "io.github.droidkaigi.dk2025", category: "BackgroundTasks")
     private static let taskIdentifier = "io.github.droidkaigi.dk2025.notification-refresh"
 
     public static func registerBackgroundTasks() {
@@ -17,7 +16,6 @@ public enum BackgroundTaskHandler {
                 using: nil
             ) { task in
                 guard let refreshTask = task as? BGAppRefreshTask else {
-                    logger.warning("Received task is not BGAppRefreshTask")
                     return
                 }
 
@@ -27,7 +25,6 @@ public enum BackgroundTaskHandler {
                 // to handle concurrent operations safely.
                 handleBackgroundRefreshTaskAsync(refreshTask)
             }
-            logger.info("Registered background task: \(taskIdentifier)")
         }
     }
 
@@ -43,8 +40,6 @@ public enum BackgroundTaskHandler {
 
     @available(iOS 13.0, *)
     public static func handleBackgroundRefreshTask(_ task: BGAppRefreshTask) async {
-        logger.info("Handling background refresh task")
-
         // Set completion handler - default to success
         var taskCompleted = false
         defer {
@@ -58,7 +53,6 @@ public enum BackgroundTaskHandler {
         let settings = await notificationUseCase.load()
 
         guard settings.isEnabled else {
-            logger.debug("Notifications disabled, skipping background refresh")
             task.setTaskCompleted(success: true)
             taskCompleted = true
             return
@@ -66,8 +60,6 @@ public enum BackgroundTaskHandler {
 
         let authStatus = await notificationUseCase.checkAuthorizationStatus()
         guard authStatus == .authorized else {
-            logger.debug(
-                "Notifications not authorized (\(String(describing: authStatus))), skipping background refresh")
             task.setTaskCompleted(success: true)
             taskCompleted = true
             return
@@ -78,24 +70,19 @@ public enum BackgroundTaskHandler {
 
         task.setTaskCompleted(success: true)
         taskCompleted = true
-        logger.info("Background refresh task completed successfully")
     }
 
     public static func scheduleBackgroundRefreshIfNeeded() async {
-        logger.debug("Scheduling background refresh if needed")
-
         // Check if notifications are enabled
         @Dependency(\.notificationUseCase) var notificationUseCase
         let settings = await notificationUseCase.load()
 
         guard settings.isEnabled else {
-            logger.debug("Notifications disabled, skipping background refresh scheduling")
             return
         }
 
         let authStatus = await notificationUseCase.checkAuthorizationStatus()
         guard authStatus == .authorized else {
-            logger.debug("Notifications not authorized, skipping background refresh scheduling")
             return
         }
 
@@ -105,15 +92,13 @@ public enum BackgroundTaskHandler {
 
             switch backgroundRefreshStatus {
             case .denied:
-                logger.info("Background App Refresh is disabled system-wide")
                 return
             case .restricted:
-                logger.info("Background App Refresh is restricted")
                 return
             case .available:
-                logger.debug("Background App Refresh is available")
+                break
             @unknown default:
-                logger.warning("Unknown background refresh status")
+                print("Unknown background refresh status")
             }
 
             // Schedule background task
@@ -122,12 +107,9 @@ public enum BackgroundTaskHandler {
 
             do {
                 try BGTaskScheduler.shared.submit(request)
-                logger.info("Successfully scheduled background refresh task")
             } catch {
                 handleBackgroundTaskSchedulingError(error)
             }
-        } else {
-            logger.debug("Background task scheduling not available (iOS < 13)")
         }
     }
 
@@ -135,16 +117,16 @@ public enum BackgroundTaskHandler {
         if let bgError = error as? NSError, bgError.domain == "BGTaskSchedulerErrorDomain" {
             switch bgError.code {
             case 1:  // BGTaskSchedulerErrorCodeUnavailable
-                logger.info("Background app refresh is disabled or Low Power Mode is on: \(error.localizedDescription)")
+                return
             case 2:  // BGTaskSchedulerErrorCodeTooManyPendingTaskRequests
-                logger.warning("Too many pending background tasks: \(error.localizedDescription)")
+                print("Too many pending background tasks: \(error.localizedDescription)")
             case 3:  // BGTaskSchedulerErrorCodeNotPermitted
-                logger.debug("Background refresh not permitted (likely in simulator): \(error.localizedDescription)")
+                return
             default:
-                logger.error("Failed to schedule background refresh: \(error.localizedDescription)")
+                print("Failed to schedule background refresh: \(error.localizedDescription)")
             }
         } else {
-            logger.error("Failed to schedule background refresh: \(error.localizedDescription)")
+            print("Failed to schedule background refresh: \(error.localizedDescription)")
         }
     }
 
@@ -160,7 +142,6 @@ public enum BackgroundTaskHandler {
                 true
             })
         else {
-            logger.warning("No timetable data available for notification update")
             return
         }
 
@@ -171,11 +152,8 @@ public enum BackgroundTaskHandler {
         }
 
         let favoriteItems = allItems.filter { $0.isFavorited }
-        logger.info("Background refresh: \(allItems.count) total, \(favoriteItems.count) favorites")
 
         // Update notifications
         await notificationUseCase.rescheduleAllNotifications(allItems, settings)
-
-        logger.info("Background refresh: Updated notifications for \(favoriteItems.count) favorites")
     }
 }
