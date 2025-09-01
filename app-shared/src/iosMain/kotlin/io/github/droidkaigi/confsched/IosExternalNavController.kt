@@ -162,7 +162,7 @@ internal class IosExternalNavController : ExternalNavController {
      * - Instead, this method searches for a foreground-active [UIWindowScene],
      *   retrieves its key window, and then resolves the top-most visible view controller.
      *
-     * @see <a href="https://developer.apple.com/documentation/uikit/uiapplication/1622924-keywindow">
+     * @see <a href="https://developer.apple.com/documentation/uikit/uiapplication/keywindow">
      *      UIApplication.keyWindow (deprecated)</a>
      * @see <a href="https://developer.apple.com/documentation/uikit/uiwindowscene">
      *      UIWindowScene – Apple Developer Documentation</a>
