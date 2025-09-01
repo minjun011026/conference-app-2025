@@ -12,6 +12,7 @@ public struct SettingsScreen: View {
         List {
             notificationSection
         }
+        .scrollContentBackground(.hidden)
         .background(AssetColors.surface.swiftUIColor)
         .navigationTitle(String(localized: "Settings", bundle: .module))
         #if os(iOS)
