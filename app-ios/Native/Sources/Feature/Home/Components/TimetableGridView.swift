@@ -150,16 +150,17 @@ struct TimetableGridView: View {
         ZStack(alignment: .topLeading) {
             if let dayStart = dayStart {
                 ForEach(timelineItems, id: \.id) { item in
+                    let left = offsetX(for: item.timetableItem)
                     let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
+                    let width = sessionWidth(for: item.timetableItem)
                     let height = sessionHeight(for: item.timetableItem)
 
                     TimetableGridCard(
                         timetableItem: item.timetableItem,
                         onTap: { _ in onItemTap(item) }
                     )
-                    .frame(width: roomWidth, height: height)
-                    .offset(x: offsetX(for: item.timetableItem.room), y: top)
-
+                    .frame(width: width, height: height)
+                    .offset(x: left, y: top)
                 }
             }
 
@@ -199,14 +200,26 @@ struct TimetableGridView: View {
         return 0
     }
 
-    private func offsetX(for room: Room) -> CGFloat {
-        guard let idx = rooms.firstIndex(where: { $0.id == room.id }) else { return 0 }
-        return CGFloat(idx) * (roomWidth + roomSpacing)
+    private func offsetX(for item: any TimetableItem) -> CGFloat {
+        if (item.isLunchTime()) {
+            return 0
+        } else {
+            guard let idx = rooms.firstIndex(where: { $0.id == item.room.id }) else { return 0 }
+            return CGFloat(idx) * (roomWidth + roomSpacing)
+        }
     }
 
     private func offsetY(for date: Date, base: Date) -> CGFloat {
         let seconds = date.timeIntervalSince(base)
         return CGFloat(max(seconds, 0) / 60.0) * heightOfMinute
+    }
+    
+    private func sessionWidth(for item: any TimetableItem) -> CGFloat {
+        if (item.isLunchTime()) {
+            return timetableWidth
+        } else {
+            return roomWidth
+        }
     }
 
     private func sessionHeight(for item: any TimetableItem) -> CGFloat {
