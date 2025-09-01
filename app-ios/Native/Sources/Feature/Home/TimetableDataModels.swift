@@ -27,7 +27,7 @@ extension TimetableItem {
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: endsAt)
     }
-    
+
     public func isLunchTime() -> Bool {
         title.currentLangTitle.lowercased().contains("lunch")
     }

@@ -58,7 +58,8 @@ struct TimetableGridCard: View {
     TimetableGridCard(
         timetableItem: PreviewData.timetableItemSession,
         onTap: { _ in }
-    ).frame(width: 200, height: 100)
+    )
+    .frame(width: 200, height: 100)
 }
 
 private enum PreviewData {

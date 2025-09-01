@@ -22,7 +22,7 @@ struct TimetableGridView: View {
             dayEnd: dayEnd,
         )
     }
-    
+
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
@@ -50,7 +50,10 @@ struct TimetableGridView: View {
     private var timetableGridView: some View {
         HStack(alignment: .top, spacing: 0) {
             timeAxis
-                .frame(width: layoutConfig.timeAxisWidth, height: layoutCalculator.timetableHeight(), alignment: .topTrailing)
+                .frame(
+                    width: layoutConfig.timeAxisWidth, height: layoutCalculator.timetableHeight(),
+                    alignment: .topTrailing
+                )
                 .padding(.trailing, 4)
 
             ScrollView(.horizontal) {
@@ -63,7 +66,9 @@ struct TimetableGridView: View {
                         sessionCards
                         currentTimeLine
                     }
-                    .frame(width: layoutCalculator.timetableWidth(), height: layoutCalculator.timetableHeight(), alignment: .topLeading)
+                    .frame(
+                        width: layoutCalculator.timetableWidth(), height: layoutCalculator.timetableHeight(),
+                        alignment: .topLeading)
                 }
             }
 
@@ -109,7 +114,8 @@ struct TimetableGridView: View {
     @ViewBuilder
     private var roomLines: some View {
         ForEach(0...rooms.count, id: \.self) { index in
-            let x = CGFloat(index) * (layoutConfig.roomWidth + layoutConfig.roomSpacing) - (layoutConfig.roomSpacing / 2)
+            let x =
+                CGFloat(index) * (layoutConfig.roomWidth + layoutConfig.roomSpacing) - (layoutConfig.roomSpacing / 2)
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
                 .frame(width: 1, height: layoutCalculator.timetableHeight())
