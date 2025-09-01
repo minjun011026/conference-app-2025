@@ -5,7 +5,7 @@ struct TimetableLayoutConfig {
     let heightOfMinute: CGFloat = 5
     let roomWidth: CGFloat = 192
     let roomSpacing: CGFloat = 4
-    let timeAxisWidth: CGFloat = 50
+    let timeAxisWidth: CGFloat = 40
 }
 
 struct TimetableLayoutCalculator {
