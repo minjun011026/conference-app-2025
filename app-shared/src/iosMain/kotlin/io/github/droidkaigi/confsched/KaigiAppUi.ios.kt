@@ -18,6 +18,7 @@ import io.github.droidkaigi.confsched.model.core.Lang
 import io.github.droidkaigi.confsched.model.core.defaultLang
 import io.github.droidkaigi.confsched.navigation.component.NavHostWithSharedAxisX
 import io.github.droidkaigi.confsched.navigation.extension.navigateToAboutTab
+import io.github.droidkaigi.confsched.navigation.extension.navigateToContributors
 import io.github.droidkaigi.confsched.navigation.extension.navigateToEventMapTab
 import io.github.droidkaigi.confsched.navigation.extension.navigateToFavoritesTab
 import io.github.droidkaigi.confsched.navigation.extension.navigateToLicenses
@@ -112,7 +113,7 @@ actual fun KaigiAppUi() {
                         AboutItem.Map -> externalNavController.navigate(
                             url = "https://goo.gl/maps/vv9sE19JvRjYKtSP9",
                         )
-                        AboutItem.Contributors -> TODO()
+                        AboutItem.Contributors -> navController.navigateToContributors()
                         AboutItem.Staff -> navController.navigateToStaffs()
                         AboutItem.Sponsors -> navController.navigateToSponsors()
                         AboutItem.CodeOfConduct -> {

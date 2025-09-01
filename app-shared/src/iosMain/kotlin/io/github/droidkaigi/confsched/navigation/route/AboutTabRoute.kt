@@ -22,3 +22,6 @@ data object SettingsRoute
 
 @Serializable
 data object StaffsRoute
+
+@Serializable
+data object ContributorsRoute
