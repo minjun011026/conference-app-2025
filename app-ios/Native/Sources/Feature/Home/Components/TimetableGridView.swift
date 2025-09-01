@@ -13,12 +13,16 @@ struct TimetableGridView: View {
     @State private var now: Date = Date()
     @State private var timer: Timer? = nil
 
-    // MARK: - Layout Const
-    private let heightOfMinute: CGFloat = 5
-    private let roomWidth: CGFloat = 192
-    private let roomSpacing: CGFloat = 4
-    private let timeAxisWidth: CGFloat = 50
-
+    private let layoutConfig = TimetableLayoutConfig()
+    private var layoutCalculator: TimetableLayoutCalculator {
+        .init(
+            config: layoutConfig,
+            rooms: rooms,
+            dayStart: dayStart,
+            dayEnd: dayEnd,
+        )
+    }
+    
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 0) {
@@ -46,7 +50,7 @@ struct TimetableGridView: View {
     private var timetableGridView: some View {
         HStack(alignment: .top, spacing: 0) {
             timeAxis
-                .frame(width: timeAxisWidth, height: timetableHeight, alignment: .topTrailing)
+                .frame(width: layoutConfig.timeAxisWidth, height: layoutCalculator.timetableHeight(), alignment: .topTrailing)
                 .padding(.trailing, 4)
 
             ScrollView(.horizontal) {
@@ -59,7 +63,7 @@ struct TimetableGridView: View {
                         sessionCards
                         currentTimeLine
                     }
-                    .frame(width: timetableWidth, height: timetableHeight, alignment: .topLeading)
+                    .frame(width: layoutCalculator.timetableWidth(), height: layoutCalculator.timetableHeight(), alignment: .topLeading)
                 }
             }
 
@@ -68,7 +72,7 @@ struct TimetableGridView: View {
     }
 
     private var roomHeaderRow: some View {
-        HStack(spacing: roomSpacing) {
+        HStack(spacing: layoutConfig.roomSpacing) {
             Color.clear
                 .gridCellUnsizedAxes([.horizontal, .vertical])
 
@@ -76,7 +80,7 @@ struct TimetableGridView: View {
                 Text(room.displayName)
                     .font(Typography.titleMedium)
                     .foregroundStyle(room.roomTheme.primaryColor)
-                    .frame(width: roomWidth)
+                    .frame(width: layoutConfig.roomWidth)
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
         }
@@ -96,7 +100,7 @@ struct TimetableGridView: View {
                     let labelDate = Calendar.current.date(byAdding: .minute, value: hourIndex * 60, to: dayStart)!
                     Text(labelDate.formatted(date: .omitted, time: .shortened))
                         .font(.caption2)
-                        .frame(height: heightOfMinute * 60, alignment: .top)
+                        .frame(height: layoutConfig.heightOfMinute * 60, alignment: .top)
                 }
             }
         }
@@ -105,10 +109,10 @@ struct TimetableGridView: View {
     @ViewBuilder
     private var roomLines: some View {
         ForEach(0...rooms.count, id: \.self) { index in
-            let x = CGFloat(index) * (roomWidth + roomSpacing) - (roomSpacing / 2)
+            let x = CGFloat(index) * (layoutConfig.roomWidth + layoutConfig.roomSpacing) - (layoutConfig.roomSpacing / 2)
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
-                .frame(width: 1, height: timetableHeight)
+                .frame(width: 1, height: layoutCalculator.timetableHeight())
                 .offset(x: x)
         }
     }
@@ -123,7 +127,7 @@ struct TimetableGridView: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
-                    .offset(y: CGFloat(hourIndex * 60) * heightOfMinute)
+                    .offset(y: CGFloat(hourIndex * 60) * layoutConfig.heightOfMinute)
             }
         }
     }
@@ -138,7 +142,7 @@ struct TimetableGridView: View {
                     .fill(Color.red)
                     .frame(height: 2)
                     .frame(maxWidth: .infinity)
-                    .offset(y: offsetY(for: now, base: dayStart))
+                    .offset(y: layoutCalculator.offsetY(for: now, base: dayStart))
             }
         }
     }
@@ -147,10 +151,10 @@ struct TimetableGridView: View {
     private var sessionCards: some View {
         if let dayStart = dayStart {
             ForEach(timelineItems, id: \.id) { item in
-                let left = offsetX(for: item.timetableItem)
-                let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
-                let width = sessionWidth(for: item.timetableItem)
-                let height = sessionHeight(for: item.timetableItem)
+                let left = layoutCalculator.offsetX(for: item.timetableItem)
+                let top = layoutCalculator.offsetY(for: item.timetableItem.startsAt, base: dayStart)
+                let width = layoutCalculator.sessionWidth(for: item.timetableItem)
+                let height = layoutCalculator.sessionHeight(for: item.timetableItem)
 
                 TimetableGridCard(
                     timetableItem: item.timetableItem,
@@ -180,45 +184,5 @@ struct TimetableGridView: View {
 
     private var dayEnd: Date? {
         timelineItems.map({ $0.timetableItem.endsAt }).max()
-    }
-
-    private var timetableWidth: CGFloat {
-        guard !rooms.isEmpty else { return 0 }
-        let columns = CGFloat(rooms.count)
-        return columns * roomWidth + (columns - 1) * roomSpacing
-    }
-
-    private var timetableHeight: CGFloat {
-        if let dayStart = dayStart, let dayEnd = dayEnd {
-            return CGFloat(dayEnd.timeIntervalSince(dayStart) / 60) * heightOfMinute
-        }
-        return 0
-    }
-
-    private func offsetX(for item: any TimetableItem) -> CGFloat {
-        if (item.isLunchTime()) {
-            return 0
-        } else {
-            guard let idx = rooms.firstIndex(where: { $0.id == item.room.id }) else { return 0 }
-            return CGFloat(idx) * (roomWidth + roomSpacing)
-        }
-    }
-
-    private func offsetY(for date: Date, base: Date) -> CGFloat {
-        let seconds = date.timeIntervalSince(base)
-        return CGFloat(seconds / 60.0) * heightOfMinute
-    }
-    
-    private func sessionWidth(for item: any TimetableItem) -> CGFloat {
-        if (item.isLunchTime()) {
-            return timetableWidth
-        } else {
-            return roomWidth
-        }
-    }
-
-    private func sessionHeight(for item: any TimetableItem) -> CGFloat {
-        let seconds = item.endsAt.timeIntervalSince(item.startsAt)
-        return CGFloat(seconds / 60.0) * heightOfMinute
     }
 }
