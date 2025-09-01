@@ -109,7 +109,7 @@ struct TimetableGridView: View {
 
             // Get time label height. DO NOT show.
             Text("00:00")
-                .font(.caption2)
+                .font(Typography.labelMedium)
                 .background(
                     GeometryReader { geometry in
                         Spacer()
@@ -125,7 +125,7 @@ struct TimetableGridView: View {
                 ForEach(0...totalMinutes / 60, id: \.self) { hourIndex in
                     let labelDate = Calendar.current.date(byAdding: .minute, value: hourIndex * 60, to: dayStart)!
                     Text(labelDate.formatted(date: .omitted, time: .shortened))
-                        .font(.caption2)
+                        .font(Typography.labelMedium)
                         .frame(height: layoutConfig.heightOfMinute * 60, alignment: .top)
                         .offset(y: -timeLabelHeight / 2)
                 }
