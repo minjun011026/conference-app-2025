@@ -121,7 +121,7 @@ fun NavGraphBuilder.contributorsNavGraph(
         with(rememberContributorsScreenContextRetained()) {
             ContributorsScreenRoot(
                 onBackClick = onBackClick,
-                onContributorClick = onLinkClick
+                onContributorClick = onLinkClick,
             )
         }
     }
