@@ -20,6 +20,7 @@
  *   - Change the default value for shouldRemoveStoreOwner in rememberViewModelStoreNavEntryDecorator to a lambda that always returns true.
  *   - Remove SavedStateRegistryOwner and HasDefaultViewModelProviderFactory implementation from childViewModelStoreOwner in ViewModelStoreNavEntryDecorator to ensure it works in jvm target.
  *   - Replace NavEntry.key with NavEntry.contentKey, NavEntry.content.invoke(NavKey) with NavEntry.Content() to compile successfully.
+ *   - Add suppress annotation to ViewModelStoreNavEntryDecorator to suppress ktlint warning.
  *   - Minor code formatting changes.
  */
 
@@ -71,6 +72,7 @@ public fun rememberViewModelStoreNavEntryDecorator(
  *   [NavEntry] should be cleared when the [NavEntry] is popped from the backStack. If true, the
  *   entry's ViewModelStoreOwner will be removed.
  */
+@Suppress("ktlint:standard:function-naming")
 public fun ViewModelStoreNavEntryDecorator(
     viewModelStore: ViewModelStore,
     shouldRemoveStoreOwner: () -> Boolean,
