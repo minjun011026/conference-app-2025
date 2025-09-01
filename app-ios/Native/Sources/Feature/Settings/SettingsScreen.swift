@@ -1,8 +1,10 @@
 import Dependencies
+import Component
 import Model
 import SwiftUI
 import Theme
 
+// TODO: Should use system font
 public struct SettingsScreen: View {
     @State private var presenter = SettingsPresenter()
 
@@ -50,10 +52,12 @@ public struct SettingsScreen: View {
                     ProgressView()
                         .scaleEffect(0.8)
                 } else if presenter.authorizationStatus == .denied {
-                    Button(String(localized: "Settings", bundle: .module)) {
+                    Button {
                         presenter.openSystemSettings()
+                    } label: {
+                        Text(String(localized: "Settings", bundle: .module))
                     }
-                    .buttonStyle(.borderedProminent)
+                    .filledButtonStyle()
                     .controlSize(.small)
                 } else {
                     Toggle(
