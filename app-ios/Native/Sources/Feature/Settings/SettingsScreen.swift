@@ -4,7 +4,7 @@ import Model
 import SwiftUI
 import Theme
 
-// TODO: Should use system font
+// NOTE: Should use system font
 public struct SettingsScreen: View {
     @State private var presenter = SettingsPresenter()
 
