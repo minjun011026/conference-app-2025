@@ -27,7 +27,6 @@ actual class PlatformDefaultSensorRobot : SensorRobot {
             when (sensorType) {
                 SensorType.ACCELEROMETER -> mockAccelerometerSensor = sensor
                 SensorType.MAGNETIC_FIELD -> mockMagneticFieldSensor = sensor
-                else -> throw IllegalArgumentException("Unsupported sensor type: $sensorType")
             }
         }
     }
