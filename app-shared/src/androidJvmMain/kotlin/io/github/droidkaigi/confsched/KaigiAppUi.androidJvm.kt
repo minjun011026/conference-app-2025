@@ -36,6 +36,7 @@ import io.github.droidkaigi.confsched.navkey.SponsorsNavKey
 import io.github.droidkaigi.confsched.navkey.StaffNavKey
 import io.github.droidkaigi.confsched.navkey.TimetableItemDetailNavKey
 import io.github.droidkaigi.confsched.navkey.TimetableNavKey
+import kotlin.time.Clock
 
 @Composable
 context(appGraph: AppGraph)
@@ -78,7 +79,16 @@ actual fun KaigiAppUi() {
                     onAddCalendarClick = externalNavController::navigateToCalendarRegistration,
                     onShareClick = externalNavController::onShareClick,
                     onLinkClick = externalNavController::navigate,
-                    onSearchClick = { backStack.add(SearchNavKey) },
+                    onSearchClick = {
+                        // When opening the search screen in JVM, if the `rememberRetained` key is not specified, the previous state remains intact.
+                        // Therefore, using epoch time ensures the state is reset when transitioning to the search screen.
+                        // If the state remains in the backstack, it will naturally be preserved.
+                        backStack.add(
+                            SearchNavKey(
+                                openedAtEpochMillis = Clock.System.now().toEpochMilliseconds(),
+                            ),
+                        )
+                    },
                     onTimetableItemClick = {
                         if (backStack.lastOrNull() is TimetableItemDetailNavKey) {
                             backStack.removeLastOrNull()

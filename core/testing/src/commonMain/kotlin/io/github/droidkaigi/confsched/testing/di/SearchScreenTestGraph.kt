@@ -10,7 +10,8 @@ interface SearchScreenTestGraph : SearchScreenContext.Factory {
 
     @Provides
     fun provideSearchScreenContext(): SearchScreenContext {
-        return createSearchScreenContext()
+        // The `rememberRetained` key is not required for testing, so we've set it to `0L`.
+        return createSearchScreenContext(0L)
     }
 }
 
