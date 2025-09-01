@@ -45,25 +45,25 @@ struct ScenePhaseHandlerTests {
         // Mock a scenario where notifications are enabled
         let settings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 10,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
         // Test that the settings structure is correct
         #expect(settings.isEnabled == true)
-        #expect(settings.reminderMinutes == 10)
+        #expect(settings.reminderTime.rawValue == 10)
     }
 
     @Test("Test notification status refresh with disabled notifications")
     func testNotificationStatusRefreshDisabled() async {
         let settings = NotificationSettings(
             isEnabled: false,
-            reminderMinutes: 5,
+            reminderTime: .fiveMinutes,
             useCustomSound: false
         )
 
         #expect(settings.isEnabled == false)
-        #expect(settings.reminderMinutes == 5)
+        #expect(settings.reminderTime.rawValue == 5)
     }
 
     @Test("Test background refresh scheduling conditions")
@@ -82,7 +82,7 @@ struct ScenePhaseHandlerTests {
         // Case 2: Notifications disabled
         let disabledSettings = NotificationSettings(
             isEnabled: false,
-            reminderMinutes: 10,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
@@ -143,14 +143,14 @@ struct ScenePhaseHandlerTests {
         // Create a test scenario where notification scheduling might fail
         let settings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 10,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
         // Verify settings are valid
         #expect(settings.isEnabled == true)
-        #expect(settings.reminderMinutes > 0)
-        #expect(settings.reminderMinutes <= 60) // Reasonable upper bound
+        #expect(settings.reminderTime.rawValue > 0)
+        #expect(settings.reminderTime.rawValue <= 60) // Reasonable upper bound
     }
 
     @MainActor

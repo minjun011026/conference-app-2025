@@ -63,11 +63,12 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
     public func load() async -> NotificationSettings {
         let isEnabled = userDefaults.bool(forKey: StorageKeys.enabled)
         let reminderMinutes = userDefaults.object(forKey: StorageKeys.reminderMinutes) as? Int ?? 10
+        let reminderTime: NotificationReminderTime = reminderMinutes == 5 ? .fiveMinutes : .tenMinutes
         let useCustomSound = userDefaults.bool(forKey: StorageKeys.customSound)
 
         let settings = NotificationSettings(
             isEnabled: isEnabled,
-            reminderMinutes: reminderMinutes,
+            reminderTime: reminderTime,
             useCustomSound: useCustomSound
         )
 
@@ -76,7 +77,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
     public func save(_ settings: NotificationSettings) async {
         userDefaults.set(settings.isEnabled, forKey: StorageKeys.enabled)
-        userDefaults.set(settings.reminderMinutes, forKey: StorageKeys.reminderMinutes)
+        userDefaults.set(settings.reminderTime.rawValue, forKey: StorageKeys.reminderMinutes)
         userDefaults.set(settings.useCustomSound, forKey: StorageKeys.customSound)
 
         // Increment version to trigger re-scheduling
@@ -136,7 +137,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
 
         // Calculate notification time in JST
         let sessionStartTime = item.timetableItem.startsAt
-        let reminderInterval = TimeInterval(settings.reminderMinutes * 60)
+        let reminderInterval = TimeInterval(settings.reminderTime.rawValue * 60)
         let notificationTime = sessionStartTime.addingTimeInterval(-reminderInterval)
 
         // Don't schedule notifications for past events (compare in JST timezone)
@@ -156,7 +157,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             comment: "Notification body format with session title and minutes"
         )
         content.body = String.localizedStringWithFormat(
-            bodyFormat, item.timetableItem.title.currentLangTitle, settings.reminderMinutes)
+            bodyFormat, item.timetableItem.title.currentLangTitle, settings.reminderTime.rawValue)
 
         // Add custom sound if enabled and available
         if settings.useCustomSound {
@@ -178,7 +179,7 @@ public final class NotificationUseCaseImpl: NSObject, @unchecked Sendable {
             "sessionTitle": item.timetableItem.title.currentLangTitle,
             "room": item.timetableItem.room.name.currentLangTitle,
             "startTime": sessionStartTime.timeIntervalSince1970,
-            "reminderMinutes": settings.reminderMinutes,
+            "reminderMinutes": settings.reminderTime.rawValue,
         ]
 
         // Add category for actionable notifications

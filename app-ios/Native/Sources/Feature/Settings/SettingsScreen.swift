@@ -1,5 +1,5 @@
-import Dependencies
 import Component
+import Dependencies
 import Model
 import SwiftUI
 import Theme
@@ -104,15 +104,13 @@ public struct SettingsScreen: View {
                         NSLocalizedString(reminderTime.displayTextKey, bundle: .module, comment: "Reminder time option")
                     ) {
                         Task {
-                            await presenter.updateReminderTime(reminderTime.rawValue)
+                            await presenter.updateReminderTime(reminderTime)
                         }
                     }
                 }
             } label: {
                 HStack {
-                    let currentTime =
-                        NotificationReminderTime(rawValue: presenter.notificationSettings.reminderMinutes)
-                        ?? .tenMinutes
+                    let currentTime = presenter.notificationSettings.reminderTime
                     Text(
                         NSLocalizedString(currentTime.displayTextKey, bundle: .module, comment: "Current reminder time")
                     )

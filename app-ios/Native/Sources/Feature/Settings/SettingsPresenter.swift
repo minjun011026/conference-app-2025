@@ -44,8 +44,8 @@ final class SettingsPresenter {
         }
     }
 
-    func updateReminderTime(_ minutes: Int) async {
-        await updateSettings(notificationSettings.copy(reminderMinutes: minutes))
+    func updateReminderTime(_ reminderTime: NotificationReminderTime) async {
+        await updateSettings(notificationSettings.copy(reminderTime: reminderTime))
     }
 
     func toggleCustomSound() async {
@@ -81,12 +81,12 @@ final class SettingsPresenter {
 extension NotificationSettings {
     fileprivate func copy(
         isEnabled: Bool? = nil,
-        reminderMinutes: Int? = nil,
+        reminderTime: NotificationReminderTime? = nil,
         useCustomSound: Bool? = nil
     ) -> NotificationSettings {
         NotificationSettings(
             isEnabled: isEnabled ?? self.isEnabled,
-            reminderMinutes: reminderMinutes ?? self.reminderMinutes,
+            reminderTime: reminderTime ?? self.reminderTime,
             useCustomSound: useCustomSound ?? self.useCustomSound
         )
     }

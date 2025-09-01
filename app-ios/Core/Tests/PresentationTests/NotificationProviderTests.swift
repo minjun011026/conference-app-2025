@@ -54,10 +54,10 @@ struct NotificationProviderTests {
     func testInitialization() async throws {
         let provider = withDependencies {
             $0.notificationUseCase.load = {
-                NotificationSettings(isEnabled: true, reminderMinutes: 15)
+                NotificationSettings(isEnabled: true, reminderTime: .tenMinutes, useCustomSound: false)
             }
             $0.notificationUseCase.checkAuthorizationStatus = {
-                .authorized
+                NotificationAuthorizationStatus.authorized
             }
         } operation: {
             NotificationProvider()
@@ -65,7 +65,7 @@ struct NotificationProviderTests {
 
         // Initially, settings should be default
         #expect(provider.settings.isEnabled == false)
-        #expect(provider.authorizationStatus == .notDetermined)
+        #expect(provider.authorizationStatus == NotificationAuthorizationStatus.notDetermined)
 
         provider.initialize()
 
@@ -73,8 +73,8 @@ struct NotificationProviderTests {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
 
         #expect(provider.settings.isEnabled == true)
-        #expect(provider.settings.reminderMinutes == 15)
-        #expect(provider.authorizationStatus == .authorized)
+        #expect(provider.settings.reminderTime == NotificationReminderTime.tenMinutes)
+        #expect(provider.authorizationStatus == NotificationAuthorizationStatus.authorized)
     }
 
     @Test("Test handle favorite change")
@@ -88,10 +88,10 @@ struct NotificationProviderTests {
 
         let provider = withDependencies {
             $0.notificationUseCase.load = {
-                NotificationSettings(isEnabled: true, reminderMinutes: 10)
+                NotificationSettings(isEnabled: true, reminderTime: .tenMinutes, useCustomSound: false)
             }
             $0.notificationUseCase.checkAuthorizationStatus = {
-                .authorized
+                NotificationAuthorizationStatus.authorized
             }
             $0.notificationUseCase.scheduleNotification = { _, _ in
                 scheduleCalled.setValue(true)
@@ -122,10 +122,10 @@ struct NotificationProviderTests {
 
         let provider = withDependencies {
             $0.notificationUseCase.load = {
-                NotificationSettings(isEnabled: true, reminderMinutes: 10)
+                NotificationSettings(isEnabled: true, reminderTime: .tenMinutes, useCustomSound: false)
             }
             $0.notificationUseCase.checkAuthorizationStatus = {
-                .authorized
+                NotificationAuthorizationStatus.authorized
             }
             $0.notificationUseCase.rescheduleAllNotifications = { _, _ in
                 rescheduleCallCount.setValue(rescheduleCallCount.value + 1)
@@ -153,11 +153,12 @@ struct NotificationProviderTests {
                 loadCallCount.setValue(count)
                 return NotificationSettings(
                     isEnabled: count > 1, // Change after first call
-                    reminderMinutes: count * 5
+                    reminderTime: count == 1 ? .fiveMinutes : .tenMinutes,
+                    useCustomSound: false
                 )
             }
             $0.notificationUseCase.checkAuthorizationStatus = {
-                .notDetermined
+                NotificationAuthorizationStatus.notDetermined
             }
         } operation: {
             NotificationProvider()
@@ -165,7 +166,7 @@ struct NotificationProviderTests {
 
         // Initial state
         #expect(provider.settings.isEnabled == false)
-        #expect(provider.authorizationStatus == .notDetermined)
+        #expect(provider.authorizationStatus == NotificationAuthorizationStatus.notDetermined)
 
         // First initialization
         provider.initialize()
@@ -173,7 +174,7 @@ struct NotificationProviderTests {
 
         #expect(loadCallCount.value == 1)
         #expect(provider.settings.isEnabled == false)
-        #expect(provider.settings.reminderMinutes == 5)
+        #expect(provider.settings.reminderTime == .fiveMinutes)
 
         // Refresh settings
         provider.refreshSettings()
@@ -181,6 +182,6 @@ struct NotificationProviderTests {
 
         #expect(loadCallCount.value == 2)
         #expect(provider.settings.isEnabled == true)
-        #expect(provider.settings.reminderMinutes == 10)
+        #expect(provider.settings.reminderTime == .tenMinutes)
     }
 }

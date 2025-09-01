@@ -2,23 +2,21 @@ import Foundation
 
 public struct NotificationSettings: Equatable, Sendable {
     public let isEnabled: Bool
-
-    public let reminderMinutes: Int
-
+    public let reminderTime: NotificationReminderTime
     public let useCustomSound: Bool
 
     public init(
         isEnabled: Bool = false,
-        reminderMinutes: Int = 10,
+        reminderTime: NotificationReminderTime = .tenMinutes,
         useCustomSound: Bool = false
     ) {
         self.isEnabled = isEnabled
-        self.reminderMinutes = reminderMinutes
+        self.reminderTime = reminderTime
         self.useCustomSound = useCustomSound
     }
 }
 
-public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
+public enum NotificationReminderTime: Int, CaseIterable, Identifiable, Sendable {
     case fiveMinutes = 5
     case tenMinutes = 10
 
@@ -32,4 +30,5 @@ public enum NotificationReminderTime: Int, CaseIterable, Identifiable {
             return "10 minutes before"
         }
     }
+
 }

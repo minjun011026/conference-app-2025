@@ -54,7 +54,7 @@ struct NotificationUseCaseTests {
     func testLoad() async throws {
         let expectedSettings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 15,
+            reminderTime: .fiveMinutes,
             useCustomSound: true
         )
 
@@ -66,7 +66,8 @@ struct NotificationUseCaseTests {
         }.load()
 
         #expect(settings.isEnabled == true)
-        #expect(settings.reminderMinutes == 15)
+        #expect(settings.reminderTime == .fiveMinutes)
+        #expect(settings.reminderTime.rawValue == 5)
         #expect(settings.useCustomSound == true)
     }
 
@@ -75,7 +76,7 @@ struct NotificationUseCaseTests {
     func testSave() async throws {
         let settingsToSave = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 30,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
@@ -92,7 +93,8 @@ struct NotificationUseCaseTests {
 
         #expect(savedSettings.value != nil)
         #expect(savedSettings.value?.isEnabled == true)
-        #expect(savedSettings.value?.reminderMinutes == 30)
+        #expect(savedSettings.value?.reminderTime == .tenMinutes)
+        #expect(savedSettings.value?.reminderTime.rawValue == 10)
         #expect(savedSettings.value?.useCustomSound == false)
     }
 
@@ -147,7 +149,7 @@ struct NotificationUseCaseTests {
 
         let settings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 10,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
@@ -169,7 +171,7 @@ struct NotificationUseCaseTests {
         #expect(scheduledItem.value?.id == favoritedItem.id)
         #expect(scheduledItem.value?.isFavorited == true)
         #expect(scheduledSettings.value?.isEnabled == true)
-        #expect(scheduledSettings.value?.reminderMinutes == 10)
+        #expect(scheduledSettings.value?.reminderTime == .tenMinutes)
     }
 
     @MainActor
@@ -182,7 +184,7 @@ struct NotificationUseCaseTests {
 
         let settings = NotificationSettings(
             isEnabled: false, // Disabled
-            reminderMinutes: 10,
+            reminderTime: .tenMinutes,
             useCustomSound: false
         )
 
@@ -225,7 +227,7 @@ struct NotificationUseCaseTests {
 
         let settings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 15,
+            reminderTime: .fiveMinutes,
             useCustomSound: false
         )
 
@@ -270,20 +272,22 @@ struct NotificationSettingsTests {
         let settings = NotificationSettings()
 
         #expect(settings.isEnabled == false)
-        #expect(settings.reminderMinutes == 10)
+        #expect(settings.reminderTime == .tenMinutes)
+        #expect(settings.reminderTime.rawValue == 10)
         #expect(settings.useCustomSound == false)
     }
 
-    @Test("Test custom notification settings")
-    func testCustomSettings() {
+    @Test("Test type-safe notification settings")
+    func testTypeSafeSettings() {
         let settings = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 30,
+            reminderTime: .fiveMinutes,
             useCustomSound: true
         )
 
         #expect(settings.isEnabled == true)
-        #expect(settings.reminderMinutes == 30)
+        #expect(settings.reminderTime == .fiveMinutes)
+        #expect(settings.reminderTime.rawValue == 5)
         #expect(settings.useCustomSound == true)
     }
 
@@ -291,19 +295,19 @@ struct NotificationSettingsTests {
     func testSettingsEquality() {
         let settings1 = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 15,
+            reminderTime: .fiveMinutes,
             useCustomSound: false
         )
 
         let settings2 = NotificationSettings(
             isEnabled: true,
-            reminderMinutes: 15,
+            reminderTime: .fiveMinutes,
             useCustomSound: false
         )
 
         let settings3 = NotificationSettings(
             isEnabled: false, // Different
-            reminderMinutes: 15,
+            reminderTime: .fiveMinutes,
             useCustomSound: false
         )
 
