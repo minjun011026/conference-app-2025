@@ -57,7 +57,11 @@ public struct SettingsScreen: View {
                     } label: {
                         Text(String(localized: "Settings", bundle: .module))
                     }
-                    .filledButtonStyle()
+                    .typography(.caption)
+                    .padding(.all, 8)
+                    .foregroundColor(AssetColors.primary0.swiftUIColor)
+                    .background(AssetColors.primary.swiftUIColor)
+                    .clipShape(.capsule)
                     .controlSize(.small)
                 } else {
                     Toggle(
