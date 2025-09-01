@@ -17,13 +17,4 @@ enum class SensorType(
 ) {
     ACCELEROMETER(1, "android.sensor.accelerometer"),
     MAGNETIC_FIELD(2, "android.sensor.magnetic_field"),
-    ;
-
-    companion object {
-        /** Returns enum from TYPE_XXX integer ID (null if not found). */
-        fun fromId(id: Int): SensorType? = entries.firstOrNull { it.id == id }
-
-        /** Returns enum from STRING_TYPE_XXX (case-sensitive; null if not found). */
-        fun fromStringType(stringType: String): SensorType? = entries.firstOrNull { it.stringType == stringType }
-    }
 }
