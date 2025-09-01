@@ -105,7 +105,7 @@ struct TimetableGridView: View {
     @ViewBuilder
     private var roomLines: some View {
         ForEach(0...rooms.count, id: \.self) { index in
-            let x = CGFloat(index) * (roomWidth + roomSpacing) - roomSpacing / 2
+            let x = CGFloat(index) * (roomWidth + roomSpacing) - (roomSpacing / 2)
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
                 .frame(width: 1, height: timetableHeight)
@@ -185,7 +185,7 @@ struct TimetableGridView: View {
     private var timetableWidth: CGFloat {
         guard !rooms.isEmpty else { return 0 }
         let columns = CGFloat(rooms.count)
-        return columns * roomWidth + max(0, columns - 1) * roomSpacing
+        return columns * roomWidth + (columns - 1) * roomSpacing
     }
 
     private var timetableHeight: CGFloat {
@@ -206,7 +206,7 @@ struct TimetableGridView: View {
 
     private func offsetY(for date: Date, base: Date) -> CGFloat {
         let seconds = date.timeIntervalSince(base)
-        return CGFloat(max(seconds, 0) / 60.0) * heightOfMinute
+        return CGFloat(seconds / 60.0) * heightOfMinute
     }
     
     private func sessionWidth(for item: any TimetableItem) -> CGFloat {
@@ -219,6 +219,6 @@ struct TimetableGridView: View {
 
     private func sessionHeight(for item: any TimetableItem) -> CGFloat {
         let seconds = item.endsAt.timeIntervalSince(item.startsAt)
-        return CGFloat(max(seconds, 0) / 60.0) * heightOfMinute
+        return CGFloat(seconds / 60.0) * heightOfMinute
     }
 }
