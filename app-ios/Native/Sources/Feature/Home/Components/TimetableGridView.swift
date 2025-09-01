@@ -14,6 +14,7 @@ struct TimetableGridView: View {
     @State private var timer: Timer? = nil
 
     @State private var headerHeight: CGFloat = 0
+    @State private var timeLabelHeight: CGFloat = 0
 
     private let layoutConfig = TimetableLayoutConfig()
     private var layoutCalculator: TimetableLayoutCalculator {
@@ -106,6 +107,18 @@ struct TimetableGridView: View {
             // Space same as the room header
             Spacer().frame(height: headerHeight)
 
+            // Get time label height. DO NOT show.
+            Text("00:00")
+                .font(.caption2)
+                .background(
+                    GeometryReader { geometry in
+                        Spacer()
+                            .onAppear { timeLabelHeight = geometry.size.height }
+                            .onChange(of: geometry.size.height) { timeLabelHeight = geometry.size.height }
+                    }
+                )
+                .hidden()
+                .frame(height: 0)
 
             if let dayStart = dayStart, let dayEnd = dayEnd {
                 let totalMinutes = Int(dayEnd.timeIntervalSince(dayStart) / 60)
@@ -114,6 +127,7 @@ struct TimetableGridView: View {
                     Text(labelDate.formatted(date: .omitted, time: .shortened))
                         .font(.caption2)
                         .frame(height: layoutConfig.heightOfMinute * 60, alignment: .top)
+                        .offset(y: -timeLabelHeight / 2)
                 }
             }
         }
