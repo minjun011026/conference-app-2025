@@ -50,7 +50,7 @@ public struct SettingsScreen: View {
                     ProgressView()
                         .scaleEffect(0.8)
                 } else if presenter.authorizationStatus == .denied {
-                    Button("Settings") {
+                    Button(String(localized: "Settings", bundle: .module)) {
                         presenter.openSystemSettings()
                     }
                     .buttonStyle(.borderedProminent)
