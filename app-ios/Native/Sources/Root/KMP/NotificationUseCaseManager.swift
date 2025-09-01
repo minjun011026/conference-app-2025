@@ -1,5 +1,5 @@
 import Foundation
-import Handler
+import UseCase
 
 public final class NotificationUseCaseManager: @unchecked Sendable {
     public static let shared = NotificationUseCaseManager()
