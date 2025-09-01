@@ -13,6 +13,8 @@ struct TimetableGridView: View {
     @State private var now: Date = Date()
     @State private var timer: Timer? = nil
 
+    @State private var headerHeight: CGFloat = 0
+
     private let layoutConfig = TimetableLayoutConfig()
     private var layoutCalculator: TimetableLayoutCalculator {
         .init(
@@ -89,15 +91,21 @@ struct TimetableGridView: View {
                     .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
             }
         }
+        .background(
+            GeometryReader { geometry in
+                // Get Room Header Height
+                Spacer()
+                    .onAppear { headerHeight = geometry.size.height }
+                    .onChange(of: geometry.size.height) { headerHeight = geometry.size.height }
+            }
+        )
     }
 
     private var timeAxis: some View {
         VStack(spacing: 0) {
-            // Place transparent text to take the room header space.
-            Text("Room Name")
-                .font(Typography.titleMedium)
-                .foregroundStyle(Color.clear)
-                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+            // Space same as the room header
+            Spacer().frame(height: headerHeight)
+
 
             if let dayStart = dayStart, let dayEnd = dayEnd {
                 let totalMinutes = Int(dayEnd.timeIntervalSince(dayStart) / 60)
