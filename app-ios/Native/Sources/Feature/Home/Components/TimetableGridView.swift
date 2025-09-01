@@ -102,68 +102,63 @@ struct TimetableGridView: View {
         }
     }
 
+    @ViewBuilder
     private var roomLines: some View {
-        ZStack(alignment: .topLeading) {
-            ForEach(0...rooms.count, id: \.self) { index in
-                let x = CGFloat(index) * (roomWidth + roomSpacing) - roomSpacing / 2
+        ForEach(0...rooms.count, id: \.self) { index in
+            let x = CGFloat(index) * (roomWidth + roomSpacing) - roomSpacing / 2
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(width: 1, height: timetableHeight)
+                .offset(x: x)
+        }
+    }
+
+    @ViewBuilder
+    private var hourLines: some View {
+        if let dayStart = dayStart, let dayEnd = dayEnd {
+            let totalMinutes = Int(dayEnd.timeIntervalSince(dayStart) / 60)
+            let hourNum = totalMinutes / 60
+            ForEach(0...hourNum, id: \.self) { hourIndex in
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: 1, height: timetableHeight)
-                    .offset(x: x)
+                    .frame(height: 1)
+                    .frame(maxWidth: .infinity)
+                    .offset(y: CGFloat(hourIndex * 60) * heightOfMinute)
             }
         }
     }
 
-    private var hourLines: some View {
-        ZStack(alignment: .topLeading) {
-            if let dayStart = dayStart, let dayEnd = dayEnd {
-                let totalMinutes = Int(dayEnd.timeIntervalSince(dayStart) / 60)
-                let hourNum = totalMinutes / 60
-                ForEach(0...hourNum, id: \.self) { hourIndex in
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 1)
-                        .frame(maxWidth: .infinity)
-                        .offset(y: CGFloat(hourIndex * 60) * heightOfMinute)
-                }
-            }
-        }
-    }
-
+    @ViewBuilder
     private var currentTimeLine: some View {
-        ZStack(alignment: .topLeading) {
-            if let dayStart = dayStart,
-                let dayEnd = dayEnd
-            {
-                if now >= dayStart && now <= dayEnd {
-                    Rectangle()
-                        .fill(Color.red)
-                        .frame(height: 2)
-                        .frame(maxWidth: .infinity)
-                        .offset(y: offsetY(for: now, base: dayStart))
-                }
+        if let dayStart = dayStart,
+            let dayEnd = dayEnd
+        {
+            if now >= dayStart && now <= dayEnd {
+                Rectangle()
+                    .fill(Color.red)
+                    .frame(height: 2)
+                    .frame(maxWidth: .infinity)
+                    .offset(y: offsetY(for: now, base: dayStart))
             }
         }
     }
 
+    @ViewBuilder
     private var sessionCards: some View {
-        ZStack(alignment: .topLeading) {
-            if let dayStart = dayStart {
-                ForEach(timelineItems, id: \.id) { item in
-                    let left = offsetX(for: item.timetableItem)
-                    let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
-                    let width = sessionWidth(for: item.timetableItem)
-                    let height = sessionHeight(for: item.timetableItem)
+        if let dayStart = dayStart {
+            ForEach(timelineItems, id: \.id) { item in
+                let left = offsetX(for: item.timetableItem)
+                let top = offsetY(for: item.timetableItem.startsAt, base: dayStart)
+                let width = sessionWidth(for: item.timetableItem)
+                let height = sessionHeight(for: item.timetableItem)
 
-                    TimetableGridCard(
-                        timetableItem: item.timetableItem,
-                        onTap: { _ in onItemTap(item) }
-                    )
-                    .frame(width: width, height: height)
-                    .offset(x: left, y: top)
-                }
+                TimetableGridCard(
+                    timetableItem: item.timetableItem,
+                    onTap: { _ in onItemTap(item) }
+                )
+                .frame(width: width, height: height)
+                .offset(x: left, y: top)
             }
-
         }
     }
 
