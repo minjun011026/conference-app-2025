@@ -155,7 +155,6 @@ struct TimetableGridView: View {
 
                     TimetableGridCard(
                         timetableItem: item.timetableItem,
-                        cellCount: 1,
                         onTap: { _ in onItemTap(item) }
                     )
                     .frame(width: roomWidth, height: height)
