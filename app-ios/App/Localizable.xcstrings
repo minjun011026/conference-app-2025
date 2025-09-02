@@ -178,6 +178,74 @@
           }
         }
       }
+    },
+    "DroidKaigi Session Reminder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigi Session Reminder"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DroidKaigiセッションリマインダー"
+          }
+        }
+      }
+    },
+    "%@ starts in %d minutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ starts in %2$d minutes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@が%2$d分後に開始されます"
+          }
+        }
+      }
+    },
+    "View Session" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Session"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セッションを見る"
+          }
+        }
+      }
+    },
+    "Dismiss" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
