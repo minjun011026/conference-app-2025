@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write # for creating or deleting a comment on pull requests
+      actions: read # for downloading artifacts
     timeout-minutes: 2
     steps:
       - name: Download PR number
