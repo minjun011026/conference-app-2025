@@ -11,6 +11,7 @@ struct TimetableGridView: View {
     let onItemTap: (TimetableItemWithFavorite) -> Void
 
     @State private var now: Date = Date()
+    @State private var timer: Timer? = nil
 
     // MARK: - Layout Const
     private let heightOfMinute: CGFloat = 5
@@ -31,11 +32,14 @@ struct TimetableGridView: View {
             }
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 Task { @MainActor in
                     self.now = Date()
                 }
             }
+        }
+        .onDisappear {
+            timer?.invalidate()
         }
     }
 
